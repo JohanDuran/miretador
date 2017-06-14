@@ -36,6 +36,14 @@
             <td><?= h($field->contact) ?></td>
         </tr>
         <tr>
+            <th scope="row"><?= __('Photo') ?></th>
+            <td><?= h($field->photo) ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('Photo Dir') ?></th>
+            <td><?= h($field->photo_dir) ?></td>
+        </tr>
+        <tr>
             <th scope="row"><?= __('Id') ?></th>
             <td><?= $this->Number->format($field->id) ?></td>
         </tr>
@@ -113,6 +121,8 @@
                 <th scope="col"><?= __('Description') ?></th>
                 <th scope="col"><?= __('Created') ?></th>
                 <th scope="col"><?= __('Modified') ?></th>
+                <th scope="col"><?= __('Photo') ?></th>
+                <th scope="col"><?= __('Photo Dir') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
             <?php foreach ($field->users as $users): ?>
@@ -126,6 +136,8 @@
                 <td><?= h($users->description) ?></td>
                 <td><?= h($users->created) ?></td>
                 <td><?= h($users->modified) ?></td>
+                <td><?= h($users->photo) ?></td>
+                <td><?= h($users->photo_dir) ?></td>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['controller' => 'Users', 'action' => 'view', $users->id]) ?>
                     <?= $this->Html->link(__('Edit'), ['controller' => 'Users', 'action' => 'edit', $users->id]) ?>

@@ -54,6 +54,23 @@ class FieldsTable extends Table
             'targetForeignKey' => 'user_id',
             'joinTable' => 'users_fields'
         ]);
+        
+        $this->addBehavior('Proffer.Proffer', [
+        	'photo' => [	// The name of your upload field
+        		'root' => WWW_ROOT . 'files', // Customise the root upload folder here, or omit to use the default
+        		'dir' => 'photo_dir',	// The name of the field to store the folder
+        		'thumbnailSizes' => [ // Declare your thumbnails
+        			'landscape' => [		// Define a second thumbnail
+        				'w' => 1280,
+        				'h' => 375,
+        				'crop' => true,
+        				'jpeg_quality'	=> 100
+        			],
+        		],
+        		'thumbnailMethod' => 'gd'	// Options are Imagick or Gd
+        	]
+        ]);
+        
     }
 
     /**
@@ -101,6 +118,38 @@ class FieldsTable extends Table
             ->dateTime('finish')
             ->requirePresence('finish', 'create')
             ->notEmpty('finish');
+
+        $validator
+            ->provider('proffer', 'Proffer\Model\Validation\ProfferRules')
+            
+            ->add('photo', 'proffer', [
+                'rule' => ['dimensions', [
+                    'min' => ['w' => 1280, 'h' => 375],
+                    'max' => ['w' => 2360, 'h' => 1280]
+                    ]],
+                    'message' => 'La imagen no tiene las dimensiones correctas.',
+                    'provider' => 'proffer'
+                ])
+                
+            ->add('photo', 'extension', [
+                'rule' => ['extension', [
+                   'jpeg' , 'png' , 'jpg'
+                    ]],
+                    'message' => 'La imagen no tiene la extensión correctas.',
+                ])
+                
+            ->add('photo', 'fileSize', [
+                'rule' => ['fileSize', '<=', "1MB"],
+                    'message' => 'La imagen no debe exceder 1MB.',
+                ])
+            ->add('photo', 'mimeType', [
+                'rule' => ['mimeType', ['image/jpeg', 'image/png']],
+                    'message' => 'La imagen no debe exceder 1MB.',
+                ])
+            ->allowEmpty('photo');
+
+        $validator
+            ->allowEmpty('photo_dir');
 
         return $validator;
     }

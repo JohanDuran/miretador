@@ -16,6 +16,8 @@ use Cake\ORM\Entity;
  * @property string $contact
  * @property \Cake\I18n\Time $start
  * @property \Cake\I18n\Time $finish
+ * @property string $photo
+ * @property string $photo_dir
  * @property \Cake\I18n\Time $created
  * @property \Cake\I18n\Time $modified
  *
@@ -36,6 +38,7 @@ class Field extends Entity
      */
     protected $_accessible = [
         '*' => true,
-        'id' => false
+        'id' => false,
+        'photo_dir' => false
     ];
 }

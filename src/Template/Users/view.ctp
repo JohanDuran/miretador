@@ -36,6 +36,14 @@
             <td><?= h($user->phone) ?></td>
         </tr>
         <tr>
+            <th scope="row"><?= __('Photo') ?></th>
+            <td><?= h($user->photo) ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><?= __('Photo Dir') ?></th>
+            <td><?= h($user->photo_dir) ?></td>
+        </tr>
+        <tr>
             <th scope="row"><?= __('Id') ?></th>
             <td><?= $this->Number->format($user->id) ?></td>
         </tr>
@@ -102,6 +110,8 @@
                 <th scope="col"><?= __('Contact') ?></th>
                 <th scope="col"><?= __('Start') ?></th>
                 <th scope="col"><?= __('Finish') ?></th>
+                <th scope="col"><?= __('Photo') ?></th>
+                <th scope="col"><?= __('Photo Dir') ?></th>
                 <th scope="col"><?= __('Created') ?></th>
                 <th scope="col"><?= __('Modified') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
@@ -118,6 +128,8 @@
                 <td><?= h($fields->contact) ?></td>
                 <td><?= h($fields->start) ?></td>
                 <td><?= h($fields->finish) ?></td>
+                <td><?= h($fields->photo) ?></td>
+                <td><?= h($fields->photo_dir) ?></td>
                 <td><?= h($fields->created) ?></td>
                 <td><?= h($fields->modified) ?></td>
                 <td class="actions">

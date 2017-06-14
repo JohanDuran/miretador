@@ -27,6 +27,8 @@
                 <th scope="col"><?= $this->Paginator->sort('contact') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('start') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('finish') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('photo') ?></th>
+                <th scope="col"><?= $this->Paginator->sort('photo_dir') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('created') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('modified') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
@@ -44,6 +46,8 @@
                 <td><?= h($field->contact) ?></td>
                 <td><?= h($field->start) ?></td>
                 <td><?= h($field->finish) ?></td>
+                <td><?= h($field->photo) ?></td>
+                <td><?= h($field->photo_dir) ?></td>
                 <td><?= h($field->created) ?></td>
                 <td><?= h($field->modified) ?></td>
                 <td class="actions">

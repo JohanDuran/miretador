@@ -14,7 +14,7 @@
     </ul>
 </nav>
 <div class="users form large-9 medium-8 columns content">
-    <?= $this->Form->create($user) ?>
+    <?= $this->Form->create($user, ['type' => 'file']) ?>
     <fieldset>
         <legend><?= __('Add User') ?></legend>
         <?php
@@ -24,6 +24,7 @@
             echo $this->Form->input('phone');
             echo $this->Form->input('owner');
             echo $this->Form->input('description');
+            echo $this->Form->input('photo', ['type' => 'file', 'class' => 'filestyle', 'data-buttonName' => 'btn-primary', 'data-buttonText' => 'Examinar', 'data-iconName'=>"glyphicon glyphicon-inbox"]);
             echo $this->Form->input('fields._ids', ['options' => $fields]);
         ?>
     </fieldset>

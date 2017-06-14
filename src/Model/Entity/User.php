@@ -2,7 +2,7 @@
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
-use Cake\Auth\DefaultPasswordHasher;
+use Cake\Auth\DefaultPasswordHasher; 
 
 /**
  * User Entity
@@ -16,6 +16,8 @@ use Cake\Auth\DefaultPasswordHasher;
  * @property string $description
  * @property \Cake\I18n\Time $created
  * @property \Cake\I18n\Time $modified
+ * @property string $photo
+ * @property string $photo_dir
  *
  * @property \App\Model\Entity\Field[] $fields
  * @property \App\Model\Entity\UsersGame[] $users_games
@@ -34,7 +36,8 @@ class User extends Entity
      */
     protected $_accessible = [
         '*' => true,
-        'id' => false
+        'id' => false,
+        'photo_dir' => false
     ];
 
     /**
@@ -48,8 +51,8 @@ class User extends Entity
     
     
     protected function _setPassword($value){
-        $hasher = new DefaultPasswordHasher();
+
+        $hasher= new DefaultPasswordHasher();
         return $hasher->hash($value);
-        
     }
 }
