@@ -33,7 +33,7 @@
             echo $this->Form->input('contact');
             echo $this->Form->input('start');
             echo $this->Form->input('finish');
-            echo $this->Form->input('photo', ['type' => 'file', 'class' => 'filestyle', 'data-buttonName' => 'btn-primary', 'data-buttonText' => 'Examinar']);
+            echo $this->Form->input('photo', ['type' => 'file', 'class' => 'filestyle', 'data-buttonName' => 'btn-primary', 'data-buttonText' => 'Examinar', 'data-placeholder'=>"Aún no se ha selecionado una imagen", 'data-iconName'=>' fa fa-file-image-o']);
             echo $this->Form->input('users._ids', ['options' => $users]);
         ?>
     </fieldset>

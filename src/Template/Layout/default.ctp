@@ -26,13 +26,11 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     </title>
     <?= $this->Html->meta('icon') ?>
 
-    <?= $this->Html->css(['bootstrap.min']) ?>
-    <?= $this->Html->fonts('glyphicons-halflings-regular') ?>
-    <?= $this->Html->script([ 'jquery-3.2.1.min', 'bootstrap.min', 'bootstrap-filestyle.min']) ?>
+    <?= $this->Html->css(['bootstrap']) ?>
+    <?= $this->Html->script([ 'jquery-3.2.1.min', 'bootstrap', 'bootstrap-filestyle.min', 'https://use.fontawesome.com/0394caa6cc.js']) ?>
 
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
-    <?= $this->fetch('fonts') ?>
     <?= $this->fetch('script') ?>
 </head>
 <body>
