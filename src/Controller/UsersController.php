@@ -33,12 +33,15 @@ class UsersController extends AppController
      */
     public function view($id = null)
     {
-        $user = $this->Users->get($id, [
+        $user = $this->Users->get($id);
+        $this->set('user', $user);
+        
+        /*$user = $this->Users->get($id, [
             'contain' => ['Fields', 'UsersGames']
         ]);
 
         $this->set('user', $user);
-        $this->set('_serialize', ['user']);
+        $this->set('_serialize', ['user']);*/
     }
 
     /**
@@ -51,6 +54,11 @@ class UsersController extends AppController
         $user = $this->Users->newEntity();
         if ($this->request->is('post')) {
             $user = $this->Users->patchEntity($user, $this->request->data);
+            
+            $user->role = 'user'; //Role por defecto de los usuarios va a ser user.
+            $user->active = 1; //Cambiar cuando tengamos el correo de confirmación.
+            $user->owner = 0;  // Los usuarios por defecto no son dueños de cancha.
+            
             if ($this->Users->save($user)) {
                 $this->Flash->success(__('The user has been saved.'));
 
@@ -72,21 +80,21 @@ class UsersController extends AppController
      */
     public function edit($id = null)
     {
-        $user = $this->Users->get($id, [
-            'contain' => ['Fields']
-        ]);
-        if ($this->request->is(['patch', 'post', 'put'])) {
+        $user = $this->Users->get($id);
+        if ($this->request->is(['patch', 'post', 'put']))
+        {
             $user = $this->Users->patchEntity($user, $this->request->data);
-            if ($this->Users->save($user)) {
-                $this->Flash->success(__('The user has been saved.'));
-
+            if ($this->Users->save($user))
+            {
+                $this->Flash->success('El usuario ha sido modificado');
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The user could not be saved. Please, try again.'));
+            else
+            {
+                $this->Flash->error('El usuario no pudo ser modificado. Por favor, intente nuevamente.');
+            }
         }
-        $fields = $this->Users->Fields->find('list', ['limit' => 200]);
-        $this->set(compact('user', 'fields'));
-        $this->set('_serialize', ['user']);
+        $this->set(compact('user'));
     }
 
     /**
@@ -98,14 +106,61 @@ class UsersController extends AppController
      */
     public function delete($id = null)
     {
-        $this->request->allowMethod(['post', 'delete']);
+       $this->request->allowMethod(['post', 'delete']);
         $user = $this->Users->get($id);
-        if ($this->Users->delete($user)) {
-            $this->Flash->success(__('The user has been deleted.'));
-        } else {
-            $this->Flash->error(__('The user could not be deleted. Please, try again.'));
+        if ($this->Users->delete($user))
+        {
+            $this->Flash->success('El usuario ha sido eliminado.');
         }
-
+        else
+        {
+            $this->Flash->error('El usuario no pudo ser eliminado. Por favor, intente nuevamente.');
+        }
         return $this->redirect(['action' => 'index']);
     }
+    
+    
+    public function login(){
+        if($this->request->is('post')){
+            $user = $this->Auth->identify();
+            if($user){
+                $this->Auth->setUser($user);
+                return $this->redirect($this->Auth->redirectUrl());
+            }
+            else{
+                $this->Flash->error('Datos invalidos, por favor intente nuevamente.', ['key' => 'auth']);
+            }
+        }
+        
+    }
+    
+    public function home(){
+        
+        $this->render();
+        
+    }
+    
+    public function logout(){
+        return $this->redirect($this->Auth->logout());
+        
+    }
+    
+    
+    public function isAuthorized($user){
+        if(isset($user['role']) and $user['role'] === 'user'){
+            if(in_array($this->request->action, ['home', 'view', 'logout'])){
+                return true;
+            }
+        }
+        return parent::isAuthorized($user);
+    }
+    
+    public function beforeFilter(\Cake\Event\Event $event){
+        
+        parent::beforeFilter($event);
+        $this->Auth->allow(['add']);
+        
+    }
+    
+    
 }

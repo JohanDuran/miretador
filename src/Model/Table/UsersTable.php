@@ -62,7 +62,7 @@ class UsersTable extends Table
         		'dir' => 'photo_dir',	// The name of the field to store the folder
         		'thumbnailSizes' => [ // Declare your thumbnails
         			'portrait' => [		// Define a second thumbnail
-        				'w' => 100,
+        				'w' => 200,
         				'h' => 300,
         				'crop' => true,
         				'jpeg_quality'	=> 100
@@ -84,25 +84,24 @@ class UsersTable extends Table
     public function validationDefault(Validator $validator)
     {
         $validator
-            ->integer('id')
-            ->allowEmpty('id', 'create');
+            ->add('id', 'valid', ['rule' => 'numeric'])
+            ->notEmpty('id', 'create');
 
         $validator
-            ->email('email')
+            ->add('email','valid',['rule'=> 'email' , 'message' => 'Ingrese un correo válido.'])
             ->requirePresence('email', 'create')
-            ->notEmpty('email');
+            ->notEmpty('email', 'Rellene este campo.');
 
         $validator
             ->requirePresence('password', 'create')
-            ->notEmpty('password');
+            ->notEmpty('password' , 'Rellene este campo.', 'create');
 
         $validator
             ->requirePresence('name', 'create')
-            ->notEmpty('name');
+            ->notEmpty('name' , 'Rellene este campo.');
 
         $validator
-            ->requirePresence('phone', 'create')
-            ->notEmpty('phone');
+            ->allowEmpty('phone');
 
         $validator
             ->boolean('owner')
@@ -116,8 +115,8 @@ class UsersTable extends Table
             
             ->add('photo', 'proffer', [
                 'rule' => ['dimensions', [
-                    'min' => ['w' => 100, 'h' => 300],
-                    'max' => ['w' => 640, 'h' => 960]
+                    'min' => ['w' => 200, 'h' => 300],
+                    'max' => ['w' => 800, 'h' => 1200]
                     ]],
                     'message' => 'La imagen no tiene las dimensiones correctas.',
                     'provider' => 'proffer'
@@ -136,13 +135,24 @@ class UsersTable extends Table
                 ])
             ->add('photo', 'mimeType', [
                 'rule' => ['mimeType', ['image/jpeg', 'image/png']],
-                    'message' => 'La imagen no debe exceder 1MB.',
+                    'message' => 'La imagen no es del formato correcto.',
                 ])
             ->allowEmpty('photo');
                 
 
         $validator
             ->allowEmpty('photo_dir');
+            
+        
+        $validator
+            ->requirePresence('role', 'create')
+            ->notEmpty('role');
+            
+        $validator
+            ->add('active', 'valid', ['rule' => 'boolean'])
+            ->requirePresence('active', 'create')
+            ->notEmpty('active');
+        
 
         return $validator;
     }
@@ -156,8 +166,32 @@ class UsersTable extends Table
      */
     public function buildRules(RulesChecker $rules)
     {
-        $rules->add($rules->isUnique(['email']));
+        $rules->add($rules->isUnique(['email'], 'Ya existe un usuario con este correo.'));
 
         return $rules;
     }
+    
+    
+    public function findAuth(\Cake\ORM\Query $query, array $options ){
+        $query
+            ->select(['id', 'name', 'email', 'password', 'role', 'description', 'phone', 'photo', 'photo_dir', 'owner'])
+            ->where(['Users.active' => 1]);
+            
+        return $query;
+    }
+    
+    public function recoverPassword($id)
+    {
+        $user = $this->get($id);
+        return $user->password;
+    }
+    public function beforeDelete($event, $entity, $options)
+    {
+        if ($entity->role == 'admin')
+        {
+            return false;
+        }
+        return true;
+    }
+    
 }
