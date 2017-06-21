@@ -42,8 +42,10 @@
 
     <div class="col-md-10 col-md-offset-1 main" >
         <div class="col-md-6 left-side" >
-            <h3>MIRETADOR.COM</h3>
-            <p>Bienvenido a MIRETADOR.COM.</p>
+            <?= $this->Html->image('logo.svg', ['alt' => 'Logo Mi Retador', 'class' => 'img-responsive  center-block logo', 'url' => ['controller' => 'Pages', 'action' => 'display', 'home']]) ?>
+            
+            <h3 class="center-block"><?= $this->Html->link('Mi Retador', ['controller' => 'Pages', 'action' => 'display', 'home' ])?></h3>
+            <p class="center-block">Bienvenido a MIRETADOR.COM</p>
             <br>
         
         

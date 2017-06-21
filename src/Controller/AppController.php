@@ -58,7 +58,7 @@ class AppController extends Controller
                     'controller' => 'Users',
                     'action' => 'login'
                 ],
-                'authError' => 'Ingrese sus datos', //Mensaje de error
+                
                 'loginRedirect' => [ //Redireccionamiento después de logearse
                     'controller' => 'Users',
                     'action' => 'home'

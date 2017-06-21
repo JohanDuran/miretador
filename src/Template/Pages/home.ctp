@@ -11,7 +11,7 @@ use Cake\Network\Exception\NotFoundException;
 
 $this->layout = false;
 
-$cakeDescription = 'Mi Retador | Home';
+$cakeDescription = 'Home';
 ?>
 
 <!DOCTYPE html>
@@ -34,7 +34,7 @@ $cakeDescription = 'Mi Retador | Home';
             <div class="container">
                 <div class="navbar-header">
                     <a class="navbar-brand" href="/">
-                        <?= $this->Html->image('cake.logo.svg', ['alt' => 'Mi Retador logo', 'class' => 'img-responsive img-thumbnail']) ?>
+                        <?= $this->Html->image('cake.logo.svg', ['alt' => 'Mi Retador logo', 'class' => 'img-responsive']) ?>
                     </a>
                 </div>
                 <ul class="nav navbar-nav navbar-right">

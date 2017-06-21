@@ -10,8 +10,10 @@
 
     <div class="col-md-10 col-md-offset-1 main" >
         <div class="col-md-6 left-side" >
-            <h3>MIRETADOR.COM</h3>
-            <p>Editar la información de <?= $user->name ?>.</p>
+            <?= $this->Html->image('logo.svg', ['alt' => 'Logo Mi Retador', 'class' => 'img-responsive  center-block logo', 'url' => ['controller' => 'Pages', 'action' => 'display', 'home']]) ?>
+            
+            <h3 class="center-block"><?= $this->Html->link('Mi Retador', ['controller' => 'Pages', 'action' => 'display', 'home' ])?></h3>
+            <p class="center-block">Editar la información de <?= $user->name ?>.</p>
             <br>
         
         
