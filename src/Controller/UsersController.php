@@ -11,6 +11,31 @@ use App\Controller\AppController;
 class UsersController extends AppController
 {
 
+    public function isAuthorized($user){
+        if(isset($user['role']) and $user['role'] === 'user'){
+            if(in_array($this->request->action, ['home',  'logout'])){
+                return true;
+            }
+            
+            if(in_array($this->request->action, ['view','edit', 'delete'])){
+                $id = $this->request->params['pass'][0];
+                $user = $this->Users->get($id);
+                if ($user->id == $user['id']){
+                    return true;
+                }
+            }
+            
+        }
+        return parent::isAuthorized($user);
+    }
+    
+    public function beforeFilter(\Cake\Event\Event $event){
+        
+        parent::beforeFilter($event);
+        $this->Auth->allow(['add']);
+        
+    }
+
     /**
      * Index method
      *
@@ -132,6 +157,11 @@ class UsersController extends AppController
             }
         }
         
+        if ($this->Auth->user())
+        {
+            return $this->redirect(['controller' => 'Users', 'action' => 'home']);
+        }
+        
     }
     
     public function home(){
@@ -146,21 +176,7 @@ class UsersController extends AppController
     }
     
     
-    public function isAuthorized($user){
-        if(isset($user['role']) and $user['role'] == 'user'){
-            if(in_array($this->request->action, ['home', 'view', 'logout'])){
-                return true;
-            }
-        }
-        return parent::isAuthorized($user);
-    }
     
-    public function beforeFilter(\Cake\Event\Event $event){
-        
-        parent::beforeFilter($event);
-        $this->Auth->allow(['add']);
-        
-    }
     
     
 }

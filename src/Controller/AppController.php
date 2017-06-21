@@ -58,7 +58,7 @@ class AppController extends Controller
                     'controller' => 'Users',
                     'action' => 'login'
                 ],
-                
+                //'authError' => $this->Flash->error('Ingrese sus datos.', ['key' => 'auth']),
                 'loginRedirect' => [ //Redireccionamiento después de logearse
                     'controller' => 'Users',
                     'action' => 'home'
@@ -95,6 +95,7 @@ class AppController extends Controller
     
     public function beforeFilter(Event $event){
         
+        $this->Auth->config('authorize', ['Controller']);
         $this->set('current_user', $this->Auth->user() );
     }
     
@@ -102,7 +103,6 @@ class AppController extends Controller
         if(isset($user['role']) and $user['role'] === 'admin'){
             return true;
         }
-        
         return false;
     }
     

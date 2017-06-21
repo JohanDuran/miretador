@@ -34,7 +34,7 @@ $cakeDescription = 'Home';
             <div class="container">
                 <div class="navbar-header">
                     <a class="navbar-brand" href="/">
-                        <?= $this->Html->image('cake.logo.svg', ['alt' => 'Mi Retador logo', 'class' => 'img-responsive']) ?>
+                        <?= $this->Html->image('logo.svg', ['alt' => 'Mi Retador logo', 'class' => 'img-responsive']) ?>
                     </a>
                 </div>
                 <ul class="nav navbar-nav navbar-right">
