@@ -13,7 +13,7 @@ class UsersController extends AppController
 
     public function isAuthorized($user){
         if(isset($user['role']) and $user['role'] === 'user'){
-            if(in_array($this->request->action, ['home',  'logout'])){
+            if(in_array($this->request->action, [ 'logout'])){
                 return true;
             }
             
@@ -159,7 +159,7 @@ class UsersController extends AppController
         
         if ($this->Auth->user())
         {
-            return $this->redirect(['controller' => 'Users', 'action' => 'home']);
+            return $this->redirect(['controller' => 'Users', 'action' => 'view' , $this->Auth->user('id') ]);
         }
         
     }

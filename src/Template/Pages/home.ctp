@@ -1,48 +1,49 @@
 <?php
-/**
- * Mi Retador : Página creada por Kenneth Calvo y Johan Durán para el curso de desarrollo de aplicaciones web, impartido por el profesor Braulio Solano en la Universidad de Costa Rica.
- */
-use Cake\Cache\Cache;
-use Cake\Core\Configure;
-use Cake\Core\Plugin;
-use Cake\Datasource\ConnectionManager;
-use Cake\Error\Debugger;
-use Cake\Network\Exception\NotFoundException;
-
-$this->layout = false;
-
-$cakeDescription = 'Home';
+$this->assign('title', 'Home');
 ?>
-
-<!DOCTYPE html>
-    <html>
-
-    <head>
-        <?= $this->Html->charset() ?>
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>
-                <?= $cakeDescription ?>
-            </title>
-            <?= $this->Html->meta('icon') ?>
-            <?= $this->Html->css(['bootstrap', 'style']) ?>
-            <?= $this->Html->script([ 'jquery-3.2.1.min', 'bootstrap', 'bootstrap-filestyle.min', 'https://use.fontawesome.com/0394caa6cc.js']) ?>
-            
-    </head>
-    <body>
-        
-        <nav class="navbar navbar-default ´navbarHome">
-            <div class="container">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="/">
-                        <?= $this->Html->image('logo.svg', ['alt' => 'Mi Retador logo', 'class' => 'img-responsive']) ?>
-                    </a>
+      
+     
+       
+<div class="row">
+        <div class="col-sm-12 col-md-9">
+                <div class = "row">
+                        <div class="col-sm-6 col-md-4 steps">
+                                <div class="step step-1">
+                                        <span class="step-num">1</span>
+                                        <div class="step-header">
+                                              <i class="fa fa-user-plus step-ico" aria-hidden="true"></i>
+                                              <h5 class ="step-title">Registrate</h5>
+                                        </div>
+                                        <div class="caption">
+                                                <p>Se parte de una gran comunidad de fiebres del futbol.</p>
+                                        </div>
+                                </div>
+                        </div>
+                        <div class="col-sm-6 col-md-4 steps">
+                                <div class="step step-2">
+                                        <span class="step-num">2</span>
+                                        <div class="step-header">
+                                              <i class="fa fa-user-plus step-ico" aria-hidden="true"></i>
+                                              <h5 class ="step-title">Registrate</h5>
+                                        </div>
+                                        <div class="caption">
+                                                <p>Se parte de una gran comunidad de fiebres del futbol.</p>
+                                        </div>
+                                </div>
+                        </div>
+                        <div class="col-sm-6 col-md-4 steps">
+                                <div class="step step-3">
+                                        <span class="step-num">3</span>
+                                        <div class="step-header">
+                                              <i class="fa fa-user-plus step-ico" aria-hidden="true"></i>
+                                              <h5 class ="step-title">Registrate</h5>
+                                        </div>
+                                        <div class="caption">
+                                                <p>Se parte de una gran comunidad de fiebres del futbol.</p>
+                                        </div>
+                                </div>
+                        </div>
                 </div>
-                <ul class="nav navbar-nav navbar-right">
-                        <?= $this->Html->link('Iniciar Sesión', ['controller' => 'Users', 'action' => 'login' ], ['class' => 'btn btn-sm btn-success']) ?>
-                </ul>
-            </div>
-        </nav>
-        
-        
-    </body>
-    </html>
+    
+  </div>
+</div>

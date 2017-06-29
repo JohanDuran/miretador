@@ -1,5 +1,194 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway:400,500,600&subset=latin-ext');
+
+html{
+    font-size: 15px;
+}
+
+body{
+font-family: 'Raleway', sans-serif;
+margin-top: 100px;
+}
+
 .logo{
     width: 55%;
     height: auto;
-    margin-top: 9rem;
+    padding-top: 9rem;
+}
+
+.logo_menu{
+     width: 120px;
+    height: auto;
+}
+
+.brand_name{
+	font-size: 1.4rem;
+    font-weight: 600;
+	color:#000 !important;
+	text-decoration: none;
+	vertical-align: middle;
+	padding: 1.5rem 1rem;
+	text-align: center
+}
+.brand_name:hover, .brand_name:focus, .brand_name:active {
+	text-decoration: none;
+	outline: none;
+}
+
+.navbar-default a{
+        color: white !important;
+    }
+
+.navbar-nav{
+    font-size: 1rem;
+    font-weight: 600;
+    margin: .2rem 1rem 0 0;
+}
+.navbar-default{
+    font-size: 2rem;
+    background-color: #00BFA5; 
+    border-color: transparent;
+}
+
+.navbar-default .navbar-toggle, .navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus, .navbar-default .navbar-toggle:active{
+    background-color: transparent;
+    margin-top: 16px;
+}
+
+.icon-fa{
+    margin: 0 0.4rem 0.4rem 0.4rem;
+}
+
+.open a:hover, .open a:focus, .open a:active{
+    background-color: transparent !important;
+}
+
+.login-button{
+    text-decoration: underline;
+}
+
+.login-button:hover{
+    text-decoration: underline !important;
+}
+
+.login-button:focus{
+    text-decoration: underline !important;
+    outline: none !important;
+}
+
+.steps .step{
+    border: 2px solid #DCDCDC;
+    position: relative;
+    text-align: center;
+    font-size: 1em;
+    margin: 0 5px;
+    border-radius: 5px;
+}
+.steps .step .step-num{
+    color: #FFF;
+    position: absolute;
+    top: -13px;
+    left: -13px;
+    font-size: 15px;
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    line-height: 30px;
+}
+
+.steps .step-1 .step-num{
+    background-color: #00BFA5;
+}
+
+.steps .step-2 .step-num {
+    background-color: #189BF2;
+}
+
+.steps .step-3 .step-num{
+    background-color: #F21A18;
+}
+
+.steps .step .step-header{
+    padding: .9rem;
+    margin: 0;
+    border: 0;
+    font: inherit;
+    vertical-align: baseline;
+}
+
+.steps .step .caption{
+    text-align: left;
+    background-color: #F2F2F2;
+    padding: 15px;
+}
+
+.steps .step-ico{
+    font-size: 60px;
+}
+
+.steps .step-title{
+    font-size: 2em;
+    margin-top: 15px;
+}
+
+.steps .step-1 .step-ico, .steps .step-1 .step-title{
+    color: #00BFA5;
+}
+
+.steps .step-2 .step-ico, .steps .step-2 .step-title{
+    color: #189BF2;
+}
+
+.steps .step-3 .step-ico, .steps .step-3 .step-title{
+    color: #F21A18;
+}
+
+
+
+
+
+
+@media (min-width: 767px) {
+    
+    html{
+        font-size: 16px;
+    }
+  /*---------------------------
+  Header
+  ----------------------------*/
+  .navbar-default {
+    background: transparent;
+    margin: 2rem 0 0 0;
+    transition: all .5s ease; }
+    
+    .navbar-default a{
+        margin-top: 0.4rem;
+        color: black !important;
+    }
+    
+    .fondo-menu{
+    margin-top: 0;
+    background-color: #00BFA5 !important;
+    }
+    .fondo-menu .open .dropdown-menu{
+        background-color: #009480;
+    }
+    .fondo-menu a{
+    color: white !important;
+    }
+    
+    .brand_name{
+        padding-top: 1rem;
+    }
+    
+    /*---------------------------
+    Card Pasos
+    ----------------------------*/
+    .steps .step{
+        font-size: 1em;
+        margin: 0 15px;
+    }
+    .steps .step .step-num{
+        font-size: 1.2em;
+    }
+    
 }

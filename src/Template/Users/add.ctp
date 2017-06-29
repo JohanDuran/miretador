@@ -1,41 +1,36 @@
 <?php
 /**
-  * @var \App\View\AppView $this
-  */
-?>
-<?php /*
-<nav class="large-3 medium-4 columns" id="actions-sidebar">
-    <ul class="side-nav">
-        <li class="heading"><?= __('Actions') ?></li>
-        <li><?= $this->Html->link(__('List Users'), ['action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('List Users Games'), ['controller' => 'UsersGames', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Users Game'), ['controller' => 'UsersGames', 'action' => 'add']) ?></li>
-        <li><?= $this->Html->link(__('List Fields'), ['controller' => 'Fields', 'action' => 'index']) ?></li>
-        <li><?= $this->Html->link(__('New Field'), ['controller' => 'Fields', 'action' => 'add']) ?></li>
-    </ul>
-</nav>
-<div class="users form large-9 medium-8 columns content">
-    <?= $this->Form->create($user, ['type' => 'file']) ?>
-    <fieldset>
-        <legend><?= __('Add User') ?></legend>
-        <?php
-            echo $this->Form->input('email');
-            echo $this->Form->input('password');
-            echo $this->Form->input('name');
-            echo $this->Form->input('phone');
-            echo $this->Form->input('owner');
-            echo $this->Form->input('description');
-            echo $this->Form->input('photo', ['type' => 'file', 'class' => 'filestyle', 'data-buttonName' => 'btn-primary', 'data-buttonText' => 'Examinar', 'data-placeholder'=>"Aún no se ha selecionado una imagen", 'data-iconName'=>' fa fa-file-image-o']);
-            echo $this->Form->input('fields._ids', ['options' => $fields]);
-        ?>
-    </fieldset>
-    <?= $this->Form->button(__('Submit')) ?>
-    <?= $this->Form->end() ?>
-</div>
-*/
+ * Mi Retador : Página creada por Kenneth Calvo y Johan Durán para el curso de desarrollo de aplicaciones web, impartido por el profesor Braulio Solano en la Universidad de Costa Rica.
+ */
+use Cake\Cache\Cache;
+use Cake\Core\Configure;
+use Cake\Core\Plugin;
+use Cake\Datasource\ConnectionManager;
+use Cake\Error\Debugger;
+use Cake\Network\Exception\NotFoundException;
+$this->layout = false;
+
+
+
+$cakeDescription = 'Mi Retador | Registrarse';
 ?>
 
-<?= $this->Html->css('sesion') ?>
+<!DOCTYPE html>
+    <html>
+
+    <head>
+        <?= $this->Html->charset() ?>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>
+                <?= $cakeDescription ?>
+            </title>
+            <?= $this->Html->meta('icon') ?>
+            <?= $this->Html->css(['bootstrap', 'style', 'sesion']) ?>
+            <?= $this->Html->script([ 'jquery-3.2.1.min', 'bootstrap', 'bootstrap-filestyle.min', 'https://use.fontawesome.com/0394caa6cc.js', 'home']) ?>
+            
+    </head>
+    <body>
+
 
 <div class="container">
     
@@ -96,3 +91,7 @@
     </div><!--col-sm-8-->
 
 </div><!--container-->
+
+
+    </body>
+    </html>

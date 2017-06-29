@@ -1,4 +1,37 @@
-<?= $this->Html->css('sesion') ?>
+<?php
+/**
+ * Mi Retador : Página creada por Kenneth Calvo y Johan Durán para el curso de desarrollo de aplicaciones web, impartido por el profesor Braulio Solano en la Universidad de Costa Rica.
+ */
+use Cake\Cache\Cache;
+use Cake\Core\Configure;
+use Cake\Core\Plugin;
+use Cake\Datasource\ConnectionManager;
+use Cake\Error\Debugger;
+use Cake\Network\Exception\NotFoundException;
+$this->layout = false;
+
+
+
+$cakeDescription = 'Mi Retador | Login';
+?>
+
+<!DOCTYPE html>
+    <html>
+
+    <head>
+        <?= $this->Html->charset() ?>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>
+                <?= $cakeDescription ?>
+            </title>
+            <?= $this->Html->meta('icon') ?>
+            <?= $this->Html->css(['bootstrap', 'style', 'sesion']) ?>
+            <?= $this->Html->script([ 'jquery-3.2.1.min', 'bootstrap', 'bootstrap-filestyle.min', 'https://use.fontawesome.com/0394caa6cc.js', 'home']) ?>
+            
+    </head>
+    <body>
+
+
 
 <div class="container">
     
@@ -47,3 +80,6 @@
     </div><!--col-sm-8-->
 
 </div><!--container-->
+
+    </body>
+    </html>

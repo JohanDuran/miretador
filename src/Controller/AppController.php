@@ -60,12 +60,12 @@ class AppController extends Controller
                 ],
                 //'authError' => $this->Flash->error('Ingrese sus datos.', ['key' => 'auth']),
                 'loginRedirect' => [ //Redireccionamiento después de logearse
-                    'controller' => 'Users',
-                    'action' => 'home'
+                    'controller' => 'Pages', 
+                    'action' => 'display', 'home' 
                 ],
                 'logoutRedirect' => [ //Redireccionamiento después de cerrar sesión.
-                    'controller' => 'Users',
-                    'action' => 'login'
+                    'controller' => 'Pages', 
+                    'action' => 'display', 'home' 
                 ],
                 'unauthorizedRedirect' => $this->referer()
             ]);

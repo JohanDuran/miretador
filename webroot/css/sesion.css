@@ -6,7 +6,12 @@
     overflow: hidden !important;
     
 }
-.main{margin-top: 10rem; 
+
+html{
+    font-size: 12px !important;
+}
+
+.main{margin-top: 3rem; 
 -webkit-box-shadow: 0px 0px 14px 0px rgba(0,0,0,0.24);
 -moz-box-shadow: 0px 0px 14px 0px rgba(0,0,0,0.24);
 box-shadow: 0px 0px 14px 0px rgba(0,0,0,0.24);
@@ -16,6 +21,7 @@ background:#00BFA5;
 .fb:focus, .fb:hover{color:#FFF !important;}
 body{
 font-family: 'Raleway', sans-serif;
+margin-top: 0;
 }
 
 .left-side{
@@ -29,11 +35,10 @@ font-family: 'Raleway', sans-serif;
 	text-align: center
 	}
 	.left-side h3 a{
-	font-size: 3.5rem;
+	font-size: 3rem;
     font-weight: 900;
 	color:#FFF !important;
 	text-decoration: none;
-	padding: 0px 2rem 0px 2rem;
 	text-align: center
 	}
 	.left-side h3 a:hover, .left-side h3 a:focus, .left-side h3 a:active {
@@ -141,4 +146,16 @@ box-shadow: 0px 0px 14px 0px rgba(0,0,0,0.24);
 }
 .btn-image:hover, .btn-image:focus{
     color:#000000;
+}
+
+
+
+@media (min-width: 470px) {
+    
+    html{
+        font-size: 14px !important;
+    }
+    .main{
+        margin-top: 7rem;
+    }
 }
