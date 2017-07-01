@@ -42,6 +42,20 @@
             <?= h($user->modified->nice()) ?>
             &nbsp;
         </dd>
+        <dd>
+            Eres dueño de una cancha?</br>
+            <?= $this->Form->postLink('Registrala aquí!',
+                ['controller' => 'Users', 'action' => 'owner', $user->id],
+                ['confirm'=>'Eres dueño de una cancha de futbol 5?', 'class' => 'btn btn-sm btn-success']); ?>
+
+            &nbsp;
+        </dd>
+         <dd>
+            <?php if($user->owner == 1): ?>
+            <li><a href="#">Mis canchas (falta) </a></li>
+            <?php endif; ?>
+        </dd>
+        
     </dl>
     
     

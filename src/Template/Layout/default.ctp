@@ -27,7 +27,7 @@ $cakeDescription = 'Mi Retador | ';
     <?= $this->Html->meta('icon') ?>
 
     <?= $this->Html->css(['bootstrap', 'style']) ?>
-    <?= $this->Html->script([ 'jquery-3.2.1.min', 'bootstrap', 'bootstrap-filestyle.min', 'https://use.fontawesome.com/0394caa6cc.js', 'home']) ?>
+    <?= $this->Html->script([ 'jquery-3.2.1.min', 'bootstrap', 'bootstrap-filestyle.min', 'https://use.fontawesome.com/0394caa6cc.js', "https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js", 'home']) ?>
 
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
@@ -72,7 +72,6 @@ $cakeDescription = 'Mi Retador | ';
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user icon-fa" aria-hidden="true"></i> Hola, <?= h($current_user['name']); ?>  <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><?= $this->Html->link('Mi perfil', ['controller' => 'Users', 'action' => 'view', $current_user['id'] ]) ?></li>
-                            <li><a href="#">Mis canchas (falta) </a></li>
                             <li role="separator" class="divider"></li>
                             <li><?= $this->Html->link('Editar perfil', ['controller' => 'Users', 'action' => 'edit', $current_user['id'] ]) ?></li>
                             <li><?= $this->Html->link('Cerrar sesión', ['controller' => 'Users', 'action' => 'logout' ], ['class' => '']) ?></li>
@@ -94,6 +93,8 @@ $cakeDescription = 'Mi Retador | ';
     <div class="container">
         <?= $this->fetch('content') ?>
     </div>
+    
+    <?php //var_dump($current_user);?>
     <footer>
     </footer>
 </body>

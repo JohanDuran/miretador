@@ -17,7 +17,7 @@ class UsersController extends AppController
                 return true;
             }
             
-            if(in_array($this->request->action, ['view','edit', 'delete'])){
+            if(in_array($this->request->action, ['view','edit', 'delete','owner'])){
                 $id = $this->request->params['pass'][0];
                 $user = $this->Users->get($id);
                 if ($user->id == $user['id']){
@@ -111,6 +111,8 @@ class UsersController extends AppController
             $user = $this->Users->patchEntity($user, $this->request->data);
             if ($this->Users->save($user))
             {
+                $data = $user->toArray();
+                reloadAuth($data);
                 $this->Flash->success('El usuario ha sido modificado');
                 return $this->redirect(['action' => 'index']);
             }
@@ -175,8 +177,40 @@ class UsersController extends AppController
         
     }
     
+    public function owner($id = null){
+        
+        $user = $this->Users->get($id);
+        if ($this->request->is(['patch', 'post', 'put']))
+        {
+            if( $user["owner"] == true){
+                return $this->redirect(['action' => 'index']); //Envielo a agregar cancha
+            }else{
+                $user["owner"] = true; 
+                if ($this->Users->save($user))
+                {
+                    
+                    $this->Flash->success('Muchas gracias por hacerte dueño!');
+                    $data = $user->toArray();
+                    reloadAuth($data);//recarga la sesión 
+                    return $this->redirect(['action' => 'index']); //Envielo a agregar cancha
+                }
+                else
+                {
+                    $this->Flash->error('A ocurrido un error. Por favor, intente nuevamente.');
+            }
+            }
+            
+        }
+    }
     
     
+    public function reloadAuth($userData){
+        unset($data['password']);
+        unset($data['modified']);
+        unset($data['created']);
+        unset($data['active']);
+        $this->Auth->setUser($data);
+    }
     
     
 }
