@@ -110,12 +110,12 @@ class FieldsTable extends Table
             ->notEmpty('contact');
 
         $validator
-            ->dateTime('start')
+            ->integer('start')
             ->requirePresence('start', 'create')
             ->notEmpty('start');
 
         $validator
-            ->dateTime('finish')
+            ->integer('finish')
             ->requirePresence('finish', 'create')
             ->notEmpty('finish');
 

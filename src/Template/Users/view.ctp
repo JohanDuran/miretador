@@ -2,6 +2,8 @@
     <h2>Perfil de <?=$user->name?></h2>
     <br>
     <dl>
+        <dd><?= $this->Html->image('../files/users/photo/'. $user->photo_dir . '/portrait_' . $user->photo, ['alt' => 'foto de perfil de ' . $user->name, 'class' => 'img-responsive img-thumbnail']) ?></dd>
+        
         <dt>Nombre</dt>
         <dd>
             <?= h($user->name) ?>
@@ -45,8 +47,7 @@
         <dd>
             Eres dueño de una cancha?</br>
             <?= $this->Form->postLink('Registrala aquí!',
-                ['controller' => 'Users', 'action' => 'owner', $user->id],
-                ['confirm'=>'Eres dueño de una cancha de futbol 5?', 'class' => 'btn btn-sm btn-success']); ?>
+                ['controller' => 'Users', 'action' => 'owner', $user->id], ['class' => 'btn btn-sm btn-success' ]); //,['confirm'=>'Eres dueño de una cancha de futbol 5?', 'class' => 'btn btn-sm btn-success']); ?>
 
             &nbsp;
         </dd>

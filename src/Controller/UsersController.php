@@ -85,11 +85,11 @@ class UsersController extends AppController
             $user->owner = 0;  // Los usuarios por defecto no son dueños de cancha.
             
             if ($this->Users->save($user)) {
-                $this->Flash->success(__('The user has been saved.'));
+                $this->Flash->success(__('El usuario ha sido creado con exito.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The user could not be saved. Please, try again.'));
+            $this->Flash->error(__('El usuario no se pudo crear. Intentelo nuevamente.'));
         }
         $fields = $this->Users->Fields->find('list', ['limit' => 200]);
         $this->set(compact('user', 'fields'));
@@ -183,7 +183,7 @@ class UsersController extends AppController
         if ($this->request->is(['patch', 'post', 'put']))
         {
             if( $user["owner"] == true){
-                return $this->redirect(['action' => 'index']); //Envielo a agregar cancha
+                return $this->redirect(['controller'=>'Fields','action' => 'add']); //Envielo a agregar cancha
             }else{
                 $user["owner"] = true; 
                 if ($this->Users->save($user))
@@ -192,7 +192,7 @@ class UsersController extends AppController
                     $this->Flash->success('Muchas gracias por hacerte dueño!');
                     $data = $user->toArray();
                     reloadAuth($data);//recarga la sesión 
-                    return $this->redirect(['action' => 'index']); //Envielo a agregar cancha
+                    return $this->redirect(['controller'=>'Fields','action' => 'add']); //Envielo a agregar cancha
                 }
                 else
                 {

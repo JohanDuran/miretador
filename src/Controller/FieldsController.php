@@ -51,15 +51,27 @@ class FieldsController extends AppController
         $field = $this->Fields->newEntity();
         if ($this->request->is('post')) {
             $field = $this->Fields->patchEntity($field, $this->request->data);
-            if ($this->Fields->save($field)) {
-                $this->Flash->success(__('The field has been saved.'));
-
-                return $this->redirect(['action' => 'index']);
+            $field['user_id'] = $this->Auth->user('id');
+            $inicio = $field['start'];
+            $fin = $field['finish'];
+            if($inicio > $fin){
+                $this->Flash->error(__('La hora de inicio debe de ser menor que la hora de cierre.'));
+            }else if($inicio < 0 || $inicio > 23){
+                $this->Flash->error(__('La hora de inicio debe de ser mayor a 0 o menor a 24.'));
+            }else if($fin < 0 || $fin > 23){
+                $this->Flash->error(__('La hora de cierre debe de ser mayor a 0 o menor a 24.'));
+            }else{
+                if ($this->Fields->save($field)) {
+                    $this->Flash->success(__('La cancha ha sido creada.'));
+    
+                    return $this->redirect(['action' => 'index']);
+                }
+                $this->Flash->error(__('La cancha no se pudo crear. Por favor, intente de nuevo.'));
             }
-            $this->Flash->error(__('The field could not be saved. Please, try again.'));
+            
         }
-        $users = $this->Fields->Users->find('list', ['limit' => 200]);
-        $this->set(compact('field', 'users'));
+        //$users = $this->Fields->Users->find('list', ['limit' => 200]);
+        $this->set(compact('field')); //$this->set(compact('field', 'users'));
         $this->set('_serialize', ['field']);
     }
 

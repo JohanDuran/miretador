@@ -106,30 +106,8 @@ class AppController extends Controller
         return false;
     }
     
-    // AppController.php
-/**
- * Renews current user data, e.g. in case of an email address change while being logged in.
- *
- * @param array $newUserData
- * @return void
- */
-    protected function renewUserSession($newUserData){
-            if(!isset($newUserData) || empty($newUserData)){
-                    return;
-            }
-
-            // We need to fetch the current user data so custom indexes are copied
-            $currentUserData = $this->Auth->user();
-            if(!isset($currentUserData) || empty($currentUserData)){
-                    return;
-            }
-
-            // Merge old with new data
-            $newUserData = array_merge($currentUserData, $newUserData);
-
-            // Login with new data
-            $this->Auth->login($newUserData);
-    }
+    
+    
     
     
 }
