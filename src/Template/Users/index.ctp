@@ -1,4 +1,4 @@
-<div class="row">
+<div class="container"><div class="row">
     <div class="col-md-12">
     	<div class="page-header">
     		<h2>Usuarios</h2>
@@ -51,4 +51,5 @@
             <p><?= $this->Paginator->counter() ?></p>
         </div>
     </div>
+</div>
 </div>

@@ -27,7 +27,7 @@ $cakeDescription = 'Mi Retador | ';
     <?= $this->Html->meta('icon') ?>
 
     <?= $this->Html->css(['bootstrap', 'style']) ?>
-    <?= $this->Html->script([ 'jquery-3.2.1.min', 'bootstrap', 'bootstrap-filestyle.min', 'https://use.fontawesome.com/0394caa6cc.js', 'home']) ?>
+    <?= $this->Html->script([ 'jquery-3.2.1.min', 'bootstrap', 'bootstrap-filestyle.min', 'https://use.fontawesome.com/0394caa6cc.js', 'home', $this->request->params['controller']]) ?>
 
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
@@ -61,6 +61,7 @@ $cakeDescription = 'Mi Retador | ';
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Administrador  <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><?= $this->Html->link('Usuarios', ['controller' => 'Users', 'action' => 'index', $current_user['id'] ]) ?></li>
+                        <li><?= $this->Html->link('Canchas', ['controller' => 'Fields', 'action' => 'index', $current_user['id'] ]) ?></li>
                     </ul>
                     </li>
                 
@@ -90,16 +91,9 @@ $cakeDescription = 'Mi Retador | ';
     
     
     <?= $this->Flash->render() ?>
-    <div class="container">
-        <?= $this->fetch('content') ?>
-    </div>
     
-    <?php //var_dump($current_user);?>
-    
-    
-    
-    
-    <footer>
+    <?= $this->fetch('content') ?>
+    <footer class="footer">
   <div class="container">
     <div class="row">
       <div class="col-md-4 col-sm-6 footerleft ">
@@ -153,7 +147,6 @@ $cakeDescription = 'Mi Retador | ';
     </div>
   </div>
 </div>
-    
-    
 </body>
+
 </html>

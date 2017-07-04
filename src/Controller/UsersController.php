@@ -19,8 +19,8 @@ class UsersController extends AppController
             
             if(in_array($this->request->action, ['view','edit', 'delete','owner'])){
                 $id = $this->request->params['pass'][0];
-                $user = $this->Users->get($id);
-                if ($user->id == $user['id']){
+                $userb = $this->Users->get($id);
+                if ($userb->id == $user['id']){
                     return true;
                 }
             }
@@ -112,9 +112,13 @@ class UsersController extends AppController
             if ($this->Users->save($user))
             {
                 $data = $user->toArray();
-                reloadAuth($data);
+                unset($data['password']);
+                unset($data['modified']);
+                unset($data['created']);
+                unset($data['active']);
+                $this->Auth->setUser($data);
                 $this->Flash->success('El usuario ha sido modificado');
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['action' => 'view', $this->Auth->user('id')]);
             }
             else
             {
@@ -188,10 +192,14 @@ class UsersController extends AppController
                 $user["owner"] = true; 
                 if ($this->Users->save($user))
                 {
-                    
                     $this->Flash->success('Muchas gracias por hacerte dueño!');
                     $data = $user->toArray();
-                    reloadAuth($data);//recarga la sesión 
+                    //reloadAuth($data);//recarga la sesión 
+                    unset($data['password']);
+                    unset($data['modified']);
+                    unset($data['created']);
+                    unset($data['active']);
+                    $this->Auth->setUser($data);
                     return $this->redirect(['controller'=>'Fields','action' => 'add']); //Envielo a agregar cancha
                 }
                 else
@@ -205,11 +213,11 @@ class UsersController extends AppController
     
     
     public function reloadAuth($userData){
-        unset($data['password']);
-        unset($data['modified']);
-        unset($data['created']);
-        unset($data['active']);
-        $this->Auth->setUser($data);
+        unset($userData['password']);
+        unset($userData['modified']);
+        unset($userData['created']);
+        unset($userData['active']);
+        $this->Auth->setUser($userData);
     }
     
     

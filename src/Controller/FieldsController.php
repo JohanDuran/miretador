@@ -11,6 +11,29 @@ use App\Controller\AppController;
 class FieldsController extends AppController
 {
 
+    public function isAuthorized($user){
+        if(isset($user['role']) and $user['role'] === 'user'){
+            
+            if(in_array($this->request->action, [ 'add'])){
+                if($user['owner'] == 1){
+                    return true;
+                }
+            }
+            
+            if(in_array($this->request->action, ['view','edit','delete'])){
+                $id = $this->request->params['pass'][0];
+                $field = $this->Fields->get($id);   
+                if ($field->user_id == $user['id']){
+                    return true;
+                }
+            }
+            
+        }
+        return parent::isAuthorized($user);
+    }
+    
+
+
     /**
      * Index method
      *
@@ -90,11 +113,11 @@ class FieldsController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $field = $this->Fields->patchEntity($field, $this->request->data);
             if ($this->Fields->save($field)) {
-                $this->Flash->success(__('The field has been saved.'));
+                $this->Flash->success(__('La cancha ha sido modificada.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The field could not be saved. Please, try again.'));
+            $this->Flash->error(__('La cancha no ha sido modificada. Intentelo nuevamente.'));
         }
         $users = $this->Fields->Users->find('list', ['limit' => 200]);
         $this->set(compact('field', 'users'));
@@ -113,9 +136,9 @@ class FieldsController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $field = $this->Fields->get($id);
         if ($this->Fields->delete($field)) {
-            $this->Flash->success(__('The field has been deleted.'));
+            $this->Flash->success(__('La cancha se ha eliminado.'));
         } else {
-            $this->Flash->error(__('The field could not be deleted. Please, try again.'));
+            $this->Flash->error(__('No se pudo eliminar la cancha. Intente nuevamente.'));
         }
 
         return $this->redirect(['action' => 'index']);

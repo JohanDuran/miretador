@@ -10,6 +10,15 @@ margin-top: 100px;
 
 }
 
+    /*---------------------------
+    SECTION PASOS_CONFIRMADOS
+    ----------------------------*/
+
+.pasos_confirmados{
+    padding-top: 2rem;
+    margin-bottom: 2rem;
+}
+
 .logo{
     width: 55%;
     height: auto;
@@ -76,12 +85,15 @@ margin-top: 100px;
     outline: none !important;
 }
 
+.steps{
+    margin: 0.5rem 0;
+}
+
 .steps .step{
     border: 2px solid #DCDCDC;
     position: relative;
     text-align: center;
-    font-size: 1em;
-    margin: 0 5px;
+    font-size: 0.5em;
     border-radius: 5px;
 }
 .steps .step .step-num{
@@ -105,7 +117,7 @@ margin-top: 100px;
 }
 
 .steps .step-3 .step-num{
-    background-color: #F21A18;
+    background-color: #ff670f;
 }
 
 .steps .step .step-header{
@@ -123,11 +135,11 @@ margin-top: 100px;
 }
 
 .steps .step-ico{
-    font-size: 60px;
+    font-size: 40px;
 }
 
 .steps .step-title{
-    font-size: 2em;
+    font-size: 1.5em;
     margin-top: 15px;
 }
 
@@ -140,7 +152,7 @@ margin-top: 100px;
 }
 
 .steps .step-3 .step-ico, .steps .step-3 .step-title{
-    color: #F21A18;
+    color: #ff670f;
 }
 
 .btn-success{
@@ -151,6 +163,47 @@ margin-top: 100px;
 .btn-cancha-add{
     float: right;
 }
+
+    /*---------------------------
+    SECTION OWNER
+    ----------------------------*/
+    
+    .owner{
+        padding : 0;
+        background-color: rgba(0, 191, 92, 0.6);
+        text-align: center;
+        
+    }
+    
+    .owner .row{
+        position: relative;
+        top:0;
+        left:0;
+        padding-top:1rem;
+    }
+    .soccer_field{
+        background-image: url("../img/home/SoccerField.svg");
+        position: absolute;
+        background-repeat: no-repeat;
+        width:60%;
+        height:100px;
+        right: 0;
+        bottom:0;
+        background-position: 0 1.8rem;
+
+    }
+    
+    .be_owner{
+        padding: 2rem;
+    }
+    .owner_title{
+        font-size: 1.5rem;
+    }
+    .btn-naranja{
+        background-color: #FF8C0F !important;
+        font-size: 1.5rem;
+        font-weight:bold;
+    }
 
 
 
@@ -164,7 +217,6 @@ footer {
     background-color:#006154; 
     min-height:350px; 
     text-align: center;
-    margin-top:2rem;
 }
 .footerleft { margin-top:50px; padding:0 36px; }
 .logofooter { 
@@ -219,12 +271,57 @@ footer {
  blockquote{
      border-left:none;
  }
+ 
+ 
+ #agregar_cancha, #editar_cancha{
+     padding: 1rem 0;
+ }
 
 
+/* Always set the map height explicitly to define the size of the div
+* element that contains the map. */
+#map {
+    height: 500px;
+    width: 80%;
+    margin: 0% 10% 5% 10%;
+}
+
+@media (min-width: 400px) {
+    .steps .step{
+        font-size: 0.7em;
+    }
+    .steps .step-ico{
+        font-size: 50px;
+    }
+}
+
+@media (min-width: 480px) {
+    .steps .step{
+        font-size: 1em;
+    }
+    .steps .step-ico{
+        font-size: 60px;
+    }
+}
+
+@media (max-width: 767px){
+    .vista-desktop {
+        display: none!important;
+    }
+  
+  /*---------------------------
+  Mapa
+  ----------------------------*/
+    #map {
+    height: 300px;
+    width: 90%;
+    margin: 0% 5% 5% 5%;
+    }
+}
 
 
 @media (min-width: 767px) {
-    
+
     html{
         font-size: 16px;
     }
@@ -261,10 +358,12 @@ footer {
     ----------------------------*/
     .steps .step{
         font-size: 1em;
-        margin: 0 15px;
     }
     .steps .step .step-num{
         font-size: 1.2em;
+    }
+    .steps .step-title{
+        font-size:2rem;
     }
     
     
@@ -275,5 +374,28 @@ footer {
     footer { background-color:#006154; min-height:350px; text-align: justify;}
     blockquote{
         border-left: 5px solid white;
+    }
+}
+
+    /*---------------------------
+    MEDIUM
+    ----------------------------*/
+@media (min-width: 767px) {
+    .steps{
+        padding: 0 0.5rem;
+    }
+}
+
+@media (min-width: 992px) {
+    .soccer_field{
+        background-position: 0 0.5rem;
+
+    }
+}
+
+@media (min-width: 1200px) {
+    .soccer_field{
+        background-position: 0 0;
+
     }
 }
