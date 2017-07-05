@@ -2,7 +2,6 @@
 * Cambia la vista del menú al momento de hacer scroll
 */
 $(window).scroll(function () {
-
     var nav = $('.navbar-default');
     var scroll = $(window).scrollTop();
     var resolucion = $(document).width();
@@ -40,5 +39,4 @@ function revisarNumero(elem){
          elem.value = 0;
     }
 }
-
 

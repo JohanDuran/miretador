@@ -30,16 +30,16 @@
     <?= $this->fetch('script') ?>
 </head>
 <body>
-    <div id="container">
-        <div id="header">
+    <div id='container'>
+        <div id='header'>
             <h1><?= __('Error') ?></h1>
         </div>
-        <div id="content">
+        <div id='content'>
             <?= $this->Flash->render() ?>
 
             <?= $this->fetch('content') ?>
         </div>
-        <div id="footer">
+        <div id='footer'>
             <?= $this->Html->link(__('Back'), 'javascript:history.back()') ?>
         </div>
     </div>

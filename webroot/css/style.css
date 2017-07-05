@@ -273,6 +273,30 @@ footer {
  }
  
  
+     /*---------------------------
+    Perfil de usuario
+    ----------------------------*/
+ 
+ .user_profile{
+     background-color: #3278A5;
+ }
+ 
+ .img-thumbnail-circle {
+    display: inline-block;
+    max-width: 50%;
+    height: auto;
+    line-height: 1.42857143;
+    background-color: #fff;
+    border: 1px solid #000;
+    padding: 4px;
+    border-radius: 4%;
+    margin:0 25%;
+    -webkit-transition: all .2s ease-in-out;
+    -o-transition: all .2s ease-in-out;
+    transition: all .2s ease-in-out;
+ }
+ 
+ 
  #agregar_cancha, #editar_cancha{
      padding: 1rem 0;
  }
@@ -285,6 +309,26 @@ footer {
     width: 80%;
     margin: 0% 10% 5% 10%;
 }
+
+/*Estilo para el menú de navegación*/
+.browser-container{
+    position: relative;
+    display: flex;
+    flex-flow:row wrap;
+}
+
+/*Espaciado para los contenedores del buscador*/
+.browser-container div{
+    margin: 0% 1% 0% 1%;    
+}
+
+
+/*Estilo para el botón de búsqueda*/
+.btn-buscar{
+    position: absolute;
+    bottom: 0px;
+}
+
 
 @media (min-width: 400px) {
     .steps .step{
@@ -371,7 +415,11 @@ footer {
     Footer
     ----------------------------*/
 
-    footer { background-color:#006154; min-height:350px; text-align: justify;}
+    footer { background-color:#006154;
+    min-height:350px; 
+    text-align: justify;
+        
+    }
     blockquote{
         border-left: 5px solid white;
     }

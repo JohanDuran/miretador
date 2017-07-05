@@ -13,7 +13,7 @@
  * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<!DOCTYPE html PUBLIC '-//W3C//DTD HTML 4.01//EN'>
 <html>
 <head>
     <title><?= $this->fetch('title') ?></title>
