@@ -310,25 +310,6 @@ footer {
     margin: 0% 10% 5% 10%;
 }
 
-/*Estilo para el menú de navegación*/
-.browser-container{
-    position: relative;
-    display: flex;
-    flex-flow:row wrap;
-}
-
-/*Espaciado para los contenedores del buscador*/
-.browser-container div{
-    margin: 0% 1% 0% 1%;    
-}
-
-
-/*Estilo para el botón de búsqueda*/
-.btn-buscar{
-    position: absolute;
-    bottom: 0px;
-}
-
 
 @media (min-width: 400px) {
     .steps .step{
@@ -447,3 +428,4 @@ footer {
 
     }
 }
+

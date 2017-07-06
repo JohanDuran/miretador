@@ -31,6 +31,7 @@
             
             </ul>
             <?php endif; ?>
+            
             <ul class="nav navbar-nav navbar-right">
             
                 <li class="dropdown">

@@ -26,8 +26,8 @@ $cakeDescription = 'Mi Retador | ';
     </title>
     <?= $this->Html->meta('icon') ?>
 
-    <?= $this->Html->css(['bootstrap', 'style','https://fonts.googleapis.com/icon?family=Material+Icons']) ?>
-    <?= $this->Html->script([ 'jquery-3.2.1.min', 'bootstrap', 'bootstrap-filestyle.min', 'https://use.fontawesome.com/0394caa6cc.js', 'home', $this->request->params['controller']]) ?>
+    <?= $this->Html->css(['bootstrap', 'style','https://fonts.googleapis.com/icon?family=Material+Icons','browser']) ?>
+    <?= $this->Html->script([ 'jquery-3.2.1.min', 'bootstrap', 'bootstrap-filestyle.min', 'https://use.fontawesome.com/0394caa6cc.js', 'home', $this->request->params['controller'],'browser']) ?>
 
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
@@ -73,7 +73,6 @@ $cakeDescription = 'Mi Retador | ';
         <div class='col-md-3 col-sm-6 paddingtop-bottom'>
           <div class='fb-page'>
               <blockquote cite='https://www.facebook.com/'><a href='https://www.facebook.com/' target='_blank' class='link_fb'><i class='fa fa-facebook-official' aria-hidden='true'></i> Facebook</a></blockquote>
-            
           </div>
         </div>
       </div>
@@ -97,6 +96,9 @@ $cakeDescription = 'Mi Retador | ';
     </div>
   </div>      
     </div>
+    
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDW6tU8THzd8Q1jCq1TfU7uO1rsYUYTaVA&libraries=places&callback=initAutocomplete"></script>
+ 
 </body>
 
 </html>
