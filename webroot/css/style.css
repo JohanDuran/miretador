@@ -279,6 +279,8 @@ footer {
  
  .user_profile{
      background-color: #3278A5;
+     padding: 1rem 0;
+     margin-top: 1rem;
  }
  
  .img-thumbnail-circle {
@@ -290,12 +292,54 @@ footer {
     border: 1px solid #000;
     padding: 4px;
     border-radius: 4%;
-    margin:0 25%;
+    margin:0;
     -webkit-transition: all .2s ease-in-out;
     -o-transition: all .2s ease-in-out;
     transition: all .2s ease-in-out;
  }
+ .foto_nombre{
+     text-align: center;
+ }
  
+
+ 
+
+.profile-head .user-name {width: 100%;padding:5px 5px 0px 5px;text-align:justify;font-weight: bold;color: #fff;font-size: 1.6rem;text-transform:capitalize;
+margin-bottom: 0;}
+.profile-head .info {width: 100%;text-align: justify;padding:0px 5px 5px 5px;color: #fff;font-size:1.1rem;text-transform:capitalize;margin:0;}
+.profile-head a {width: 100%;text-align: center;padding: 10px 5px;color: #fff;font-size: 1rem;text-transform: capitalize;}
+
+.profile-head ul { list-style:none;padding: 1rem 0;}
+.profile-head ul li { display:block; color:#ffffff;padding:5px;font-weight: 400;font-size: 1rem;}
+.profile-head ul li:hover i { color:rgb(0, 4, 51);}
+.profile-head ul li i { color:#ffffff;padding-right: 10px;}
+.profile-head ul li a { color:#ffffff;}
+.profile-head h6 {width: 100%;text-align: center;color: #fff;font-size: 1.5rem;margin-bottom: 0;}
+
+.profile-head .description{
+    text-align: justify;
+    color: #fff;
+    padding: 1.1rem 0;
+}
+
+.profile-head .acerca-de-mi{
+    font-weight: bold;
+    color: #fff;
+    font-size: 1.3rem;
+    margin-bottom: 0;
+}
+
+#sticky .btn-azul{
+    margin:0.1rem;
+    border-radius: 0;
+    background-color: #3278A5;
+    color: #fff;
+    text-decoration: none;
+}
+ 
+#sticky .btn-azul:focus{
+    outline: none;
+}
  
  #agregar_cancha, #editar_cancha{
      padding: 1rem 0;
@@ -345,6 +389,9 @@ footer {
 }
 
 
+    /*---------------------------
+    SMALL
+    ----------------------------*/
 @media (min-width: 767px) {
 
     html{
@@ -391,6 +438,9 @@ footer {
         font-size:2rem;
     }
     
+    .steps{
+        padding: 0 0.5rem;
+    }
     
     /*---------------------------
     Footer
@@ -404,22 +454,26 @@ footer {
     blockquote{
         border-left: 5px solid white;
     }
-}
-
-    /*---------------------------
-    MEDIUM
-    ----------------------------*/
-@media (min-width: 767px) {
-    .steps{
-        padding: 0 0.5rem;
+    
+    .img-thumbnail-circle{
+        max-width: 100%;
     }
 }
+
+    
+
 
 @media (min-width: 992px) {
     .soccer_field{
         background-position: 0 0.5rem;
 
     }
+    
+    .img-thumbnail-circle{
+        max-width: 50%;
+        margin:0 25%;
+    }
+    
 }
 
 @media (min-width: 1200px) {

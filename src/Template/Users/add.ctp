@@ -63,7 +63,7 @@ $cakeDescription = 'Mi Retador | Registrarse';
                 </div>
                 
                 <div class="form-group">
-                    <?= $this->Form->input('name', ['class' => 'form-control input-lg', 'placeholder' => 'Nombre', 'label' => false, 'required']) ?>
+                    <?= $this->Form->input('name', ['class' => 'form-control input-lg', 'placeholder' => 'Nombre', 'label' => false, 'required', 'maxlength' => '15']) ?>
                 </div>
                 
                 <div class="form-group">

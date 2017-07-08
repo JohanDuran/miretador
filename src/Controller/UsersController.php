@@ -59,7 +59,10 @@ class UsersController extends AppController
     public function view($id = null)
     {
         $user = $this->Users->get($id);
+        $this->loadModel('Fields');
+        $fields = $this->Fields->find('all', ['Fields.user_id' => '$id']);
         $this->set('user', $user);
+        $this->set('field', $fields);
         
         /*$user = $this->Users->get($id, [
             'contain' => ['Fields', 'UsersGames']
@@ -220,5 +223,6 @@ class UsersController extends AppController
         $this->Auth->setUser($userData);
     }
     
-    
 }
+
+

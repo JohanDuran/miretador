@@ -143,4 +143,22 @@ class FieldsController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+    
+    public function autocompleteField() {
+
+    if ($this->request->is('ajax')) {
+        //$this->autoLayout = false;
+        $this->viewBuilder()->autoLayout();
+        $this->autoRender = false;
+        $name = $this->request->query['term'];
+        $name=htmlspecialchars($name);
+        $results = $this->Fields->find('all', [
+            'conditions' => ['Fields.name LIKE' => '%'.$name.'%']
+        ]);
+        foreach ($results as $result) {
+             $resultsArr[] =['label' => $result['name'], 'value' => $result['id']];
+        }
+        echo json_encode($resultsArr);
+    }
+}
 }

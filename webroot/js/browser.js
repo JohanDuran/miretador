@@ -35,6 +35,10 @@ function initAutocomplete() {
 }
 
 function fillInAddress() {
+    var icon = document.getElementById('iconMyLocation');
+    icon.setAttribute("class", "glyphicon material-icons");
+    clicked=(clicked+1)%2;
+
     // Get the place details from the autocomplete object.
     var place = autocomplete.getPlace();
     $('#lat').val(place.geometry.location.lat());

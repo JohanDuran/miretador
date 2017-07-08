@@ -80,11 +80,15 @@ $cakeDescription = 'Mi Retador | Editar perfil';
                 <div class="text-xs-center">
                     <?= $this->Form->button('Editar', ['class' => 'btn btn-deep btn-blue']) ?>
                 </div>
+                
             
             </div>
             <!--/Form with header-->
         
         <?= $this->Form->end() ?>
+            <div class="text-xs-center">
+                <?= $this->Form->postLink('Eliminar el usuario', ['action' => 'delete', $user->id], ['confirm' => '¿Seguro que desea eliminar el usuario?', 'class' => 'delete']) ?>
+            </div>
         </div><!--col-sm-6-->
     
     </div><!--col-sm-8-->

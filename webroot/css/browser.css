@@ -14,8 +14,6 @@
     justify-content: center;
     /*background:#FF8C0F;*/
     padding:20px;
-    width:80%;
-    margin-left:10%;
     -webkit-box-shadow: -2px -1px 11px -1px rgba(0,0,0,0.78);
     -moz-box-shadow: -2px -1px 11px -1px rgba(0,0,0,0.78);
     box-shadow: -2px -1px 11px -1px rgba(0,0,0,0.78);
@@ -23,7 +21,7 @@
 
 
 .browser-container div{
-    margin: 0% 1% 0% 1%;
+    margin: 0;
 }
 
 .btn-buscar{

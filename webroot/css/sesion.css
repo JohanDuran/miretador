@@ -108,6 +108,14 @@ box-shadow: 0px 0px 14px 0px rgba(0,0,0,0.24);}
 -moz-box-shadow: 0px 0px 14px 0px rgba(0,0,0,0.24);
 box-shadow: 0px 0px 14px 0px rgba(0,0,0,0.24);
 }
+.delete{
+    
+    padding: 5px 19px;
+    color: Red;
+    margin: 1rem;
+    font-weight: 300;
+    float: right;
+}
 .btn-deep:hover, .btn-deep:focus{
     color:#000000;
 }
