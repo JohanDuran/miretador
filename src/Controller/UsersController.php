@@ -58,11 +58,25 @@ class UsersController extends AppController
      */
     public function view($id = null)
     {
-        $user = $this->Users->get($id);
-        $this->loadModel('Fields');
-        $fields = $this->Fields->find('all', ['Fields.user_id' => '$id']);
-        $this->set('user', $user);
-        $this->set('field', $fields);
+        $user = $this->Users->get($id, [
+            'contain' => ['Fields', 'UsersGames']
+        ]);
+        $fields = $this->loadModel('Fields');
+        $myFields = $this->Users->Fields->find('all', ['conditions'=>['Fields.user_id'=>$id], 'fields'=>['Fields.id','Fields.user_id','Fields.name']]);
+        $users_fileds = $this->loadModel('UsersFields');
+        //$favorites = $this->Users->UsersFields->find('all', ['conditions'=>['UsersFields.user_id'=>$id], 'fields'=>['UsersFields.field_id']])->toArray();
+        //$favoritesFields = $this->Users->Fields->find('all', ['conditions'=>['Fields.id'=>array_values($favorites)], 'fields'=>['Fields.id','Fields.name']]);
+        //$favoritesFields = $this->Users->Fields->find('favoriteFields',['user' => $user]);
+        
+        $query = $fields->find()->contain('UsersFields', function ($q) {
+        return $q
+            ->select(['field_id'])
+            ->where(['UsersFields.user_id' => $id]);
+        });
+        
+        
+        $this->set(['user'=> $user, 'fields' => $myFields->toArray(), 'favorite_fields' => $query->toArray()]);
+        
         
         /*$user = $this->Users->get($id, [
             'contain' => ['Fields', 'UsersGames']

@@ -14,6 +14,10 @@ class FieldsController extends AppController
     public function isAuthorized($user){
         if(isset($user['role']) and $user['role'] === 'user'){
             
+            if(in_array($this->request->action, [ 'visitView'])){
+                    return true;
+            }
+            
             if(in_array($this->request->action, [ 'add'])){
                 if($user['owner'] == 1){
                     return true;
@@ -59,8 +63,24 @@ class FieldsController extends AppController
         $field = $this->Fields->get($id, [
             'contain' => ['Users', 'UsersGames']
         ]);
+        
+        $fields = $this->loadModel('Fields');
+        $owner = $this->Fields->Users->get($field->user_id, ['fields' => ['name']]);
 
-        $this->set('field', $field);
+        $this->set(['field' => $field, 'owner' => $owner]);
+        $this->set('_serialize', ['field']);
+    }
+    
+    public function visitView($id = null)
+    {
+        $field = $this->Fields->get($id, [
+            'contain' => ['Users', 'UsersGames']
+        ]);
+        
+        $fields = $this->loadModel('Fields');
+        $owner = $this->Fields->Users->get($field->user_id, ['fields' => ['name']]);
+
+        $this->set(['field' => $field, 'owner' => $owner]);
         $this->set('_serialize', ['field']);
     }
 
@@ -146,19 +166,23 @@ class FieldsController extends AppController
     
     public function autocompleteField() {
 
-    if ($this->request->is('ajax')) {
-        //$this->autoLayout = false;
-        $this->viewBuilder()->autoLayout();
-        $this->autoRender = false;
-        $name = $this->request->query['term'];
-        $name=htmlspecialchars($name);
-        $results = $this->Fields->find('all', [
-            'conditions' => ['Fields.name LIKE' => '%'.$name.'%']
-        ]);
-        foreach ($results as $result) {
-             $resultsArr[] =['label' => $result['name'], 'value' => $result['id']];
+        if ($this->request->is('ajax')) {
+            //$this->autoLayout = false;
+            $this->viewBuilder()->autoLayout();
+            $this->autoRender = false;
+            $name = $this->request->query['term'];
+            $name=htmlspecialchars($name);
+            $results = $this->Fields->find('all', [
+                'conditions' => ['Fields.name LIKE' => '%'.$name.'%']
+            ]);
+            foreach ($results as $result) {
+                 $resultsArr[] =['label' => $result['name'], 'value' => $result['id']];
+            }
+            echo json_encode($resultsArr);
         }
-        echo json_encode($resultsArr);
     }
-}
+    
+    
+    
+    
 }

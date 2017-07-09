@@ -68,7 +68,7 @@ margin-top: 100px;
     margin: 0 0.4rem 0.4rem 0.4rem;
 }
 
-.open a:hover, .open a:focus, .open a:active{
+.navbar-default .open a:hover,.navbar-default  .open a:focus,.navbar-default  .open a:active{
     background-color: transparent !important;
 }
 
@@ -194,14 +194,14 @@ margin-top: 100px;
     }
     
     .be_owner{
-        padding: 2rem;
+        padding: 2rem 0;
     }
     .owner_title{
-        font-size: 1.5rem;
+        font-size: 1rem;
     }
     .btn-naranja{
         background-color: #FF8C0F !important;
-        font-size: 1.5rem;
+        font-size: 1rem;
         font-weight:bold;
     }
 
@@ -340,6 +340,110 @@ margin-bottom: 0;}
 #sticky .btn-azul:focus{
     outline: none;
 }
+#sticky .open .dropdown-menu{
+    background-color: #3278A5;
+}
+#sticky .open .dropdown-menu a{
+    color: white !important;
+}
+#sticky .open .dropdown-menu a:hover, #sticky .open .dropdown-menu a:focus{
+    outline: none;
+    background-color: transparent !important;
+    text-decoration: underline;
+}
+
+#sticky .nav-tabs{
+    border-bottom: none;
+}
+
+.padding-top{
+    padding-top: 1.5rem;
+}
+
+#favorites-last_games .title{
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+#favorites-last_games .table thead tr th{
+    border-bottom: 2px solid #00BFA5;
+}
+
+#favorites-last_games .table tbody tr td a{
+   color: black;
+   display: block;
+}
+#favorites-last_games .table tbody tr td a:hover, #favorites-last_games .table tbody tr td a:focus{
+   text-decoration: none;
+   outline: none;
+}
+
+.ser_dueno{
+    text-align: center;
+    background-color: rgba(255,255,255, 0.3);
+    padding: 0.5rem 0;
+}
+.ser_dueno .text{
+    font-weight:  bold;
+    color: #fff;
+}
+
+.btn-azul{
+    margin:0.1rem;
+    border-radius: 0;
+    background-color: #3278A5;
+    color: #fff;
+    text-decoration: none;
+}
+ 
+.btn-azul:focus{
+    outline: none;
+}
+
+
+
+/*****************************
+Perfil de cancha - Visita
+*****************************/
+
+#horarioVisita .title{
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+#horarioVisita .table thead tr th{
+    border-bottom: 2px solid #00BFA5;
+    text-align: center
+}
+
+#horarioVisita .table{
+    text-align: center
+}
+
+#horarioVisita .table tbody tr td a{
+   color: black;
+   display: block;
+}
+#horarioVisita .table tbody tr td a:hover, #horarioVisita .table tbody tr td a:focus{
+   text-decoration: none;
+   outline: none;
+}
+
+#horarioVisita .reto_link{
+    background-color: #00BFA5;
+    color: white !important;
+}
+#horarioVisita .alquilar_link{
+    background-color: #3278A5;
+    color: white !important;
+}
+#horarioVisita .aceptar{
+    text-decoration: underline;
+}
+#horarioVisita .aceptar:hover, #horarioVisita .aceptar:focus{
+    text-decoration: underline !important;
+}
+
  
  #agregar_cancha, #editar_cancha{
      padding: 1rem 0;
@@ -353,6 +457,45 @@ margin-bottom: 0;}
     width: 80%;
     margin: 0% 10% 5% 10%;
 }
+
+
+
+/******************************
+Perfil de Cancha
+******************************/
+
+#perfil_cancha{
+    margin-top: 1rem;
+}
+
+.field_profile{
+     background-color: #3278A5;
+ }
+ 
+#perfil_cancha .field_img{
+     width: 100%;
+     
+ }
+
+#perfil_cancha .profile-head .description{
+    padding-bottom:  0;
+}
+
+#perfil_cancha .profile-head ul{
+    padding-top: 0.3rem;
+}
+#perfil_cancha .profile-head ul li{
+    padding: 0.4rem 0;
+}
+
+
+
+#perfil_cancha .profile-head .field-name {padding:5px 5px 0px 0px;text-align:justify;font-weight: bold;color: #fff;font-size: 1.6rem;text-transform:capitalize;
+margin-bottom: 0;}
+#perfil_cancha .profile-head .info {text-align: justify;padding:0px 5px 5px 0px;color: #fff;font-size:1.1rem;text-transform:capitalize;margin:0;}
+
+
+ 
 
 
 @media (min-width: 400px) {
@@ -386,7 +529,13 @@ margin-bottom: 0;}
     width: 90%;
     margin: 0% 5% 5% 5%;
     }
+    
+    .table-responsive {
+    border: none;
 }
+    
+}
+
 
 
     /*---------------------------
@@ -458,6 +607,13 @@ margin-bottom: 0;}
     .img-thumbnail-circle{
         max-width: 100%;
     }
+    
+    /*************************
+    Perfil Cancha
+    *************************/
+    #perfil_cancha .profile-head .description{
+        padding-bottom: 1.1rem;
+    }
 }
 
     
@@ -470,8 +626,8 @@ margin-bottom: 0;}
     }
     
     .img-thumbnail-circle{
-        max-width: 50%;
-        margin:0 25%;
+        max-width: 75%;
+        margin:0 12.5%;
     }
     
 }

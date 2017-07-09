@@ -4,7 +4,7 @@
     echo "<div id='map'></div>";
     echo $this->Form->hidden('latitude',['id'=>'lat']);
     echo $this->Form->hidden('longitude',['id'=>'lng']);
-    echo $this->Form->input('price', ['label' => 'Precio']);
+    echo $this->Form->input('price', ['label' => 'Precio por equipo']);
     echo $this->Form->input('contact', ['label' => 'Teléfono']);
 ?>
 

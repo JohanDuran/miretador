@@ -167,4 +167,17 @@ class FieldsTable extends Table
 
         return $rules;
     }
+    
+    /*public function findFavoriteFields(Query $query, $options = []){
+        $user = $options['user'];
+        
+        return $query
+        ->select(['id' => 'Fields.id','name' => 'Fields.name'])
+        ->where(
+            ['Fields.id' => function ($q) use ($user) {
+                return $q->where(['user_id' => $user->id]);
+            }]);
+        
+    }*/
+    
 }
