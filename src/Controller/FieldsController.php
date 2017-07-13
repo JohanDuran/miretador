@@ -92,22 +92,62 @@ class FieldsController extends AppController
         
         $owner = $this->Fields->Users->get($field->user_id, ['fields' => ['name']]);
         
+        
+        $today = new \DateTime('NOW');
+        $nextWeek = new \DateTime('NOW');
+        $nextWeek->add(new \DateInterval('P7D'));
+        
+        $nextWeek = new \DateTime($nextWeek->format('Y-m-d'));
+        
+        $inicio = $field->start;
+        $fin = $field->finish;
+        
+        
+        $horario  = $fin - $inicio;
+        
         //Consulta para llenar la tabla.
+        $query = $this->Fields->UsersGames->find()
+                    ->where(function ($exp, $q) use ($today, $nextWeek){
+                        return $exp->between('meet', $today, $nextWeek);
+                    })
+                    ->andwhere(function ($exp, $q) use ($id) {
+                        return $exp->eq('field_id',$id);
+                    })
+                    ->andwhere(function ($exp, $q) {
+                        return $exp->eq('state',1);
+                    });
+                    
         
         
+        //2017-06-01 00:00:00
         
-        $date = new DateTime();
-        $today = new DateTime();
-        $date->sub(new DateInterval('P7D'));
+        $interval = new \DateInterval('P1D');
+        $period = new \DatePeriod($today, $interval, $nextWeek);
         
-        $begin = new DateTime( '2010-05-01' );
-        $end = new DateTime( '2010-05-10' );
+        for($j = $inicio; $j < $fin; $j++){
+            foreach ( $period as $dt ) {
+                $fecha = $dt->format('Y-m-d') . ' ' . $j . ':00:00';
+                //echo $fecha;
+                //echo '<br>';
+                //if( in_array($fecha, $arreglo_fechas_resutado) ){
+                    
+                //}
+                
+            }
+        }
         
-        $interval = DateInterval::createFromDateString('1 day');
-        $period = new DatePeriod($begin, $interval, $end);
+        $tabla = [];
         
-        $hoy = new DateTime('NOW')
-        $hoy = $hoy->format('d-m-Y');
+        /*for($i = 0; $i < $horario; i++){
+            foreach ( $period as $dt ) {
+            print_r($dt->format('Y-m-d'));
+            echo '<br>';
+            echo $horario;
+            echo '<br>';
+            } 
+        }*/
+            
+        
         
         
         
@@ -119,7 +159,7 @@ class FieldsController extends AppController
         
         
 
-        $this->set(['field' => $field, 'owner' => $owner, 'favorite' => $favorite->first()]);
+        $this->set(['field' => $field, 'owner' => $owner, 'favorite' => $favorite->first(), 'partidos' => $query->toArray()]);
         $this->set('_serialize', ['field']);
     }
 

@@ -124,6 +124,6 @@
 </main>
 
 
-<?php print_r($favorite) ?>
+<?php print_r($partidos) ?>
 
 
