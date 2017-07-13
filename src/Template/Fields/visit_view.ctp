@@ -2,6 +2,7 @@
 /**
   * @var \App\View\AppView $this
   */
+  $this->Html->script([ 'calendar']);
 ?>
 
 
@@ -9,9 +10,18 @@
     <?= $this->element('fields/fieldProfile'); ?>
     <div id="sticky" class="container">
         <ul class="nav nav-tabs nav-menu">
-            <li>
-                <?= $this->Html->link('Favoritos', ['#'], ['class' => 'btn btn-azul']);?>
+            <?php if(count($favorite) > 0): ?>
+            <li class = "btn btn-azul btn-fav">
+                <i class="fa fa-futbol-o" aria-hidden="true"></i>
+                <?= $this->Form->postLink(' Agregada', ['controller' => 'UsersFields', 'action' => 'delete', $favorite['id']], [ 'id' => 'eliminar_favorito']);?>
+                
             </li>
+            <?php else:?>
+            <li class = "btn btn-verde btn-fav">
+                <i class="fa fa-futbol-o" aria-hidden="true"></i>
+                <?= $this->Form->postLink(' Me gusta', ['controller' => 'UsersFields', 'action' => 'add', $current_user['id'], $field->id], [ 'id' => 'agregar_favorito']);?>
+            </li>
+            <?php endif;?>
           
           
         </ul><!--nav-tabs close-->
@@ -112,3 +122,8 @@
         </div>
     </div>
 </main>
+
+
+<?php print_r($favorite) ?>
+
+

@@ -1,5 +1,3 @@
-
-
 /*
 * Cambia la vista del menú al momento de hacer scroll
 */
@@ -44,3 +42,9 @@ function revisarNumero(elem){
 
 
 
+
+//utilizado para resetear el valor del buscador ya que se conserva al pasar entre páginas.
+$(document).ready(function() {
+    $("#autocompleteByName").val("");
+    $("#autocompleteByName").attr("placeholder", "Ej: cancha Mí Retador...");    
+})

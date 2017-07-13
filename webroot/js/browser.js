@@ -1,6 +1,8 @@
+
 //utilizado para mostrar el mensaje cerca de tí de una mejor manera
 $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip();   
+    //document.getElementById("search-form").reset();
 });
 
 var clicked = 0;
@@ -22,6 +24,8 @@ var componentForm = {
     postal_code: 'short_name'
 };
 
+
+//autocompletado de google. 
 function initAutocomplete() {
     // Create the autocomplete object, restricting the search to geographical
     // location types.
@@ -34,6 +38,7 @@ function initAutocomplete() {
     autocomplete.addListener('place_changed', fillInAddress);
 }
 
+//al seleccionarse un elemento se
 function fillInAddress() {
     var icon = document.getElementById('iconMyLocation');
     icon.setAttribute("class", "glyphicon material-icons");
@@ -74,7 +79,7 @@ function fillInAddressMyLocation() {
             icon.setAttribute("class", "glyphicon material-icons");   
             clicked=(clicked+1)%2;
         }
-
+        
       navigator.geolocation.getCurrentPosition(function(position) {
         var lat= position.coords.latitude;
         var lng= position.coords.longitude;
@@ -83,4 +88,13 @@ function fillInAddressMyLocation() {
         $('#autocomplete').val('Mí ubicación');    
       });
     }
+}
+
+function validarBuscador() {
+/*    if($('#lat').val() == -1 && $('#lng').val() == -1 && $('#autocomplete').val() != ""){
+        alert("debe seleccionar una ubicación de la lista");
+        return false;
+    }*/
+
+    
 }

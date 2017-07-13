@@ -12,11 +12,15 @@
     align-items: center;
     -webkit-justify-content: center;
     justify-content: center;
-    /*background:#FF8C0F;*/
+    background:#00BFA5;
+    color:white;
     padding:20px;
+    
+    /*
     -webkit-box-shadow: -2px -1px 11px -1px rgba(0,0,0,0.78);
     -moz-box-shadow: -2px -1px 11px -1px rgba(0,0,0,0.78);
     box-shadow: -2px -1px 11px -1px rgba(0,0,0,0.78);
+    */
 }
 
 
@@ -27,6 +31,18 @@
 .btn-buscar{
     position: absolute;
     bottom: 20px;
+    background-color: #FF8C0F;
+    color: white;
+    border: none;
+    font-weight: bold;
+}
+
+.btn-buscar:hover, .btn-buscar:focus, .btn-buscar:active{
+    outline: none;
+    background-color: #E85802;
+    color: white;
+    border: none;
+    font-weight: bold;
 }
 
 .rotated-image {
@@ -160,4 +176,36 @@
         margin-top:20px;
     }
 
+
+
+
+}
+
+
+@media screen and (min-width: 767px){
+    #browser .browser-container{
+        padding: 1.2rem 0.8rem;
+    }
+    
+    #browser .text{
+        margin: 0;
+        float: left;
+        width: 60%;
+        padding: 0 0.4rem 0 0;
+    }
+    
+    #browser .lugar{
+        margin: 0;
+        float: right;
+        width: 30%;
+        padding: 0 0.4rem 0 0.4rem;
+    }
+    
+    #browser .submit{
+        margin: 0;
+        float: right;
+        width: 10%;
+        padding: 0 0 0 0.4rem;
+    }
+    
 }

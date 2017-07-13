@@ -3,7 +3,8 @@ var marker;
 
 
 //mapa de google para la función de agregar, utiliza ubicación del usuario para brindar cercanía del lugar
-function initMapAdd() {
+function initMapFields_add() {
+    initAutocomplete();
     //se crea el mapa centrado en un punto cualquiera
     var myLatLng = {lat: 10.071137, lng: -84.112214};
     initMap(myLatLng);
@@ -27,7 +28,8 @@ function initMapAdd() {
 
 
 //mapa de google para la vista de editar, carga ubicación desde base de datos
-function initMapEdit() {
+function initMapFields_edit() {
+    initAutocomplete();
     //se obtiene la ubicación de los input del formulario BD
     var myLatLng = {lat: parseFloat($('#lat').val()), lng: parseFloat($('#lng').val())};
     initMap(myLatLng);

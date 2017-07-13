@@ -47,27 +47,36 @@ $this->assign('title', 'Home');
                                         </div>
                                 </div>
                         </div>
-                        <div class="col-md-4 col-lg-6">
-                                Lorem ipsum dolor sit amet, consectetuer adipiscing elit,
-                                sed diam nonummy nibh euismod tincidunt ut laoreet dolore
-                                magna aliquam erat volutpat. Ut wisi enim ad minim veniam,
-                                quis nostrud exerci tation ullamcorper suscipit lobortis nisl
-                                ut aliquip ex ea commodo consequat. Duis autem vel eum iriure
-                                dolor in hendrerit in vulputate velit esse molestie consequat,
-                                vel illum dolore eu feugiat nulla facilisis at vero eros et
-                                accumsan et iusto odio dignissim qui blandit praesent luptatum
-                                zzril delenit augue duis dolore te feugait nulla facilisi.
-                                Nam liber tempor cum soluta nobis eleifend option congue
-                                nihil imperdiet doming id quod mazim placerat facer possim
-                                assum. Typi non habent claritatem insitam; est usus legentis
-                                in iis qui facit eorum claritatem. Investigationes
-                                demonstraverunt lectores legere me lius quod ii legunt saepius.
-                                Claritas est etiam processus dynamicus, qui sequitur mutationem
-                                consuetudium lectorum. Mirum est notare quam littera gothica,
-                                quam nunc putamus parum claram, anteposuerit litterarum formas
-                                humanitatis per seacula quarta decima et quinta decima. Eodem
-                                modo typi, qui nunc nobis videntur parum clari, fiant sollemnes
-                                in futurum.
+                        <div class="col-md-4 col-lg-6" id="ult_partidos_confirmados">
+                                <h5 class="title">Últimos partidos confirmados</h5>
+                                <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Equipos</th>
+                                            <th>Fecha / Hora</th>
+                                            <th>Cancha</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>Jugador 9</br>vs</br>Jugador 2</td>
+                                            <td>10/07/17 15:00</td>
+                                            <td>Cancha 1</td>
+                                        </tr>
+                                        <tr>
+                                                <td>Jugador 1</td>
+                                            <td>11/07/17 16:00</td>
+                                            <td>Cancha 2</td>
+                                        </tr>
+                                         <tr>
+                                                 <td>Jugador 3</br>vs</br>Jugador 5</td>
+                                            <td>15/07/17 16:00</td>
+                                            <td>Cancha 3</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                </div>
                         </div>
                 </div>
         </div>

@@ -72,7 +72,7 @@ class UsersController extends AppController
         return $q
             ->select(['field_id'])
             ->where(['UsersFields.user_id' => $id]);
-        });
+        } );
         
         
         $this->set(['user'=> $user, 'fields' => $myFields->toArray(), 'favorite_fields' => $query->toArray()]);

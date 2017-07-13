@@ -11,7 +11,7 @@
 </div>
     
 <!--Carga del mapa-->    
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDW6tU8THzd8Q1jCq1TfU7uO1rsYUYTaVA&callback=initMapAdd"></script>
-
+<!--<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDW6tU8THzd8Q1jCq1TfU7uO1rsYUYTaVA&libraries=places&callback=initMapAdd"></script>
+-->
 </div>
 </section>

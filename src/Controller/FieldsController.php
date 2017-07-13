@@ -2,6 +2,8 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\ORM\TableRegistry;
+
 
 /**
  * Fields Controller
@@ -14,7 +16,7 @@ class FieldsController extends AppController
     public function isAuthorized($user){
         if(isset($user['role']) and $user['role'] === 'user'){
             
-            if(in_array($this->request->action, [ 'visitView'])){
+            if(in_array($this->request->action, [ 'visitView', 'autocompleteField', 'searchResult'])){
                     return true;
             }
             
@@ -34,6 +36,13 @@ class FieldsController extends AppController
             
         }
         return parent::isAuthorized($user);
+    }
+    
+    public function beforeFilter(\Cake\Event\Event $event){
+        
+        parent::beforeFilter($event);
+        $this->Auth->allow(['visitView', 'autocompleteField', 'searchResult']);
+        
     }
     
 
@@ -64,12 +73,13 @@ class FieldsController extends AppController
             'contain' => ['Users', 'UsersGames']
         ]);
         
-        $fields = $this->loadModel('Fields');
         $owner = $this->Fields->Users->get($field->user_id, ['fields' => ['name']]);
 
         $this->set(['field' => $field, 'owner' => $owner]);
         $this->set('_serialize', ['field']);
     }
+    
+    
     
     public function visitView($id = null)
     {
@@ -77,10 +87,39 @@ class FieldsController extends AppController
             'contain' => ['Users', 'UsersGames']
         ]);
         
-        $fields = $this->loadModel('Fields');
+        
+        $favorite = $this->Fields->UsersFields->find('all', ['conditions' => ['UsersFields.field_id' => $id, 'UsersFields.user_id' => $this->Auth->user('id')]]);
+        
         $owner = $this->Fields->Users->get($field->user_id, ['fields' => ['name']]);
+        
+        //Consulta para llenar la tabla.
+        
+        
+        
+        $date = new DateTime();
+        $today = new DateTime();
+        $date->sub(new DateInterval('P7D'));
+        
+        $begin = new DateTime( '2010-05-01' );
+        $end = new DateTime( '2010-05-10' );
+        
+        $interval = DateInterval::createFromDateString('1 day');
+        $period = new DatePeriod($begin, $interval, $end);
+        
+        $hoy = new DateTime('NOW')
+        $hoy = $hoy->format('d-m-Y');
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
 
-        $this->set(['field' => $field, 'owner' => $owner]);
+        $this->set(['field' => $field, 'owner' => $owner, 'favorite' => $favorite->first()]);
         $this->set('_serialize', ['field']);
     }
 
@@ -173,7 +212,7 @@ class FieldsController extends AppController
             $name = $this->request->query['term'];
             $name=htmlspecialchars($name);
             $results = $this->Fields->find('all', [
-                'conditions' => ['Fields.name LIKE' => '%'.$name.'%']
+                'conditions' => ['Fields.name LIKE' => '%'.$name.'%'], 'fields' => ['name', 'id']
             ]);
             foreach ($results as $result) {
                  $resultsArr[] =['label' => $result['name'], 'value' => $result['id']];
@@ -184,5 +223,100 @@ class FieldsController extends AppController
     
     
     
-    
+    public function searchResult(){
+        if($this->request->is('post')){
+            $parametros = $this->request->data;
+            $id = $parametros['identifier'];
+            $name = $parametros['byName'];
+            $lat = $parametros['lat'];
+            $lng = $parametros['lng']; 
+            $location = $parametros['byLocation'];
+
+            if($lat!=-1 && $lng != -1){
+                if($id!=-1){
+                    /*
+                    Busque id, luego busque por nombre like -> ordenado por distancia.
+                    */
+                    $query = $this->Fields->find()
+                                ->contain(['Users' => function(\Cake\ORM\Query $q) {
+                                    return $q->where(['Users.id =' => 'Fields.user_id']); }, 'Users' => function(\Cake\ORM\Query $q) {
+                                    return $q->where(['UsersFields.field_id' => 'Fields.id', 'UsersFields.user_id' => $this->Auth->user('id')]); }])
+                                ->where(['Fields.id'=> $id]);
+        
+                    $query2 = $this->Fields->find('all');
+                    //formula para calcular distancia entre dos puntos
+                    $query2->select(['distance'=>"(6371 * ACOS( COS( RADIANS( $lat ) ) * COS( RADIANS(latitude ) ) * COS( RADIANS(longitude ) - RADIANS( $lng ) ) + SIN( RADIANS( $lat ) ) * SIN( RADIANS(latitude ) ) ))"])
+                        ->where(['AND'=>['name LIKE' => '%'.$name.'%', 'id <> '=>$id]]) 
+                        ->group('distance')
+                        ->having(['distance <' => 20])//distancia en kilometros
+                        ->select($this->Fields);
+                    //print_r($query2->toArray());
+                    $this->set(['byId' => $query->first(), 'byName' => $query2->toArray(), 'name' => $name]);
+                }else if($name!=-1){
+                    /*
+                    Busque por nombre like -> ordenado por distancia.
+                    */
+                    $query = $this->Fields->find('all');
+                    //formula para calcular distancia entre dos puntos
+                    $query->select(['distance'=>"(6371 * ACOS( COS( RADIANS( $lat ) ) * COS( RADIANS(latitude ) ) * COS( RADIANS(longitude ) - RADIANS( $lng ) ) + SIN( RADIANS( $lat ) ) * SIN( RADIANS(latitude ) ) ))"])
+                        ->where(['name LIKE' => '%'.$name.'%'])
+                        ->group('distance')
+                        ->having(['distance <' => 20])//distancia en kilometros                   
+                        ->select($this->Fields);
+
+                    $this->set(['byName' => $query->toArray(), 'name' => $name]);
+                    
+                }else{
+                    /*
+                    Todas las canchas -> ordenado por distancia.
+                    */
+                    $query = $this->Fields->find('all');
+                    //formula para calcular distancia entre dos puntos
+                    $query->select(['distance'=>"(6371 * ACOS( COS( RADIANS( $lat ) ) * COS( RADIANS(latitude ) ) * COS( RADIANS(longitude ) - RADIANS( $lng ) ) + SIN( RADIANS( $lat ) ) * SIN( RADIANS(latitude ) ) ))"])
+                        ->group('distance')
+                        ->having(['distance <' => 20])//distancia en kilometros                   
+                        ->select($this->Fields);
+                    $this->set(['byLocation' => $query->toArray(), 'name' => $name]);                    
+                }
+            }else{
+                if($id!=-1){
+                    /*
+                    Busque id, luego busque por nombre like -> ordenado por Nombre.
+                    */
+                    $query = $this->Fields->find()
+                                ->contain(['Users' => function(\Cake\ORM\Query $q) {
+                                    return $q->where(['Users.id =' => 'Fields.user_id']); }, 'Users' => function(\Cake\ORM\Query $q) {
+                                    return $q->where(['UsersFields.field_id' => 'Fields.id', 'UsersFields.user_id' => $this->Auth->user('id')]); }])
+                                ->where(['Fields.id'=> $id]);
+                    $query2 = $this->Fields->find()
+                                ->contain(['Users' => function(\Cake\ORM\Query $q) {
+                                    return $q->where(['Users.id' => 'Fields.user_id']); }])
+                                ->where(['name LIKE' => '%'.$name.'%', 'id !='=> $id]);
+                    $this->set(['byId' => $query->first(), 'byName' => $query2->toArray(), 'name' => $name]);
+                }else if($name!=-1){
+                    /*
+                    Busque por nombre like -> ordenado por Nombre.
+                    */
+                    $query = $this->Fields->find()
+                                ->contain(['Users' => function(\Cake\ORM\Query $q) {
+                                    return $q->where(['Users.id' => 'Fields.user_id']); }])
+                                ->where(['name LIKE' => '%'.$name.'%']);
+                    $this->set(['byName' => $query->toArray(), 'name' => $name]);
+                }
+            }
+        }
+    }
+
+
+
+/*    public function nearestPoints($lat,$lng,$name){
+        
+        $query = $this->Fields->find('all');
+        //formula para calcular distancia entre dos puntos
+        $query->select(['name','distance'=>"(6371 * ACOS( COS( RADIANS( $lat ) ) * COS( RADIANS(latitude ) ) * COS( RADIANS(longitude ) - RADIANS( $lng ) ) + SIN( RADIANS( $lat ) ) * SIN( RADIANS(latitude ) ) ))"])
+        ->where(['name LIKE' => '%'.$name.'%'])
+        ->group('distance')
+        ->having(['distance <' => 20]);//distancia en kilometros
+        return $query;
+    }*/
 }

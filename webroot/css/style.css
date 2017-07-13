@@ -10,6 +10,10 @@ margin-top: 100px;
 
 }
 
+.bold{
+    font-weight: bold;
+}
+
     /*---------------------------
     SECTION PASOS_CONFIRMADOS
     ----------------------------*/
@@ -154,6 +158,33 @@ margin-top: 100px;
 .steps .step-3 .step-ico, .steps .step-3 .step-title{
     color: #ff670f;
 }
+
+
+#ult_partidos_confirmados .title{
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+#ult_partidos_confirmados .table thead tr th{
+    border-bottom: 2px solid #00BFA5;
+    text-align: center
+}
+
+#ult_partidos_confirmados .table{
+    text-align: center
+}
+
+#ult_partidos_confirmados .table tbody tr td a{
+   color: black;
+   display: block;
+}
+#ult_partidos_confirmados .table tbody tr td a:hover, #ult_partidos_confirmados .table tbody tr td a:focus{
+   text-decoration: none;
+   outline: none;
+}
+
+
+
 
 .btn-success{
     background-color: #00BFA5 !important;
@@ -340,6 +371,34 @@ margin-bottom: 0;}
 #sticky .btn-azul:focus{
     outline: none;
 }
+
+#sticky .btn-verde{
+    margin:0.1rem;
+    border-radius: 0;
+    background-color: #00BFA5;
+    color: #fff !important;
+    text-decoration: none;
+}
+
+
+#sticky .btn-fav a{
+    color: white;
+    display: inline;
+    padding: 0 0 0 0.3rem;
+    border: none;
+    
+}
+#sticky .btn-fav a:hover, #sticky .btn-fav a:focus{
+    background-color: transparent !important;
+    border: none;
+    outline: none;
+    
+}
+ 
+#sticky .btn-verde:focus{
+    outline: none;
+}
+
 #sticky .open .dropdown-menu{
     background-color: #3278A5;
 }
@@ -444,6 +503,30 @@ Perfil de cancha - Visita
     text-decoration: underline !important;
 }
 
+
+
+
+
+/*****************************
+Perfil de cancha - Dueño
+*****************************/
+
+#horarioDueno .title{
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+#horarioDueno .table thead tr th{
+    border-bottom: 2px solid #00BFA5;
+    text-align: center
+}
+
+#horarioDueno .table{
+    text-align: center
+}
+
+
+
  
  #agregar_cancha, #editar_cancha{
      padding: 1rem 0;
@@ -495,10 +578,103 @@ margin-bottom: 0;}
 #perfil_cancha .profile-head .info {text-align: justify;padding:0px 5px 5px 0px;color: #fff;font-size:1.1rem;text-transform:capitalize;margin:0;}
 
 
+
+
+/****************************************
+    Página busqueda
+****************************************/
+
+#busqueda .cant_resultados_container{
+    
+    padding: 0.5rem 1.2rem;
+    margin: 0 1rem 1rem 1rem;
+    display: flex;
+}
+
+#busqueda .cantidad_resultados{
+    float: left;
+    width: 100%;
+}
+#busqueda .num_resultados{
+    font-size: 1.2rem;
+    color: #00BFA5;
+    display: inline-block;
+    font-weight: 700;
+    line-height: 26px;
+    margin-right: 8px;
+    padding: 2px 8px;
+    vertical-align: top;
+}
+
+#busqueda .cantidad_resultados .titulo {
+    display: inline-block;
+    font-weight: bold;
+    line-height: 1.2em;
+    width: 70%;
+}
+
+#busqueda .resultados_para, #busqueda .titulo_resultados{
+    display: block;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+#busqueda .border_2{
+    border: 2px solid rgba(0, 0, 0, 0.2);
+}
+
+.border_bottom_none{
+    border-bottom: none !important;
+}
+
+#busqueda .img_field{
+    padding: 0 ;
+}
+
+#busqueda .info_principal{
+    padding:1rem;
+}
+
+#busqueda .field_name{
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: #009480;
+}
+
+#busqueda .price{
+    color: #00CC1C;
+    font-weight:bold;
+}
+
+#busqueda .price_number{
+    font-size: 1.2rem;
+}
+
+#busqueda .field_name:hover, #busqueda .field_name:active, #busqueda .field_name:focus{
+    outline: none;
+    
+}
+
+#busqueda .description{
+    text-align: justify;
+}
+
+
+@media screen and (min-width: 767px) {
+    #busqueda .price, #busqueda .schedule{
+        text-align: right;
+    }
+}
+
+
+
+
  
 
 
-@media (min-width: 400px) {
+@media screen and (min-width: 400px) {
     .steps .step{
         font-size: 0.7em;
     }
@@ -507,7 +683,7 @@ margin-bottom: 0;}
     }
 }
 
-@media (min-width: 480px) {
+@media screen and (min-width: 480px) {
     .steps .step{
         font-size: 1em;
     }
@@ -516,7 +692,7 @@ margin-bottom: 0;}
     }
 }
 
-@media (max-width: 767px){
+@media screen and (max-width: 767px){
     .vista-desktop {
         display: none!important;
     }
@@ -541,7 +717,7 @@ margin-bottom: 0;}
     /*---------------------------
     SMALL
     ----------------------------*/
-@media (min-width: 767px) {
+@media screen and (min-width: 767px) {
 
     html{
         font-size: 16px;
@@ -614,12 +790,21 @@ margin-bottom: 0;}
     #perfil_cancha .profile-head .description{
         padding-bottom: 1.1rem;
     }
+    
+    
+    
 }
 
     
+@media screen and (max-width: 992px){
+    .vista-desktop-wide {
+        display: none!important;
+    }
+    
+}
 
 
-@media (min-width: 992px) {
+@media screen and (min-width: 992px) {
     .soccer_field{
         background-position: 0 0.5rem;
 
@@ -630,9 +815,19 @@ margin-bottom: 0;}
         margin:0 12.5%;
     }
     
+    
+    #busqueda .filtros{
+        float: left;
+        width: 20%;
+    }
+    #busqueda .resultados{
+        float: right;
+        width: 80%;
+    }
+    
 }
 
-@media (min-width: 1200px) {
+@media screen and (min-width: 1200px) {
     .soccer_field{
         background-position: 0 0;
 
