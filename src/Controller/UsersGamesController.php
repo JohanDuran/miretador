@@ -68,20 +68,25 @@ class UsersGamesController extends AppController
      */
     public function add($user_id, $field_id, $meet, $state)
     {
+        $this->request->allowMethod(['post']);
         $usersGame = $this->UsersGames->newEntity();
-        if ($this->request->is('post')) {
-            $usersGame = $this->UsersGames->patchEntity($usersGame, $this->request->data);
-            if ($this->UsersGames->save($usersGame)) {
-                $this->Flash->success(__('The users game has been saved.'));
+        $meet = $meet.":00:00";
+        $meet = strtotime($meet);
+        $usersGame->user_id = $user_id;
+        $usersGame->field_id = $field_id;
+        $usersGame->state = $state;
+        $usersGame->meet = $meet;
+        if ($this->UsersGames->save($usersGame)) {
+            $this->Flash->success(__('Partido agregado con exito.'));
 
-                return $this->redirect(['action' => 'index']);
-            }
-            $this->Flash->error(__('The users game could not be saved. Please, try again.'));
+            return $this->redirect(['action' => 'index']);
         }
-        $users = $this->UsersGames->Users->find('list', ['limit' => 200]);
+        $this->Flash->error(__('Ocurrió un error, intente nuevamente.'));
+        
+        /*$users = $this->UsersGames->Users->find('list', ['limit' => 200]);
         $fields = $this->UsersGames->Fields->find('list', ['limit' => 200]);
         $this->set(compact('usersGame', 'users', 'fields'));
-        $this->set('_serialize', ['usersGame']);
+        $this->set('_serialize', ['usersGame']);*/
     }
 
     /**

@@ -80,12 +80,12 @@
                                     <?php if(!isset($current_user)):?>
                                         <?= $this->Html->link('Disponible', ['controller' => 'Users', 'action' => 'login'], ['class' => 'disponible_link']); ?>
                                     <?php else: 
-                                        $date = new \date_create_from_format('j-M-Y', '15-Feb-2009');;
+                                        //$date = date_create_from_format('Y-m-d H', $fecha);
                                     ?>
                                             
-                                        <?= $this->Html->link('Reto', ['controller' => 'UsersGames', 'action' => 'add', $current_user['id'], $field->id, 0], ['class' => 'reto_link']); ?>
+                                        <?= $this->Form->postLink('Reto', ['controller' => 'UsersGames', 'action' => 'add', $current_user['id'], $field->id, $fecha, 0], ['class' => 'reto_link']); ?>
                                         </br>
-                                        <?= $this->Html->link('Alquilar', ['controller' => 'UsersGames', 'action' => 'add', $current_user['id'], $field->id, 1], ['class' => 'alquilar_link']); ?>
+                                        <?= $this->Form->postLink('Alquilar', ['controller' => 'UsersGames', 'action' => 'add', $current_user['id'], $field->id, $fecha, 1], ['class' => 'alquilar_link']); ?>
                                             
                                             
                                     <?php endif; ?>
