@@ -95,6 +95,8 @@ class FieldsController extends AppController
         
         $today = new \DateTime('NOW');
         $nextWeek = new \DateTime('NOW');
+        //$today->setTimezone(new \DateTimeZone('America/Costa_Rica'));
+        //$nextWeek->setTimezone(new \DateTimeZone('America/Costa_Rica'));
         $nextWeek->add(new \DateInterval('P7D'));
         
         $nextWeek = new \DateTime($nextWeek->format('Y-m-d'));
@@ -117,26 +119,37 @@ class FieldsController extends AppController
                         return $exp->eq('state',1);
                     });
                     
+        $query = $query->toArray();
+        $arreglo_fechas_resutado = [];
         
-        
-        //2017-06-01 00:00:00
-        
+        foreach($query as $partido){
+            $arreglo_fechas_resutado[$partido->meet->format('Y-m-d H')] = $partido;
+            //array_push($arreglo_fechas_resutado, $partido->meet->format('Y-m-d H'));
+        }
         $interval = new \DateInterval('P1D');
         $period = new \DatePeriod($today, $interval, $nextWeek);
         
-        for($j = $inicio; $j < $fin; $j++){
+        $this->set(['field' => $field, 'owner' => $owner, 'favorite' => $favorite->first(), 'partidos' => $arreglo_fechas_resutado, 'periodo' => $period]);
+        $this->set('_serialize', ['field']);
+        
+        //2017-06-01 00:00:00
+        
+        
+        
+        /*for($j = $inicio; $j < $fin; $j++){
             foreach ( $period as $dt ) {
-                $fecha = $dt->format('Y-m-d') . ' ' . $j . ':00:00';
+                $fecha = $dt->format('Y-m-d') . ' ' . $j;
                 //echo $fecha;
                 //echo '<br>';
-                //if( in_array($fecha, $arreglo_fechas_resutado) ){
+                if(isset($arreglo_fechas_resutado[$fecha])) {
                     
-                //}
+                    //Hay partido
+                }else{
+                    //links
+                }
                 
             }
-        }
-        
-        $tabla = [];
+        }*/
         
         /*for($i = 0; $i < $horario; i++){
             foreach ( $period as $dt ) {
@@ -159,8 +172,7 @@ class FieldsController extends AppController
         
         
 
-        $this->set(['field' => $field, 'owner' => $owner, 'favorite' => $favorite->first(), 'partidos' => $query->toArray()]);
-        $this->set('_serialize', ['field']);
+        
     }
 
     /**

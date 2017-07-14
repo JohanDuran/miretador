@@ -472,7 +472,8 @@ Perfil de cancha - Visita
 }
 #horarioVisita .table thead tr th{
     border-bottom: 2px solid #00BFA5;
-    text-align: center
+    text-align: center;
+    text-transform: capitalize;
 }
 
 #horarioVisita .table{
@@ -491,6 +492,10 @@ Perfil de cancha - Visita
 #horarioVisita .reto_link{
     background-color: #00BFA5;
     color: white !important;
+}
+#horarioVisita .disponible_link{
+    background-color: lightgray;
+    color: black !important;
 }
 #horarioVisita .alquilar_link{
     background-color: #3278A5;

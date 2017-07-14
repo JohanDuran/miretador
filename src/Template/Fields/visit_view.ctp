@@ -1,4 +1,5 @@
 <?php
+    use Cake\I18n\Time;
 /**
   * @var \App\View\AppView $this
   */
@@ -40,46 +41,64 @@
                     <thead>
                         <tr>
                             <th>Hora</th>
-                            <th>Lunes</br>10/07/17</th>
-                            <th>Martes</br>11/07/17</th>
-                            <th>Míercoles</br>12/07/17</th>
-                            <th>Jueves</br>13/07/17</th>
-                            <th>Viernes</br>14/07/17</th>
-                            <th>Sábado</br>15/07/17</th>
-                            <th>Domingo</br>16/07/17</th>
+                            <?php
+                                foreach ( $periodo as $dt ) :
+                            ?>
+                                <th>
+                                    <?php 
+                                        $now = Time::createFromTimestamp($dt->getTimestamp());
+                                        echo $now->i18nFormat('EEEE', null, 'es_ES');
+                                    ?>
+                                    </br>
+                                    <?php
+                                        echo $now->i18nFormat('dd/MM/yyyy', null, 'es_ES');
+                                    ?>
+                                    
+                                </th>
+                            <?php endforeach; ?>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>15:00</td>
-                            <td><a href="#" class="reto_link">Reto</a></br><a href="#" class="alquilar_link">Alquilar</a></td>
-                            <td><a href="#" class="reto_link">Reto</a></br><a href="#" class="alquilar_link">Alquilar</a></td>
-                            <td>Jugador 1</br>vs</br>Jugador 2</td>
-                            <td><a href="#" class="reto_link">Reto</a></br><a href="#" class="alquilar_link">Alquilar</a></td>
-                            <td><a href="#" class="reto_link">Reto</a></br><a href="#" class="alquilar_link">Alquilar</a></td>
-                            <td>Jugador 3</br>vs</br>Jugador 5</td>
-                            <td><a href="#" class="reto_link">Reto</a></br><a href="#" class="alquilar_link">Alquilar</a></td>
-                        </tr>
-                        <tr>
-                            <td>16:00</td>
-                            <td>Jugador 6</br>vs</br>Jugador 7</td>
-                            <td><a href="#" class="reto_link">Reto</a></br><a href="#" class="alquilar_link">Alquilar</a></td>
-                            <td><a href="#" class="reto_link">Reto</a></br><a href="#" class="alquilar_link">Alquilar</a></td>
-                            <td><a href="#" class="reto_link">Reto</a></br><a href="#" class="alquilar_link">Alquilar</a></td>
-                            <td><a href="#" class="reto_link">Reto</a></br><a href="#" class="alquilar_link">Alquilar</a></td>
-                            <td><a href="#" class="reto_link">Reto</a></br><a href="#" class="alquilar_link">Alquilar</a></td>
-                            <td><a href="#" class="reto_link">Reto</a></br><a href="#" class="alquilar_link">Alquilar</a></td>
-                        </tr>
-                        <tr>
-                            <td>17:00</td>
-                            <td><a href="#" class="reto_link">Reto</a></br><a href="#" class="alquilar_link">Alquilar</a></td>
-                            <td><a href="#" class="reto_link">Reto</a></br><a href="#" class="alquilar_link">Alquilar</a></td>
-                            <td><a href="#" class="reto_link">Reto</a></br><a href="#" class="alquilar_link">Alquilar</a></td>
-                            <td><a href="#" class="reto_link">Reto</a></br><a href="#" class="alquilar_link">Alquilar</a></td>
-                            <td>Jugador 12</br>vs</br>Jugador 15</td>
-                            <td><a href="#" class="reto_link">Reto</a></br><a href="#" class="alquilar_link">Alquilar</a></td>
-                            <td><a href="#" class="reto_link">Reto</a></br><a href="#" class="alquilar_link">Alquilar</a></td>
-                        </tr>
+                        <?php for($i = $field->start; $i < $field->finish; $i++ ): ?>
+                            <tr>
+                                <td><?php echo $i. ':00'; 
+                                    ?>
+                                </td>
+                                <?php foreach ( $periodo as $dt ): 
+                                    
+                                    if($i < 10){
+                                        $fecha = $dt->format('Y-m-d') . ' 0' . $i;
+                                    }else{
+                                        $fecha = $dt->format('Y-m-d') . ' ' . $i;
+                                    }
+                                    
+                                    if(isset($partidos[$fecha])): 
+                                ?>
+                                       <td> </td> 
+                                    <?php else: ?>
+                                    <td>
+                                    <?php if(!isset($current_user)):?>
+                                        <?= $this->Html->link('Disponible', ['controller' => 'Users', 'action' => 'login'], ['class' => 'disponible_link']); ?>
+                                    <?php else: 
+                                        $date = new \date_create_from_format('j-M-Y', '15-Feb-2009');;
+                                    ?>
+                                            
+                                        <?= $this->Html->link('Reto', ['controller' => 'UsersGames', 'action' => 'add', $current_user['id'], $field->id, 0], ['class' => 'reto_link']); ?>
+                                        </br>
+                                        <?= $this->Html->link('Alquilar', ['controller' => 'UsersGames', 'action' => 'add', $current_user['id'], $field->id, 1], ['class' => 'alquilar_link']); ?>
+                                            
+                                            
+                                    <?php endif; ?>
+                                    </td>
+                                        
+                                    <?php endif; 
+                                    ?>
+                                
+                                <?php endforeach; ?>
+                            </tr>
+                        <?php endfor; ?>
+                        
+                        
                     </tbody>
                 </table>
                 </div>
@@ -121,9 +140,9 @@
             </div>
         </div>
     </div>
+    
 </main>
 
 
-<?php print_r($partidos) ?>
 
 

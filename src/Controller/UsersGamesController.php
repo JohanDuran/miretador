@@ -11,6 +11,23 @@ use App\Controller\AppController;
 class UsersGamesController extends AppController
 {
 
+    public function isAuthorized($user){
+        if(isset($user['role']) and $user['role'] === 'user'){
+            
+            if(in_array($this->request->action, [ 'add', 'edit'])){
+                    return true;
+            }
+            
+            
+            
+            
+        }
+        return parent::isAuthorized($user);
+    }
+
+
+
+
     /**
      * Index method
      *
@@ -49,7 +66,7 @@ class UsersGamesController extends AppController
      *
      * @return \Cake\Network\Response|null Redirects on successful add, renders view otherwise.
      */
-    public function add()
+    public function add($user_id, $field_id, $meet, $state)
     {
         $usersGame = $this->UsersGames->newEntity();
         if ($this->request->is('post')) {
@@ -74,7 +91,7 @@ class UsersGamesController extends AppController
      * @return \Cake\Network\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function edit($id = null)
+    public function edit($id = null, $user_id)
     {
         $usersGame = $this->UsersGames->get($id, [
             'contain' => []
