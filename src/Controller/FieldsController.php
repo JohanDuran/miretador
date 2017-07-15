@@ -108,7 +108,13 @@ class FieldsController extends AppController
         $horario  = $fin - $inicio;
         
         //Consulta para llenar la tabla.
-        $query = $this->Fields->UsersGames->find()
+        $confirmados = $this->Fields->UsersGames->find()
+                    ->contain([
+                        'Users' => function ($q) {
+                            return $q->autoFields(false)
+                                     ->select(['name']);
+                        }
+                    ])
                     ->where(function ($exp, $q) use ($today, $nextWeek){
                         return $exp->between('meet', $today, $nextWeek);
                     })
@@ -119,17 +125,43 @@ class FieldsController extends AppController
                         return $exp->eq('state',1);
                     });
                     
-        $query = $query->toArray();
+        $confirmados = $confirmados->toArray();
         $arreglo_fechas_resutado = [];
         
-        foreach($query as $partido){
-            $arreglo_fechas_resutado[$partido->meet->format('Y-m-d H')] = $partido;
-            //array_push($arreglo_fechas_resutado, $partido->meet->format('Y-m-d H'));
+        $retos = $this->Fields->UsersGames->find()
+                    ->contain([
+                        'Users' => function ($q) {
+                            return $q->autoFields(false)
+                                     ->select(['name']);
+                        }
+                    ])
+                    ->where(function ($exp, $q) use ($today, $nextWeek){
+                        return $exp->between('meet', $today, $nextWeek);
+                    })
+                    ->andwhere(function ($exp, $q) use ($id) {
+                        return $exp->eq('field_id',$id);
+                    })
+                    ->andwhere(function ($exp, $q) {
+                        return $exp->eq('state',0);
+                    });
+        
+        $retos = $retos->toArray();
+        
+        foreach($confirmados as $partido){
+            if(isset($partido->challenged)){
+                $retador = $partido->challenged;
+                $challeger = $this->Fields->Users->get($retador, ['fields' => ['name']]);
+                $partido->challenger = $challeger;
+            }
+            $arreglo_fechas_resutado[$partido->meet->i18nFormat('yyyy-MM-dd HH')] = $partido;
         }
+        
+        
+        
         $interval = new \DateInterval('P1D');
         $period = new \DatePeriod($today, $interval, $nextWeek);
         
-        $this->set(['field' => $field, 'owner' => $owner, 'favorite' => $favorite->first(), 'partidos' => $arreglo_fechas_resutado, 'periodo' => $period]);
+        $this->set(['field' => $field, 'owner' => $owner, 'favorite' => $favorite->first(), 'partidos' => $arreglo_fechas_resutado, 'periodo' => $period, 'retos' => $retos]);
         $this->set('_serialize', ['field']);
         
         //2017-06-01 00:00:00
@@ -290,9 +322,6 @@ class FieldsController extends AppController
                     Busque id, luego busque por nombre like -> ordenado por distancia.
                     */
                     $query = $this->Fields->find()
-                                ->contain(['Users' => function(\Cake\ORM\Query $q) {
-                                    return $q->where(['Users.id =' => 'Fields.user_id']); }, 'Users' => function(\Cake\ORM\Query $q) {
-                                    return $q->where(['UsersFields.field_id' => 'Fields.id', 'UsersFields.user_id' => $this->Auth->user('id')]); }])
                                 ->where(['Fields.id'=> $id]);
         
                     $query2 = $this->Fields->find('all');
@@ -301,7 +330,8 @@ class FieldsController extends AppController
                         ->where(['AND'=>['name LIKE' => '%'.$name.'%', 'id <> '=>$id]]) 
                         ->group('distance')
                         ->having(['distance <' => 20])//distancia en kilometros
-                        ->select($this->Fields);
+                        ->select($this->Fields)
+                        ->order(['distance' => 'ASC']);
                     //print_r($query2->toArray());
                     $this->set(['byId' => $query->first(), 'byName' => $query2->toArray(), 'name' => $name]);
                 }else if($name!=-1){
@@ -314,7 +344,8 @@ class FieldsController extends AppController
                         ->where(['name LIKE' => '%'.$name.'%'])
                         ->group('distance')
                         ->having(['distance <' => 20])//distancia en kilometros                   
-                        ->select($this->Fields);
+                        ->select($this->Fields)
+                        ->order(['distance' => 'ASC']);
 
                     $this->set(['byName' => $query->toArray(), 'name' => $name]);
                     
@@ -327,7 +358,8 @@ class FieldsController extends AppController
                     $query->select(['distance'=>"(6371 * ACOS( COS( RADIANS( $lat ) ) * COS( RADIANS(latitude ) ) * COS( RADIANS(longitude ) - RADIANS( $lng ) ) + SIN( RADIANS( $lat ) ) * SIN( RADIANS(latitude ) ) ))"])
                         ->group('distance')
                         ->having(['distance <' => 20])//distancia en kilometros                   
-                        ->select($this->Fields);
+                        ->select($this->Fields)
+                        ->order(['distance' => 'ASC']);
                     $this->set(['byLocation' => $query->toArray(), 'name' => $name]);                    
                 }
             }else{
@@ -336,23 +368,20 @@ class FieldsController extends AppController
                     Busque id, luego busque por nombre like -> ordenado por Nombre.
                     */
                     $query = $this->Fields->find()
-                                ->contain(['Users' => function(\Cake\ORM\Query $q) {
-                                    return $q->where(['Users.id =' => 'Fields.user_id']); }, 'Users' => function(\Cake\ORM\Query $q) {
-                                    return $q->where(['UsersFields.field_id' => 'Fields.id', 'UsersFields.user_id' => $this->Auth->user('id')]); }])
                                 ->where(['Fields.id'=> $id]);
                     $query2 = $this->Fields->find()
                                 ->contain(['Users' => function(\Cake\ORM\Query $q) {
                                     return $q->where(['Users.id' => 'Fields.user_id']); }])
-                                ->where(['name LIKE' => '%'.$name.'%', 'id !='=> $id]);
+                                ->where(['name LIKE' => '%'.$name.'%', 'id !='=> $id])
+                                ->order(['name' => 'ASC']);
                     $this->set(['byId' => $query->first(), 'byName' => $query2->toArray(), 'name' => $name]);
                 }else if($name!=-1){
                     /*
                     Busque por nombre like -> ordenado por Nombre.
                     */
                     $query = $this->Fields->find()
-                                ->contain(['Users' => function(\Cake\ORM\Query $q) {
-                                    return $q->where(['Users.id' => 'Fields.user_id']); }])
-                                ->where(['name LIKE' => '%'.$name.'%']);
+                                ->where(['name LIKE' => '%'.$name.'%'])
+                                ->order(['name' => 'ASC']);
                     $this->set(['byName' => $query->toArray(), 'name' => $name]);
                 }
             }

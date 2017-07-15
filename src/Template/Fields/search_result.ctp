@@ -18,7 +18,8 @@
                     echo $count ?></span> 
                 <div class ="titulo">
                     <span class ="resultados_titulo"> Resultados para:</span> 
-                    <span class ="resultados_para"> <?= h($name) ?></span>  <!-- Cambiar por la busqueda. -->
+                    <span class ="resultados_para"> <?php if(isset($name)){
+                    h($name);}  ?></span>  <!-- Cambiar por la busqueda. -->
                 </div>
             </div>
             

@@ -76,6 +76,8 @@ class UsersGamesController extends AppController
         $usersGame->field_id = $field_id;
         $usersGame->state = $state;
         $usersGame->meet = $meet;
+        
+        
         if ($this->UsersGames->save($usersGame)) {
             $this->Flash->success(__('Partido agregado con exito.'));
 
@@ -83,10 +85,50 @@ class UsersGamesController extends AppController
         }
         $this->Flash->error(__('Ocurrió un error, intente nuevamente.'));
         
-        /*$users = $this->UsersGames->Users->find('list', ['limit' => 200]);
-        $fields = $this->UsersGames->Fields->find('list', ['limit' => 200]);
-        $this->set(compact('usersGame', 'users', 'fields'));
-        $this->set('_serialize', ['usersGame']);*/
+        
+        //Tenia fé de qe funcionara. jeje
+        /* 
+        
+        $query = $this->UsersGames->find()
+                        ->where(function ($exp, $q) use ($meet){
+                        return $exp->eq('meet', $meet);
+                        })
+                        ->andwhere(function ($exp, $q) use ($field_id) {
+                            return $exp->eq('field_id',$field_id);
+                        });
+                        
+        $query = $query->toArray();
+                        
+        if(isset($query)){
+            foreach($query as $partido){
+                if($partido->state == 1){
+                    $this->Flash->error(__('Ya existe un partido a esta hora. Por favor busque otra hora.'));
+                }elseif ($partido->state == 0) {
+                    $this->UsersGames->getConnection()->transactional(function () use ($partido) {
+                        if(deleteReto($partido)){
+                            if ($this->UsersGames->save($usersGame)) {
+                                $this->Flash->success(__('Partido agregado con exito.'));
+                    
+                                return $this->redirect(['action' => 'index']);
+                            }
+                            $this->Flash->error(__('Ocurrió un error, intente nuevamente.'));
+                        }else{
+                            $this->Flash->error(__('Ocurrió un error, intente nuevamente.'));
+                        }
+                    });
+                }
+            }
+        }else{
+            $this->UsersGames->getConnection()->transactional(function () use ($partido) {
+                if ($this->UsersGames->save($usersGame)) {
+                    $this->Flash->success(__('Partido agregado con exito.'));
+        
+                    return $this->redirect(['action' => 'index']);
+                }
+                $this->Flash->error(__('Ocurrió un error, intente nuevamente.'));  
+            });
+        }*/
+        
     }
 
     /**
@@ -96,24 +138,32 @@ class UsersGamesController extends AppController
      * @return \Cake\Network\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function edit($id = null, $user_id)
+    public function edit($id = null, $user_id, $meet)
     {
-        $usersGame = $this->UsersGames->get($id, [
-            'contain' => []
-        ]);
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $usersGame = $this->UsersGames->patchEntity($usersGame, $this->request->data);
+        
+        $this->request->allowMethod(['post']);
+        
+        $usersGame = $this->UsersGames->get($id);
+        $usersGame->challenged = $user_id;
+        $usersGame->state = 1;
+        $usersGame->meet = strtotime($meet);
+        
+        if($usersGame->user_id == $user_id){
+            $this->Flash->error(__('Ocurrió un error, no puedes aceptar tu propio reto. Presiona alquilar para reservar la cancha completa.'));
+            return $this->redirect(['action' => 'index']);
+        }else{
             if ($this->UsersGames->save($usersGame)) {
-                $this->Flash->success(__('The users game has been saved.'));
-
+                $this->Flash->success(__('Reto confirmado.'));
+    
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The users game could not be saved. Please, try again.'));
+            $this->Flash->error(__('Ocurrió un error, intente nuevamente.'));
+            return $this->redirect(['action' => 'index']);
         }
-        $users = $this->UsersGames->Users->find('list', ['limit' => 200]);
-        $fields = $this->UsersGames->Fields->find('list', ['limit' => 200]);
-        $this->set(compact('usersGame', 'users', 'fields'));
-        $this->set('_serialize', ['usersGame']);
+        
+        
+        
+        
     }
 
     /**
@@ -128,11 +178,21 @@ class UsersGamesController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $usersGame = $this->UsersGames->get($id);
         if ($this->UsersGames->delete($usersGame)) {
-            $this->Flash->success(__('The users game has been deleted.'));
+            $this->Flash->success(__('Partido eliminado con exito.'));
         } else {
-            $this->Flash->error(__('The users game could not be deleted. Please, try again.'));
+            $this->Flash->error(__('Ocurrió un error, intente nuevamente.'));
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+    
+    
+    public function deleteReto($userGame){
+        if ($this->UsersGames->delete($usersGame)) {
+            return true;
+        } else {
+            return false;
+        }
+        
     }
 }

@@ -74,6 +74,17 @@ class UsersController extends AppController
             ->where(['UsersFields.user_id' => $id]);
         } );
         
+        foreach($user->users_games as $game){
+            $cancha = $this->Users->Fields->get($game->field_id, ['fields' => ['name']]);
+            $game->field_name = $cancha;
+            if(isset($game->challenged)){
+                $retador = $this->Users->get($game->challenged, ['fields' => ['name']]);
+                $game->challenger_name = $retador;
+            }
+            
+            
+        }
+        
         
         $this->set(['user'=> $user, 'fields' => $myFields->toArray(), 'favorite_fields' => $query->toArray()]);
         

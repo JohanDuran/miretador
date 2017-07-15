@@ -64,30 +64,29 @@
                                 <td><?php echo $i. ':00'; 
                                     ?>
                                 </td>
-                                <?php foreach ( $periodo as $dt ): 
-                                    
-                                    if($i < 10){
-                                        $fecha = $dt->format('Y-m-d') . ' 0' . $i;
-                                    }else{
-                                        $fecha = $dt->format('Y-m-d') . ' ' . $i;
-                                    }
-                                    
-                                    if(isset($partidos[$fecha])): 
-                                ?>
-                                       <td> </td> 
-                                    <?php else: ?>
-                                    <td>
-                                    <?php if(!isset($current_user)):?>
-                                        <?= $this->Html->link('Disponible', ['controller' => 'Users', 'action' => 'login'], ['class' => 'disponible_link']); ?>
-                                    <?php else: 
-                                        //$date = date_create_from_format('Y-m-d H', $fecha);
+                                    <?php foreach ( $periodo as $dt ): 
+                                        
+                                        if($i < 10){
+                                            $fecha = $dt->format('Y-m-d') . ' 0' . $i;
+                                        }else{
+                                            $fecha = $dt->format('Y-m-d') . ' ' . $i;
+                                        }
+                                        if(isset($partidos[$fecha])): 
                                     ?>
-                                            
-                                        <?= $this->Form->postLink('Reto', ['controller' => 'UsersGames', 'action' => 'add', $current_user['id'], $field->id, $fecha, 0], ['class' => 'reto_link']); ?>
-                                        </br>
-                                        <?= $this->Form->postLink('Alquilar', ['controller' => 'UsersGames', 'action' => 'add', $current_user['id'], $field->id, $fecha, 1], ['class' => 'alquilar_link']); ?>
-                                            
-                                            
+                                        <td> <?= $partidos[$fecha]->user->name ?>
+                                        <?php if(isset($partidos[$fecha]->challenger) ): ?>
+                                        </br>vs</br><?= $partidos[$fecha]->challenger->name ?><!-- Falta el segundo jugador -->
+                                        <?php endif; ?>
+                                        
+                                        </td> 
+                                    <?php else: ?>
+                                        <td>
+                                        <?php if(isset($current_user)):?>
+                                            <?= $this->Form->postLink('Reto', ['controller' => 'UsersGames', 'action' => 'add', $current_user['id'], $field->id, $fecha, 0], ['class' => 'reto_link']); ?>
+                                            </br>
+                                            <?= $this->Form->postLink('Alquilar', ['controller' => 'UsersGames', 'action' => 'add', $current_user['id'], $field->id, $fecha, 1], ['class' => 'alquilar_link']); ?>
+                                        <?php else: ?>
+                                            <?= $this->Html->link('Disponible', ['controller' => 'Users', 'action' => 'login'], ['class' => 'disponible_link']); ?>
                                     <?php endif; ?>
                                     </td>
                                         
@@ -107,6 +106,7 @@
             <div class="col-md-4">
                 
                 <h5 class="title">Esperando retador</h5>
+                <?php if(count($retos)): ?>
                 <div class="table-responsive">
                 <table class="table table-hover">
                     <thead>
@@ -117,29 +117,37 @@
                         </tr>
                     </thead>
                     <tbody>
+                        
+                        <?php foreach ($retos as $reto): ?>
                         <tr>
-                            <td>Jugador 9</td>
-                            <td>10/07/17 15:00</td>
-                            <td><a href="#" class ="aceptar">Aceptar reto</a></td>
+                            <td><?= h($reto->user->name); ?></td>
+                            <td>
+                                <?php
+                                echo $reto->meet->i18nFormat('dd/MM/yyyy HH:mm', null, 'es_ES');
+                                ?>
+                            </td>
+                            <td>
+                                <?php if(isset($current_user)):?>
+                                    <?= $this->Form->postLink('Aceptar reto', ['controller' => 'UsersGames', 'action' => 'edit', $reto->id, $current_user['id'], $reto->meet->i18nFormat('dd-MM-yyyy HH:mm:ss', null, 'es_ES')], ['class' => 'aceptar']); ?>
+                                <?php else: ?>
+                                    <?= $this->Html->link('Aceptar reto', ['controller' => 'Users', 'action' => 'login'], ['class' => 'disponible_link']); ?>
+                                <?php endif; ?>     
+                            </td>
                         </tr>
-                        <tr>
-                            <td>Jugador 10</td>
-                            <td>11/07/17 16:00</td>
-                            <td><a href="#" class ="aceptar">Aceptar reto</a></td>
-                        </tr>
-                         <tr>
-                            <td>Jugador 6</td>
-                            <td>15/07/17 16:00</td>
-                            <td><a href="#" class ="aceptar">Aceptar reto</a></td>
-                        </tr>
+                        
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
                 </div>
+                <?php else: ?>
+                <p>No se encuentran retos disponibles.</p>
+                <?php endif; ?>
                 
                 
             </div>
         </div>
     </div>
+    
     
 </main>
 
