@@ -31,8 +31,13 @@ if (Configure::read('debug')):
     $this->end();
 endif;
 ?>
-<h2><?= h($message) ?></h2>
-<p class="error">
-    <strong><?= __d('cake', 'Error') ?>: </strong>
-    <?= __d('cake', 'The requested address {0} was not found on this server.', "<strong>'{$url}'</strong>") ?>
-</p>
+
+<div class="container">
+    <div class="jumbotron">
+        <div class="text-center"><i class="fa fa-5x fa-frown-o" style="color:#d9534f;"></i></div>
+        <h1 class="text-center"><?= h($message) ?><p> </p><p><small class="text-center"><?= __d('cake', 'La dirección {0} No existe.', "<strong>'{$url}'</strong>") ?></small></p></h1>
+        <p class="text-center"><a class="btn btn_home" href="/"><i class="fa fa-home"></i> Ir a Home</a></p>
+    </div>
+</div>
+
+

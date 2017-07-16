@@ -14,6 +14,7 @@
         <ul class='footer-ul'>
           <li><?= $this->Html->link('Nuestra Historia',  ['controller' => 'Pages', 'action' => 'display', 'historia']); ?></li>
           <li><?= $this->Html->link('Nuestro Equipo',  ['controller' => 'Pages', 'action' => 'display', 'equipo']); ?></li>
+          <li><a href='#zbwid-4f314329'> Contáctenos</a></li>
           <li><a href='#'> Terminos y Condiciones</a></li>
           <li><a href='#'> Preguntas Frecuentes</a></li>
         </ul>
@@ -48,6 +49,7 @@
       <ul class='bottom_ul'>
         <li><?= $this->Html->link('MiRetador.com',  ['controller' => 'Pages', 'action' => 'display', 'home']); ?></li>
         <li><a href='#'>Sobre nosotros</a></li>
+        <li><a href='#zbwid-4f314329'>Contáctenos</a></li>
         <li><a href='#'>Faq's</a></li>
       </ul>
     </div>

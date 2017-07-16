@@ -7,35 +7,38 @@
   $this->Html->script([ 'calendar']);
 ?>
 
-
+<?php
+    echo $this->Form->hidden('latitude',['id'=>'lat','value'=>$field->latitude]);
+    echo $this->Form->hidden('longitude',['id'=>'lng','value'=>$field->longitude]);
+?>
 <section id="perfil_cancha">
     <?= $this->element('fields/fieldProfile'); ?>
     <div id="sticky" class="container">
         <ul class="nav nav-tabs nav-menu">
-            <?php if(count($favorite) > 0): ?>
+            <?php if(count($favorite) > 0 && isset($current_user['id'])): ?>
             <span id='spn_agregada'>
-                <li class = "btn btn-azul btn-fav" id="btn_agregada" onclick="deleteFavorite('<?=Cake\Routing\Router::url(array('controller' => 'UsersFields', 'action' => 'delete',$favorite['id']));?>')">
+                <li class = "btn btn-azul btn-fav" id="btn_agregada" onclick="deleteFavorite('<?=Cake\Routing\Router::url(array('controller' => 'UsersFields', 'action' => 'deleteAjax',$favorite['id']));?>')">
                     <i class="fa fa-futbol-o" aria-hidden="true"></i>
                     Agregada
                 </li>                
             </span>
             
             <span id='spn_me_gusta' hidden>
-                <li class = "btn btn-verde btn-fav" id="btn_me_gusta" onclick="addFavorite('<?=Cake\Routing\Router::url(array('controller' => 'UsersFields', 'action' => 'add',$current_user['id'], $field->id));?>')">
+                <li class = "btn btn-verde btn-fav" id="btn_me_gusta" onclick="addFavorite('<?=Cake\Routing\Router::url(array('controller' => 'UsersFields', 'action' => 'addAjax',$current_user['id'], $field->id));?>')">
                     <i class="fa fa-futbol-o" aria-hidden="true"></i>
                     Me gusta
                 </li>
             </span>    
-            <?php else:?>
+            <?php elseif(isset($current_user['id'])):?>
             <span id='spn_agregada' hidden>
-                <li class = "btn btn-azul btn-fav" id="btn_agregada" onclick="deleteFavorite('<?=Cake\Routing\Router::url(array('controller' => 'UsersFields', 'action' => 'delete',$favorite['id']));?>')">
+                <li class = "btn btn-azul btn-fav" id="btn_agregada" onclick="deleteFavorite('<?=Cake\Routing\Router::url(array('controller' => 'UsersFields', 'action' => 'deleteAjax',$favorite['id']));?>')">
                     <i class="fa fa-futbol-o" aria-hidden="true"></i>
                     Agregada
                 </li>                
             </span>
             
             <span id='spn_me_gusta'>
-                <li class = "btn btn-verde btn-fav" id="btn_me_gusta" onclick="addFavorite('<?=Cake\Routing\Router::url(array('controller' => 'UsersFields', 'action' => 'add',$current_user['id'], $field->id));?>')">
+                <li class = "btn btn-verde btn-fav" id="btn_me_gusta" onclick="addFavorite('<?=Cake\Routing\Router::url(array('controller' => 'UsersFields', 'action' => 'addAjax',$current_user['id'], $field->id));?>')">
                     <i class="fa fa-futbol-o" aria-hidden="true"></i>
                     Me gusta
                 </li>
@@ -90,7 +93,7 @@
                                         }else{
                                             $fecha = $dt->format('Y-m-d') . ' ' . $i;
                                         }
-                                        if(isset($partidos[$fecha])): 
+                                        if(isset($partidos[$fecha]) && $partidos[$fecha]->state == 1 ): 
                                     ?>
                                         <td><?php
                                             $name = explode(" ",$partidos[$fecha]->user->name);
@@ -107,11 +110,15 @@
                                         <?php else: ?>
                                             <td>
                                             <?php if(isset($current_user)):?>
-                                            <?= $this->Form->postLink('Reto', ['controller' => 'UsersGames', 'action' => 'add', $current_user['id'], $field->id, $fecha, 0], ['class' => 'reto_link']); ?>
-                                                </br>
                                                 <?= $this->Form->postLink('Alquilar', ['controller' => 'UsersGames', 'action' => 'add', $current_user['id'], $field->id, $fecha, 1], ['class' => 'alquilar_link']); ?>
+                                                <?php
+                                                    if(!isset($partidos[$fecha])){
+                                                        echo "</br>";
+                                                        echo $this->Form->postLink('Reto', ['controller' => 'UsersGames', 'action' => 'add', $current_user['id'], $field->id, $fecha, 0], ['class' => 'reto_link']);
+                                                    }
+                                                ?>
                                             <?php else: ?>
-                                                <?= $this->Html->link('Disponible', ['controller' => 'Users', 'action' => 'login'], ['class' => 'disponible_link']); ?>
+                                                <?= $this->Html->link('Disponible', ['controller' => 'Users', 'action' => 'login', 'state'=>$field->id], ['class' => 'disponible_link']); ?>
                                             <?php endif; ?>
                                             </td>
                                         
@@ -174,6 +181,9 @@
                 
             </div>
         </div>
+        <div class="row" id="map">
+        </div>
+        
     </div>
     
     

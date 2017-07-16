@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\ORM\TableRegistry;
 
 /**
  * UsersGames Controller
@@ -69,7 +70,8 @@ class UsersGamesController extends AppController
      */
     public function add($user_id, $field_id, $meet, $state)
     {
-        $this->request->allowMethod(['post']);
+        //echo $this->referer();
+        $this->request->allowMethod(['post','get']);
         $usersGame = $this->UsersGames->newEntity();
         $meet = $meet.":00:00";
         $meet = strtotime($meet);
@@ -77,59 +79,54 @@ class UsersGamesController extends AppController
         $usersGame->field_id = $field_id;
         $usersGame->state = $state;
         $usersGame->meet = $meet;
-        
-        
-        if ($this->UsersGames->save($usersGame)) {
-            $this->Flash->success(__('Partido agregado con exito.'));
-            return $this->redirect(['controller'=>'Fields', 'action' => 'visit_view', $field_id]);
-        }
-        $this->Flash->error(__('Ocurrió un error, intente nuevamente.'));
-        return $this->redirect(['controller'=>'Fields', 'action' => 'visit_view', $field_id]);
-        
-        
-        //Tenia fé de qe funcionara. jeje
-        /* 
-        
+    
         $query = $this->UsersGames->find()
-                        ->where(function ($exp, $q) use ($meet){
-                        return $exp->eq('meet', $meet);
-                        })
-                        ->andwhere(function ($exp, $q) use ($field_id) {
+                        ->where(function ($exp, $q) use ($field_id) {
                             return $exp->eq('field_id',$field_id);
+                        })
+                        ->andwhere(function ($exp, $q) use ($meet){
+                        return $exp->eq('meet', $meet);
                         });
                         
-        $query = $query->toArray();
+        $partido = $query->first();
+        
+        $usersGamesTable = TableRegistry::get('UsersGames');
                         
-        if(isset($query)){
-            foreach($query as $partido){
-                if($partido->state == 1){
-                    $this->Flash->error(__('Ya existe un partido a esta hora. Por favor busque otra hora.'));
-                }elseif ($partido->state == 0) {
-                    $this->UsersGames->getConnection()->transactional(function () use ($partido) {
-                        if(deleteReto($partido)){
-                            if ($this->UsersGames->save($usersGame)) {
+        if(isset($partido)){
+            if($partido->state == 1){
+                $this->Flash->error(__('Ya existe un partido a esta hora. Por favor busque otra hora.'));
+                return $this->redirect(['controller' => 'Fields', 'action' => 'visit_view', $field_id]);
+            }elseif ($partido->state == 0) {
+                $usersGamesTable->connection()->transactional(function () use ($partido, $usersGame, $usersGamesTable, $field_id, $state) {
+                    if($state == 1){
+                        if($usersGamesTable->delete($partido)){
+                            if ($usersGamesTable->save($usersGame)) {
                                 $this->Flash->success(__('Partido agregado con exito.'));
-                    
-                                return $this->redirect(['action' => 'index']);
+                                return $this->redirect(['controller' => 'Fields', 'action' => 'visit_view', $field_id]);
                             }
                             $this->Flash->error(__('Ocurrió un error, intente nuevamente.'));
+                            return $this->redirect(['controller' => 'Fields', 'action' => 'visit_view', $field_id]);
                         }else{
                             $this->Flash->error(__('Ocurrió un error, intente nuevamente.'));
+                            return $this->redirect(['controller' => 'Fields', 'action' => 'visit_view', $field_id]);
                         }
-                    });
-                }
+                    }else{
+                        $this->Flash->error(__('No puedes crear otro reto a esta hora.'));
+                        return $this->redirect(['controller' => 'Fields', 'action' => 'visit_view', $field_id]);
+                    }
+                    
+                });
             }
         }else{
-            $this->UsersGames->getConnection()->transactional(function () use ($partido) {
-                if ($this->UsersGames->save($usersGame)) {
+            $usersGamesTable->connection()->transactional(function() use ($usersGamesTable, $usersGame, $field_id){
+                if ($usersGamesTable->save($usersGame)) {
                     $this->Flash->success(__('Partido agregado con exito.'));
-        
-                    return $this->redirect(['action' => 'index']);
+                    return $this->redirect(['controller' => 'Fields', 'action' => 'visit_view', $field_id]);
                 }
-                $this->Flash->error(__('Ocurrió un error, intente nuevamente.'));  
+                $this->Flash->error(__('Ocurrió un error, intente nuevamente.')); 
+                return $this->redirect(['controller' => 'Fields', 'action' => 'visit_view', $field_id]);
             });
-        }*/
-        
+        }
     }
 
     /**
@@ -150,7 +147,43 @@ class UsersGamesController extends AppController
         $usersGame->meet = strtotime($meet);
         $field_id = $usersGame->field_id;
         
-        if($usersGame->user_id == $user_id){
+        $query = $this->UsersGames->find()
+                        ->where(function ($exp, $q) use ($field_id) {
+                            return $exp->eq('field_id',$field_id);
+                        })
+                        ->andwhere(function ($exp, $q) use ($meet){
+                        return $exp->eq('meet', strtotime($meet));
+                        });
+                        
+        $partido = $query->first();
+        
+        $usersGamesTable = TableRegistry::get('UsersGames');
+        
+        if(isset($partido)){
+            if($partido->state == 1){
+                $this->Flash->error(__('El partido ya ha sido confirmado. Por favor busque otra hora.'));
+                return $this->redirect(['controller' => 'Fields', 'action' => 'visit_view', $field_id]);
+            }elseif ($partido->state == 0) {
+                if($usersGame->user_id == $user_id){
+                    $this->Flash->error(__('Ocurrió un error, no puedes aceptar tu propio reto. Presiona alquilar para reservar la cancha completa.'));
+                    return $this->redirect(['controller'=>'Fields', 'action' => 'visit_view', $field_id]);
+                }else{
+                    $usersGamesTable->connection()->transactional(function () use ($usersGame, $usersGamesTable, $field_id) {
+                        if ($usersGamesTable->save($usersGame)) {
+                            $this->Flash->success(__('Partido agregado con exito.'));
+                            return $this->redirect(['controller' => 'Fields', 'action' => 'visit_view', $field_id]);
+                        }
+                        $this->Flash->error(__('Ocurrió un error, intente nuevamente.'));
+                        return $this->redirect(['controller' => 'Fields', 'action' => 'visit_view', $field_id]);
+                    });
+                }
+            }
+        }
+        
+        
+        
+        
+        /*if($usersGame->user_id == $user_id){
             $this->Flash->error(__('Ocurrió un error, no puedes aceptar tu propio reto. Presiona alquilar para reservar la cancha completa.'));
             return $this->redirect(['controller'=>'Fields', 'action' => 'visit_view', $field_id]);
         }else{
@@ -161,11 +194,7 @@ class UsersGamesController extends AppController
             }
             $this->Flash->error(__('Ocurrió un error, intente nuevamente.'));
             return $this->redirect(['controller'=>'Fields', 'action' => 'visit_view', $field_id]);
-        }
-        
-        
-        
-        
+        } */
     }
 
     /**
@@ -203,7 +232,6 @@ class UsersGamesController extends AppController
         if ($this->request->is('ajax')) {
             $this->viewBuilder()->autoLayout();
             $this->autoRender = false;
-            //$users_games = $this->loadModel('UsersGames');
             $today = new \DateTime('NOW');
             $today->setTimezone(new \DateTimeZone('America/Costa_Rica'));
             
@@ -231,11 +259,8 @@ class UsersGamesController extends AppController
                 $retado = $this->UsersGames->Users->get($game->user_id, ['fields' => ['name']]);
                 $game->challenged_name = $retado;
             }
-/*          $handle = fopen("prueba.txt",'w');
-            fwrite($handle,json_encode($ultimosPartidos));
-            fclose($handle);*/
+
             echo json_encode($ultimosPartidos);
-            //$this->set(['games' => $ultimosPartidos]);        
         }else{
             $this->Flash->error(__('Ocurrió un error.'));
             return $this->redirect(['controller'=>'Pages', 'action' => 'display', 'home']);

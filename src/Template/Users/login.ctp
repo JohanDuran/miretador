@@ -55,7 +55,11 @@ $cakeDescription = 'Mi Retador | Login';
             <!--Form with header-->
             <div class="form">
             
-            
+                <?php
+                    $state['state']=isset($state['state'])?$state['state']:-1;
+                    echo $this->Form->hidden('lastPage', ['value'=>$state['state']])
+                ?>
+
                 <div class="form-group">
                     
                     <?= $this->Form->input('email', ['class' => 'form-control input-lg', 'placeholder' => 'Correo electrónico', 'label' => false, 'required']) ?>
@@ -68,7 +72,7 @@ $cakeDescription = 'Mi Retador | Login';
                 </div>
                 
                 <div class="text-xs-center">
-                    <?= $this->Form->submit('Ingresar', ['class' => 'btn btn-deep btn-green' ]) ?>
+                    <?= $this->Form->submit('Ingresar' ,['class' => 'btn btn-deep btn-green' ]) ?>
                     <?= $this->Html->link('Registrarse', ['controller' => 'Users', 'action' => 'add' ], ['class' => 'btn btn-deep btn-blue']) ?>
                 </div>
             

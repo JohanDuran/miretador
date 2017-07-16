@@ -116,7 +116,7 @@
                                 <span><span class="price_number">¢ <?= $this->Number->format($field->price)?></span> <br class="vista-desktop">por equipo.</span>
                             </div>
                         </div>
-                        <div class="row info_principal border_2 border_bottom_none">
+                        <div class="row info_principal border_2">
                             <div class="col-sm-7 description">
                                 <span>
                                     <?php
@@ -134,11 +134,6 @@
                             </div>
                             <div class="col-sm-5 schedule">
                                 <span>Abierto desde las <?= h($field->start) ?> hasta las <?= h($field->finish) ?> horas.</span>
-                            </div>
-                        </div>
-                        <div class="row border_2">
-                            <div class="col-xs-12">
-                                Mapa
                             </div>
                         </div>
                     </div>

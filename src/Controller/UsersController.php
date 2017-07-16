@@ -244,10 +244,18 @@ class UsersController extends AppController
     
     public function login(){
         if($this->request->is('post')){
+            //Se obtiene el lastPage para saber si tenemos que redireccionar a alguna página
+            $data = $this->request->data;
+            $lastPage = $data['lastPage'];
+            unset($data['lastPage']);//se elimina para no traer problemas al autentificar
             $user = $this->Auth->identify();
             if($user){
                 $this->Auth->setUser($user);
-                return $this->redirect($this->Auth->redirectUrl());
+                if($lastPage!=-1){//-1 indica que no se redirecciona a ninguna parte
+                    return $this->redirect(['controller'=>'Fields', 'action' => 'visit_view', $lastPage]);
+                }else{
+                    return $this->redirect($this->Auth->redirectUrl());    
+                }
             }
             else{
                 $this->Flash->error('Datos invalidos, por favor intente nuevamente.', ['key' => 'auth']);
@@ -259,6 +267,12 @@ class UsersController extends AppController
             return $this->redirect(['controller' => 'Users', 'action' => 'view' , $this->Auth->user('id') ]);
         }
         
+        //Controla la página de la que proviene la petición para visit_view
+        if($this->request->is('GET')){
+            $state = ['state'=>$this->request->query('state')]; 
+            $this->set(compact('state'));
+            $this->set('_serialize', ['state']);
+        }
     }
     
     public function home(){

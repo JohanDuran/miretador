@@ -22,25 +22,23 @@
     </title>
     <?= $this->Html->meta('icon') ?>
 
-    <?= $this->Html->css('base.css') ?>
-    <?= $this->Html->css('cake.css') ?>
+    <?= $this->Html->css(['bootstrap', 'style','https://fonts.googleapis.com/icon?family=Material+Icons','browser','//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css']) ?>
+    <?= $this->Html->script([ 'jquery-3.2.1.min', 'bootstrap', 'bootstrap-filestyle.min', 'https://use.fontawesome.com/0394caa6cc.js', '//code.jquery.com/jquery-1.10.2.js','//code.jquery.com/ui/1.11.4/jquery-ui.js','//code.jquery.com/ui/1.11.4/jquery-ui.js']) ?>
+
 
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
 </head>
 <body>
+    
+    
+    
     <div id='container'>
-        <div id='header'>
-            <h1><?= __('Error') ?></h1>
-        </div>
         <div id='content'>
             <?= $this->Flash->render() ?>
 
             <?= $this->fetch('content') ?>
-        </div>
-        <div id='footer'>
-            <?= $this->Html->link(__('Back'), 'javascript:history.back()') ?>
         </div>
     </div>
 </body>

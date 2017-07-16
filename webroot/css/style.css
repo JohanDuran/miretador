@@ -14,6 +14,18 @@ margin-top: 100px;
     font-weight: bold;
 }
 
+.btn_home{
+    color: white;
+    background-color: #00BFA5;
+    border: none;
+}
+.btn_home:hover, .btn_home:active, .btn_home:focus{
+    color: white;
+    background-color: #008C79;
+    border: none;
+    outline: none;
+}
+
     /*---------------------------
     SECTION PASOS_CONFIRMADOS
     ----------------------------*/

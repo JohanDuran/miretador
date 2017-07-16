@@ -193,9 +193,6 @@ class FieldsController extends AppController
                     })
                     ->andwhere(function ($exp, $q) use ($id) {
                         return $exp->eq('field_id',$id);
-                    })
-                    ->andwhere(function ($exp, $q) {
-                        return $exp->eq('state',1);
                     });
                     
         $confirmados = $confirmados->toArray();

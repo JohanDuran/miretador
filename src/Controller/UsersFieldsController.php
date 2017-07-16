@@ -147,7 +147,7 @@ class UsersFieldsController extends AppController
     
     
     //AJAX
-    public function add($user_id,$field_id) {
+    public function addAjax($user_id,$field_id) {
 
         if ($this->request->is('ajax')) {
             $this->viewBuilder()->autoLayout();
@@ -171,7 +171,7 @@ class UsersFieldsController extends AppController
     }
     
         //AJAX
-        public function delete($id) {
+        public function deleteAjax($id) {
         if ($this->request->is('ajax')) {
             $this->viewBuilder()->autoLayout();
             $this->autoRender = false;

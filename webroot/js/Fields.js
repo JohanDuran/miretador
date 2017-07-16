@@ -1,6 +1,21 @@
 var map; //mapa de google global
 var marker;
 
+//mapa de google para la función de agregar, utiliza ubicación del usuario para brindar cercanía del lugar
+function initMapFields_view() {
+    alert("initMapFields_view");
+    var myLatLng = {lat: 10.071137, lng: -84.112214};
+    initMap(myLatLng);
+}
+
+//mapa de google para la función de agregar, utiliza ubicación del usuario para brindar cercanía del lugar
+function initMapFields_visitView() {
+    var lat = parseFloat(document.getElementById("lat").value);
+    var lng = parseFloat(document.getElementById("lng").value);
+    alert("initMapFields_visit_view"+lat+" "+lng);
+    var myLatLng = {lat: lat, lng: lng};
+    initMap(myLatLng);
+}
 
 //mapa de google para la función de agregar, utiliza ubicación del usuario para brindar cercanía del lugar
 function initMapFields_add() {
@@ -38,7 +53,7 @@ function initMapFields_edit() {
 }
 
 
-//inicializar el mapa general, común a
+//inicializar el mapa general
 function initMap(myLatLng) {
     map = new google.maps.Map(document.getElementById('map'), {
       zoom: 12,

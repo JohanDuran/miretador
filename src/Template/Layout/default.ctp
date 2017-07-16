@@ -47,7 +47,7 @@ $cakeDescription = 'Mi Retador | ';
     
     <!--Para las vistas que contienen mapa dicha vista se encargar de cargar el autocompletado, en caso de no tener mapa se carga solamente el autocompletado-->
     <?php
-    $mapFields=['add','edit'];
+    $mapFields=['add','edit','view','visitView'];
     if($this->request->controller=='Fields'):?>
             <?php if(in_array($this->request->action,$mapFields)):?>
                 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDW6tU8THzd8Q1jCq1TfU7uO1rsYUYTaVA&libraries=places&callback=<?='initMap'.$this->request->controller.'_'.$this->request->action?>"></script>

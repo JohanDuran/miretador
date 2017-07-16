@@ -125,9 +125,9 @@ $this->assign('title', $field->name);
                     </tbody>
                 </table>
                 </div>
-                
-                
             </div>
+        </div>
+        <div class="row" id="map">
         </div>
     </div>
 </section>
