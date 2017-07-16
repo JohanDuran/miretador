@@ -68,25 +68,88 @@ class UsersController extends AppController
         //$favoritesFields = $this->Users->Fields->find('all', ['conditions'=>['Fields.id'=>array_values($favorites)], 'fields'=>['Fields.id','Fields.name']]);
         //$favoritesFields = $this->Users->Fields->find('favoriteFields',['user' => $user]);
         
+        
         $query = $fields->find()->contain('UsersFields', function ($q) {
         return $q
             ->select(['field_id'])
             ->where(['UsersFields.user_id' => $id]);
         } );
         
-        foreach($user->users_games as $game){
+        
+        $today = new \DateTime('NOW');
+        
+        $today->setTimezone(new \DateTimeZone('America/Costa_Rica'));
+        //$today = $today->sub(new \DateInterval('PT6H'));
+        
+        
+
+        $users_games = $this->loadModel('UsersGames');
+        $confirmados = $users_games->find()->where(function ($exp) use ($id, $today) {
+                            $orConditions = $exp->or_(['user_id' => $id])
+                                ->eq('challenged', $id);
+                            return $exp
+                                ->add($orConditions)
+                                ->gt('meet', $today)
+                                ->eq('state', 1);
+                        })
+                        ->limit(5)
+                        ->order(['meet' => 'ASC']);
+                        
+                        
+                        
+        
+        
+        
+        
+        
+        
+        
+                    /*->where(function ($exp) use ($id) {
+                        return $exp->or_([
+                            'UsersGames.user_id' => $id,
+                            'UsersGames.challenged' => $id
+                        ]);
+                    })
+                    ->andwhere(function ($exp, $q) use ($today) {
+                        return $exp->gt('meet',$today);
+                    })
+                    ->andwhere(function ($exp, $q) {
+                        return $exp->eq('state',1);
+                    })
+                    ->limit(5)
+                    ->order(['meet' => 'ASC']);*/
+                    
+        $confirmados = $confirmados->toArray();
+        
+        /*
+        ->select(['field_id'])
+            ->where(['UsersFields.user_id' => $id])
+            ->andwhere(['meet >' => $today])
+            ->andwhere(['state' => 1])
+            ->limit(5)
+            ->order(['meet' => 'ASC']);
+        
+        */
+        
+        foreach($confirmados as $game){
             $cancha = $this->Users->Fields->get($game->field_id, ['fields' => ['name']]);
             $game->field_name = $cancha;
             if(isset($game->challenged)){
-                $retador = $this->Users->get($game->challenged, ['fields' => ['name']]);
+                if($game->challenged == $id){
+                    $retador = $this->Users->get($game->user_id, ['fields' => ['name']]);
+                }else{
+                    $retador = $this->Users->get($game->challenged, ['fields' => ['name']]);
+                }
+                
                 $game->challenger_name = $retador;
             }
             
             
         }
+        //print_r($confirmados);
         
         
-        $this->set(['user'=> $user, 'fields' => $myFields->toArray(), 'favorite_fields' => $query->toArray()]);
+        $this->set(['user'=> $user, 'fields' => $myFields->toArray(), 'favorite_fields' => $query->toArray(), 'games' => $confirmados]);
         
         
         /*$user = $this->Users->get($id, [

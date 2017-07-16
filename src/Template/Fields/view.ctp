@@ -1,4 +1,5 @@
 <?php
+use Cake\I18n\Time;
 /**
   * @var \App\View\AppView $this
   */
@@ -30,46 +31,68 @@
                     <thead>
                         <tr>
                             <th>Hora</th>
-                            <th>Lunes</br>10/07/17</th>
-                            <th>Martes</br>11/07/17</th>
-                            <th>Míercoles</br>12/07/17</th>
-                            <th>Jueves</br>13/07/17</th>
-                            <th>Viernes</br>14/07/17</th>
-                            <th>Sábado</br>15/07/17</th>
-                            <th>Domingo</br>16/07/17</th>
+                            <?php
+                                foreach ( $periodo as $dt ) :
+                            ?>
+                                <th>
+                                    <?php 
+                                        $now = Time::createFromTimestamp($dt->getTimestamp());
+                                        echo $now->i18nFormat('EEEE', null, 'es_ES');
+                                    ?>
+                                    </br>
+                                    <?php
+                                        echo $now->i18nFormat('dd/MM/yyyy', null, 'es_ES');
+                                    ?>
+                                    
+                                </th>
+                            <?php endforeach; ?>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>15:00</td>
-                            <td>Disponible</td>
-                            <td>Disponible</td>
-                            <td>Jugador 1</br>vs</br>Jugador 2</td>
-                            <td>Disponible</td>
-                            <td>Disponible</td>
-                            <td>Jugador 3</br>vs</br>Jugador 5</td>
-                            <td>Disponible</td>
-                        </tr>
-                        <tr>
-                            <td>16:00</td>
-                            <td>Jugador 6</br>vs</br>Jugador 7</td>
-                            <td>Disponible</td>
-                            <td>Disponible</td>
-                            <td>Disponible</td>
-                            <td>Disponible</td>
-                            <td>Disponible</td>
-                            <td>Disponible</td>
-                        </tr>
-                        <tr>
-                            <td>17:00</td>
-                            <td>Disponible</td>
-                            <td>Disponible</td>
-                            <td>Disponible</td>
-                            <td>Disponible</td>
-                            <td>Jugador 12</br>vs</br>Jugador 15</td>
-                            <td>Disponible</td>
-                            <td>Disponible</td>
-                        </tr>
+                        <?php for($i = $field->start; $i < $field->finish; $i++ ): ?>
+                            <tr>
+                                <td><?php echo $i. ':00'; 
+                                    ?>
+                                </td>
+                                    <?php foreach ( $periodo as $dt ):
+                                        
+                                           
+                                        if($i < 10){
+                                            $fecha = $dt->format('Y-m-d') . ' 0' . $i;
+                                        }else{
+                                            $fecha = $dt->format('Y-m-d') . ' ' . $i;
+                                        }
+                                        if(isset($partidos[$fecha])): 
+                                    ?>
+                                        <td> <?= $partidos[$fecha]->user->name ?>
+                                        <?php if(isset($partidos[$fecha]->challenger) ): ?>
+                                        </br>vs</br><?= $partidos[$fecha]->challenger->name ?><!-- Falta el segundo jugador -->
+                                        <?php endif; ?>
+                                        
+                                        </td> 
+                                    <?php else: ?>
+                                        <?php  $today = new \DateTime('NOW');
+                                        $today->setTimezone(new \DateTimeZone('America/Costa_Rica'));
+                                        
+                                        
+                                        if($today->format('Y-m-d H') >= $fecha):?>
+                                            <td></td>
+                                        <?php else: ?>
+                                            <td>
+                                                Disponible
+                                            </td>
+                                        
+                                        <?php endif; ?>
+                                        
+                                    
+                                    <?php endif; 
+                                    ?>
+                                
+                                <?php endforeach; ?>
+                            </tr>
+                        <?php endfor; ?>
+                        
+                        
                     </tbody>
                 </table>
                 </div>
@@ -87,18 +110,18 @@
                         </tr>
                     </thead>
                     <tbody>
+                        
+                        <?php foreach ($retos as $reto): ?>
                         <tr>
-                            <td>Jugador 9</td>
-                            <td>10/07/17 15:00</td>
+                            <td><?= h($reto->user->name); ?></td>
+                            <td>
+                                <?php
+                                echo $reto->meet->i18nFormat('dd/MM/yyyy HH:mm', null, 'es_ES');
+                                ?>
+                            </td>
                         </tr>
-                        <tr>
-                            <td>Jugador 10</td>
-                            <td>11/07/17 16:00</td>
-                        </tr>
-                         <tr>
-                            <td>Jugador 6</td>
-                            <td>15/07/17 16:00</td>
-                        </tr>
+                        
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
                 </div>

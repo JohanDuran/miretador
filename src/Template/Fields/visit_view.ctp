@@ -20,7 +20,7 @@
             <?php else:?>
             <li class = "btn btn-verde btn-fav">
                 <i class="fa fa-futbol-o" aria-hidden="true"></i>
-                <?= $this->Form->postLink(' Me gusta', ['controller' => 'UsersFields', 'action' => 'add', $current_user['id'], $field->id], [ 'id' => 'agregar_favorito']);?>
+                <?= $this->Form->postLink(' Me gusta', ['controller' => 'UsersFields', 'action' => 'add', $current_user['id'], $field->id], [ 'id' => 'agregar_favorito', 'onclic'=>"prueba();"]);?>
             </li>
             <?php endif;?>
           
@@ -64,8 +64,9 @@
                                 <td><?php echo $i. ':00'; 
                                     ?>
                                 </td>
-                                    <?php foreach ( $periodo as $dt ): 
+                                    <?php foreach ( $periodo as $dt ):
                                         
+                                           
                                         if($i < 10){
                                             $fecha = $dt->format('Y-m-d') . ' 0' . $i;
                                         }else{
@@ -80,16 +81,26 @@
                                         
                                         </td> 
                                     <?php else: ?>
-                                        <td>
-                                        <?php if(isset($current_user)):?>
-                                            <?= $this->Form->postLink('Reto', ['controller' => 'UsersGames', 'action' => 'add', $current_user['id'], $field->id, $fecha, 0], ['class' => 'reto_link']); ?>
-                                            </br>
-                                            <?= $this->Form->postLink('Alquilar', ['controller' => 'UsersGames', 'action' => 'add', $current_user['id'], $field->id, $fecha, 1], ['class' => 'alquilar_link']); ?>
-                                        <?php else: ?>
-                                            <?= $this->Html->link('Disponible', ['controller' => 'Users', 'action' => 'login'], ['class' => 'disponible_link']); ?>
-                                    <?php endif; ?>
-                                    </td>
+                                        <?php  $today = new \DateTime('NOW');
+                                        $today->setTimezone(new \DateTimeZone('America/Costa_Rica'));
                                         
+                                        
+                                        if($today->format('Y-m-d H') >= $fecha):?>
+                                            <td></td>
+                                        <?php else: ?>
+                                            <td>
+                                            <?php if(isset($current_user)):?>
+                                            <?= $this->Form->postLink('Reto', ['controller' => 'UsersGames', 'action' => 'add', $current_user['id'], $field->id, $fecha, 0], ['class' => 'reto_link']); ?>
+                                                </br>
+                                                <?= $this->Form->postLink('Alquilar', ['controller' => 'UsersGames', 'action' => 'add', $current_user['id'], $field->id, $fecha, 1], ['class' => 'alquilar_link']); ?>
+                                            <?php else: ?>
+                                                <?= $this->Html->link('Disponible', ['controller' => 'Users', 'action' => 'login'], ['class' => 'disponible_link']); ?>
+                                            <?php endif; ?>
+                                            </td>
+                                        
+                                        <?php endif; ?>
+                                        
+                                    
                                     <?php endif; 
                                     ?>
                                 

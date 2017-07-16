@@ -80,10 +80,10 @@ class UsersGamesController extends AppController
         
         if ($this->UsersGames->save($usersGame)) {
             $this->Flash->success(__('Partido agregado con exito.'));
-
-            return $this->redirect(['action' => 'index']);
+            return $this->redirect(['controller'=>'Fields', 'action' => 'visit_view', $field_id]);
         }
         $this->Flash->error(__('Ocurrió un error, intente nuevamente.'));
+        return $this->redirect(['controller'=>'Fields', 'action' => 'visit_view', $field_id]);
         
         
         //Tenia fé de qe funcionara. jeje
@@ -147,18 +147,19 @@ class UsersGamesController extends AppController
         $usersGame->challenged = $user_id;
         $usersGame->state = 1;
         $usersGame->meet = strtotime($meet);
+        $field_id = $usersGame->field_id;
         
         if($usersGame->user_id == $user_id){
             $this->Flash->error(__('Ocurrió un error, no puedes aceptar tu propio reto. Presiona alquilar para reservar la cancha completa.'));
-            return $this->redirect(['action' => 'index']);
+            return $this->redirect(['controller'=>'Fields', 'action' => 'visit_view', $field_id]);
         }else{
             if ($this->UsersGames->save($usersGame)) {
                 $this->Flash->success(__('Reto confirmado.'));
     
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(['controller'=>'Fields', 'action' => 'visit_view', $field_id]);
             }
             $this->Flash->error(__('Ocurrió un error, intente nuevamente.'));
-            return $this->redirect(['action' => 'index']);
+            return $this->redirect(['controller'=>'Fields', 'action' => 'visit_view', $field_id]);
         }
         
         
@@ -183,7 +184,7 @@ class UsersGamesController extends AppController
             $this->Flash->error(__('Ocurrió un error, intente nuevamente.'));
         }
 
-        return $this->redirect(['action' => 'index']);
+        return $this->redirect(['controller'=>'Fields', 'action' => 'visit_view', $field_id]);
     }
     
     

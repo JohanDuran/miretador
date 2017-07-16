@@ -103,8 +103,8 @@
                 
             </div>
             <div class="col-sm-8 last_games">
-                <h5 class="title">Partidos</h5>
-                <?php if (!empty($user->users_games)): ?>
+                <h5 class="title">Siguientes Partidos</h5>
+                <?php if (!empty($games)): ?>
                 <div class="table-responsive">
                 <table class="table table-hover">
                     <thead>
@@ -115,14 +115,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($user->users_games as $game): ?>
+                        <?php foreach ($games as $game): ?>
                         <tr>
                             <td><?=
                         h($game->meet->i18nFormat('dd/MM/yyyy HH:mm', null, 'es_ES')); 
                         ?></td>
-                            <td><?php if(isset($game->challenger_name)){
-                                h($game->challenger_name->name);
-                            } ?></td>
+                            <td><?php if(isset($game->challenger_name)):?>
+                                <?= h($game->challenger_name->name); ?>
+                            <?php endif; ?></td>
                             <td><?=
                         h($game->field_name->name); 
                         ?></td>

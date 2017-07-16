@@ -48,3 +48,9 @@ $(document).ready(function() {
     $("#autocompleteByName").val("");
     $("#autocompleteByName").attr("placeholder", "Ej: cancha Mí Retador...");    
 })
+
+
+
+function prueba() {
+    alert("RECIBIDO");
+}

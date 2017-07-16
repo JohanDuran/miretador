@@ -74,9 +74,81 @@ class FieldsController extends AppController
         ]);
         
         $owner = $this->Fields->Users->get($field->user_id, ['fields' => ['name']]);
-
-        $this->set(['field' => $field, 'owner' => $owner]);
+        
+        
+        
+        $today = new \DateTime('NOW');
+        $nextWeek = new \DateTime('NOW');
+        $today->setTimezone(new \DateTimeZone('America/Costa_Rica'));
+        $nextWeek->setTimezone(new \DateTimeZone('America/Costa_Rica'));
+        $nextWeek->add(new \DateInterval('P7D'));
+        
+        $today = new \DateTime($today->format('Y-m-d'));
+        $nextWeek = new \DateTime($nextWeek->format('Y-m-d'));
+        
+        $inicio = $field->start;
+        $fin = $field->finish;
+        
+        
+        $horario  = $fin - $inicio;
+        
+        //Consulta para llenar la tabla.
+        $confirmados = $this->Fields->UsersGames->find()
+                    ->contain([
+                        'Users' => function ($q) {
+                            return $q->autoFields(false)
+                                     ->select(['name']);
+                        }
+                    ])
+                    ->where(function ($exp, $q) use ($today, $nextWeek){
+                        return $exp->between('meet', $today, $nextWeek);
+                    })
+                    ->andwhere(function ($exp, $q) use ($id) {
+                        return $exp->eq('field_id',$id);
+                    })
+                    ->andwhere(function ($exp, $q) {
+                        return $exp->eq('state',1);
+                    });
+                    
+        $confirmados = $confirmados->toArray();
+        $arreglo_fechas_resutado = [];
+        
+        $retos = $this->Fields->UsersGames->find()
+                    ->contain([
+                        'Users' => function ($q) {
+                            return $q->autoFields(false)
+                                     ->select(['name']);
+                        }
+                    ])
+                    ->where(function ($exp, $q) use ($today, $nextWeek){
+                        return $exp->between('meet', $today, $nextWeek);
+                    })
+                    ->andwhere(function ($exp, $q) use ($id) {
+                        return $exp->eq('field_id',$id);
+                    })
+                    ->andwhere(function ($exp, $q) {
+                        return $exp->eq('state',0);
+                    });
+        
+        $retos = $retos->toArray();
+        
+        foreach($confirmados as $partido){
+            if(isset($partido->challenged)){
+                $retador = $partido->challenged;
+                $challeger = $this->Fields->Users->get($retador, ['fields' => ['name']]);
+                $partido->challenger = $challeger;
+            }
+            $arreglo_fechas_resutado[$partido->meet->i18nFormat('yyyy-MM-dd HH')] = $partido;
+        }
+        
+        
+        
+        $interval = new \DateInterval('P1D');
+        $period = new \DatePeriod($today, $interval, $nextWeek);
+        
+        $this->set(['field' => $field, 'owner' => $owner, 'partidos' => $arreglo_fechas_resutado, 'periodo' => $period, 'retos' => $retos]);
         $this->set('_serialize', ['field']);
+        
     }
     
     
@@ -95,10 +167,11 @@ class FieldsController extends AppController
         
         $today = new \DateTime('NOW');
         $nextWeek = new \DateTime('NOW');
-        //$today->setTimezone(new \DateTimeZone('America/Costa_Rica'));
-        //$nextWeek->setTimezone(new \DateTimeZone('America/Costa_Rica'));
+        $today->setTimezone(new \DateTimeZone('America/Costa_Rica'));
+        $nextWeek->setTimezone(new \DateTimeZone('America/Costa_Rica'));
         $nextWeek->add(new \DateInterval('P7D'));
         
+        $today = new \DateTime($today->format('Y-m-d'));
         $nextWeek = new \DateTime($nextWeek->format('Y-m-d'));
         
         $inicio = $field->start;
