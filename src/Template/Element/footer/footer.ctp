@@ -12,9 +12,8 @@
       <div class='col-md-2 col-sm-6 paddingtop-bottom'>
         <h6 class='heading7'>INFORMACIÓN</h6>
         <ul class='footer-ul'>
-          <li><a href='#'> Nuestra Historia</a></li>
-          <li><a href='#'> Nuestro Equipo</a></li>
-          <li><a href='#'> Contáctenos</a></li>
+          <li><?= $this->Html->link('Nuestra Historia',  ['controller' => 'Pages', 'action' => 'display', 'historia']); ?></li>
+          <li><?= $this->Html->link('Nuestro Equipo',  ['controller' => 'Pages', 'action' => 'display', 'equipo']); ?></li>
           <li><a href='#'> Terminos y Condiciones</a></li>
           <li><a href='#'> Preguntas Frecuentes</a></li>
         </ul>
@@ -33,6 +32,10 @@
       </div>
     </div>
   </div>
+  <script type="text/javascript">
+    (function(d,s,id){var z=d.createElement(s);z.type="text/javascript";z.id=id;z.async=true;z.src="//static.zotabox.com/4/6/46af1d8d4e29ceb84edbd39756dec4fd/widgets.js";var sz=d.getElementsByTagName(s)[0];sz.parentNode.insertBefore(z,sz)}(document,"script","zb-embed-code"));
+    </script>
+  
 </footer>
 <!--footer start from here-->
 
@@ -46,7 +49,6 @@
         <li><?= $this->Html->link('MiRetador.com',  ['controller' => 'Pages', 'action' => 'display', 'home']); ?></li>
         <li><a href='#'>Sobre nosotros</a></li>
         <li><a href='#'>Faq's</a></li>
-        <li><a href='#'>Contáctenos</a></li>
       </ul>
     </div>
   </div>

@@ -1,5 +1,6 @@
 <?php
 use Cake\I18n\Time;
+$this->assign('title', $field->name);
 /**
   * @var \App\View\AppView $this
   */
@@ -64,12 +65,11 @@ use Cake\I18n\Time;
                                         }
                                         if(isset($partidos[$fecha])): 
                                     ?>
-                                        <td> <?= $partidos[$fecha]->user->name ?>
-                                        <?php if(isset($partidos[$fecha]->challenger) ): ?>
-                                        </br>vs</br><?= $partidos[$fecha]->challenger->name ?><!-- Falta el segundo jugador -->
-                                        <?php endif; ?>
-                                        
-                                        </td> 
+                                        <td><?php
+                                            $name = explode(" ",$partidos[$fecha]->user->name);
+                                            echo $name[0] ?><?php if(isset($partidos[$fecha]->challenger) ): ?></br>vs</br><?php
+                                            $name = explode(" ",$partidos[$fecha]->challenger->name);
+                                            echo $name[0] ?><?php endif; ?></td>
                                     <?php else: ?>
                                         <?php  $today = new \DateTime('NOW');
                                         $today->setTimezone(new \DateTimeZone('America/Costa_Rica'));

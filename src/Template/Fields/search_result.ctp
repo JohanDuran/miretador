@@ -1,3 +1,11 @@
+<?php if(isset($name)){
+    $this->assign('title',  $name);  
+}  else{
+    $this->assign('title', 'Resultados');
+}
+
+?>
+
 <section id="busqueda">
     <div class="container">
         
@@ -18,8 +26,11 @@
                     echo $count ?></span> 
                 <div class ="titulo">
                     <span class ="resultados_titulo"> Resultados para:</span> 
-                    <span class ="resultados_para"> <?php if(isset($name)){
-                    h($name);}  ?></span>  <!-- Cambiar por la busqueda. -->
+                    <span class ="resultados_para"> <?php if(isset($name)):?>
+                    
+                    <?=h($name);?>
+                    <?php endif; ?>
+                    </span>  <!-- Cambiar por la busqueda. -->
                 </div>
             </div>
             
@@ -29,7 +40,7 @@
         
         
         <div class="filtros vista-desktop-wide">
-            <p>Aquí van los filtros.</p>
+            <p>Aquí van los filtros. </br> (proximamente.)</p>
         </div>
         <div class="resultados">
             <?php if(isset($byId)):?>
@@ -55,7 +66,7 @@
                             <span><span class="price_number">¢ <?= $this->Number->format($byId->price)?></span> <br class="vista-desktop">por equipo.</span>
                         </div>
                     </div>
-                    <div class="row info_principal border_2 border_bottom_none">
+                    <div class="row info_principal border_2 ">
                         <div class="col-sm-7 description">
                             <span>
                                 <?php
@@ -73,11 +84,6 @@
                         </div>
                         <div class="col-sm-5 schedule">
                             <span>Abierto desde las <span class = "bold"><?= h($byId->start) ?></span> hasta las <span class = "bold"><?= h($byId->finish) ?></span> horas.</span>
-                        </div>
-                    </div>
-                    <div class="row border_2">
-                        <div class="col-xs-12">
-                            Mapa
                         </div>
                     </div>
                     

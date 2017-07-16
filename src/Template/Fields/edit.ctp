@@ -1,4 +1,9 @@
 <?php
+$name = explode(" ", $field->name);
+$this->assign('title', 'Editar ' . $name[0]);
+?>
+
+<?php
 /**
   * @var \App\View\AppView $this
   */

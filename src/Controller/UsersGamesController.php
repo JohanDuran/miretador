@@ -14,18 +14,19 @@ class UsersGamesController extends AppController
     public function isAuthorized($user){
         if(isset($user['role']) and $user['role'] === 'user'){
             
-            if(in_array($this->request->action, [ 'add', 'edit'])){
+            if(in_array($this->request->action, [ 'add', 'edit','viewAjax'])){
                     return true;
-            }
-            
-            
-            
-            
+            }  
         }
         return parent::isAuthorized($user);
     }
 
-
+    public function beforeFilter(\Cake\Event\Event $event){
+        
+        parent::beforeFilter($event);
+        $this->Auth->allow(['add','viewAjax']);
+        
+    }
 
 
     /**
@@ -195,5 +196,49 @@ class UsersGamesController extends AppController
             return false;
         }
         
+    }
+    
+    public function viewAjax()
+    {
+        if ($this->request->is('ajax')) {
+            $this->viewBuilder()->autoLayout();
+            $this->autoRender = false;
+            //$users_games = $this->loadModel('UsersGames');
+            $today = new \DateTime('NOW');
+            $today->setTimezone(new \DateTimeZone('America/Costa_Rica'));
+            
+            $ultimosPartidos = $this->UsersGames->find()
+                            ->where(function ($exp, $q) use ($today){
+                                return $exp->gt('meet', $today);
+                            })
+                            ->limit(3)
+                            ->order(['id' => 'DESC']);
+    
+            $ultimosPartidos = $ultimosPartidos->toArray();
+            
+            foreach($ultimosPartidos as $game){
+                $cancha = $this->UsersGames->Fields->get($game->field_id, ['fields' => ['name']]);
+                $game->field_name = $cancha;
+                
+                $game->meet = $game->meet->format('d-m-Y / H:i');
+                
+                //nombre del jugador retador
+                if(isset($game->challenged)){
+                    $retador = $this->UsersGames->Users->get($game->challenged, ['fields' => ['name']]);
+                    $game->challenger_name = $retador;
+                }
+                //nombre del jugador retado
+                $retado = $this->UsersGames->Users->get($game->user_id, ['fields' => ['name']]);
+                $game->challenged_name = $retado;
+            }
+/*          $handle = fopen("prueba.txt",'w');
+            fwrite($handle,json_encode($ultimosPartidos));
+            fclose($handle);*/
+            echo json_encode($ultimosPartidos);
+            //$this->set(['games' => $ultimosPartidos]);        
+        }else{
+            $this->Flash->error(__('Ocurrió un error.'));
+            return $this->redirect(['controller'=>'Pages', 'action' => 'display', 'home']);
+        }
     }
 }

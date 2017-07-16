@@ -1,4 +1,8 @@
 <?php
+$this->assign('title', 'Canchas');
+?>
+
+<?php
 /**
   * @var \App\View\AppView $this
   */

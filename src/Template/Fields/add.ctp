@@ -1,3 +1,8 @@
+<?php
+$this->assign('title', 'Agregar cancha');
+?>
+
+
 <section id="agregar_cancha">
     <div class="container">
 <div class="fields form large-9 medium-8 columns content">

@@ -360,6 +360,8 @@ class FieldsController extends AppController
         return $this->redirect(['action' => 'index']);
     }
     
+
+    //AJAX
     public function autocompleteField() {
 
         if ($this->request->is('ajax')) {
@@ -377,6 +379,7 @@ class FieldsController extends AppController
             echo json_encode($resultsArr);
         }
     }
+    
     
     
     

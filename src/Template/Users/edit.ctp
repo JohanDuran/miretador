@@ -10,9 +10,8 @@ use Cake\Error\Debugger;
 use Cake\Network\Exception\NotFoundException;
 $this->layout = false;
 
-
-
-$cakeDescription = 'Mi Retador | Editar perfil';
+$name = explode(" ", $user->name);
+$cakeDescription = 'Mi Retador | Editar ' . $name[0];
 ?>
 
 <!DOCTYPE html>

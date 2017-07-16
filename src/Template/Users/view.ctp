@@ -1,3 +1,8 @@
+<?php
+$this->assign('title', $user->name);
+?>
+
+
 <section id="perfil">
     <div class="container-fluid user_profile">
         <div class="container" style="margin-top: 30px;">
@@ -120,8 +125,10 @@
                             <td><?=
                         h($game->meet->i18nFormat('dd/MM/yyyy HH:mm', null, 'es_ES')); 
                         ?></td>
-                            <td><?php if(isset($game->challenger_name)):?>
-                                <?= h($game->challenger_name->name); ?>
+                            <td><?php if(isset($game->challenger_name)):
+                                $name = explode(" ", $game->challenger_name->name);
+                                echo $name[0];
+                            ?>
                             <?php endif; ?></td>
                             <td><?=
                         h($game->field_name->name); 

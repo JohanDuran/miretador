@@ -1,5 +1,6 @@
 <?php
     use Cake\I18n\Time;
+    $this->assign('title', $field->name);
 /**
   * @var \App\View\AppView $this
   */
@@ -12,16 +13,33 @@
     <div id="sticky" class="container">
         <ul class="nav nav-tabs nav-menu">
             <?php if(count($favorite) > 0): ?>
-            <li class = "btn btn-azul btn-fav">
-                <i class="fa fa-futbol-o" aria-hidden="true"></i>
-                <?= $this->Form->postLink(' Agregada', ['controller' => 'UsersFields', 'action' => 'delete', $favorite['id']], [ 'id' => 'eliminar_favorito']);?>
-                
-            </li>
+            <span id='spn_agregada'>
+                <li class = "btn btn-azul btn-fav" id="btn_agregada" onclick="deleteFavorite('<?=Cake\Routing\Router::url(array('controller' => 'UsersFields', 'action' => 'delete',$favorite['id']));?>')">
+                    <i class="fa fa-futbol-o" aria-hidden="true"></i>
+                    Agregada
+                </li>                
+            </span>
+            
+            <span id='spn_me_gusta' hidden>
+                <li class = "btn btn-verde btn-fav" id="btn_me_gusta" onclick="addFavorite('<?=Cake\Routing\Router::url(array('controller' => 'UsersFields', 'action' => 'add',$current_user['id'], $field->id));?>')">
+                    <i class="fa fa-futbol-o" aria-hidden="true"></i>
+                    Me gusta
+                </li>
+            </span>    
             <?php else:?>
-            <li class = "btn btn-verde btn-fav">
-                <i class="fa fa-futbol-o" aria-hidden="true"></i>
-                <?= $this->Form->postLink(' Me gusta', ['controller' => 'UsersFields', 'action' => 'add', $current_user['id'], $field->id], [ 'id' => 'agregar_favorito', 'onclic'=>"prueba();"]);?>
-            </li>
+            <span id='spn_agregada' hidden>
+                <li class = "btn btn-azul btn-fav" id="btn_agregada" onclick="deleteFavorite('<?=Cake\Routing\Router::url(array('controller' => 'UsersFields', 'action' => 'delete',$favorite['id']));?>')">
+                    <i class="fa fa-futbol-o" aria-hidden="true"></i>
+                    Agregada
+                </li>                
+            </span>
+            
+            <span id='spn_me_gusta'>
+                <li class = "btn btn-verde btn-fav" id="btn_me_gusta" onclick="addFavorite('<?=Cake\Routing\Router::url(array('controller' => 'UsersFields', 'action' => 'add',$current_user['id'], $field->id));?>')">
+                    <i class="fa fa-futbol-o" aria-hidden="true"></i>
+                    Me gusta
+                </li>
+            </span> 
             <?php endif;?>
           
           
@@ -74,12 +92,11 @@
                                         }
                                         if(isset($partidos[$fecha])): 
                                     ?>
-                                        <td> <?= $partidos[$fecha]->user->name ?>
-                                        <?php if(isset($partidos[$fecha]->challenger) ): ?>
-                                        </br>vs</br><?= $partidos[$fecha]->challenger->name ?><!-- Falta el segundo jugador -->
-                                        <?php endif; ?>
-                                        
-                                        </td> 
+                                        <td><?php
+                                            $name = explode(" ",$partidos[$fecha]->user->name);
+                                            echo $name[0] ?><?php if(isset($partidos[$fecha]->challenger) ): ?></br>vs</br><?php
+                                            $name = explode(" ",$partidos[$fecha]->challenger->name);
+                                            echo $name[0] ?><?php endif; ?></td> 
                                     <?php else: ?>
                                         <?php  $today = new \DateTime('NOW');
                                         $today->setTimezone(new \DateTimeZone('America/Costa_Rica'));

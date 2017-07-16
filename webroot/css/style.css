@@ -671,10 +671,26 @@ margin-bottom: 0;}
 }
 
 
+#nuestra_historia{
+    text-align: justify;
+    margin: 1rem 0;
+}
+
+#nuestra_historia h4, #nuestra_historia h2{
+    color: #00BFA5;
+    padding: 1rem;
+} 
+
+#nuestra_historia .row, #nuestra_historia .col-sm-6 {
+    margin: 0;
+    padding: 0;
+}
+
+
+
+
 @media screen and (min-width: 767px) {
-    #busqueda .price, #busqueda .schedule{
-        text-align: right;
-    }
+    
 }
 
 
@@ -798,6 +814,17 @@ margin-bottom: 0;}
     *************************/
     #perfil_cancha .profile-head .description{
         padding-bottom: 1.1rem;
+    }
+    
+    #busqueda .price, #busqueda .schedule{
+        text-align: right;
+    }
+    
+    #nuestra_historia .left{
+        padding-left: 10px;
+    }
+    #nuestra_historia .right{
+        padding-right: 10px;
     }
     
     

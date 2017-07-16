@@ -29,7 +29,7 @@ $this->assign('title', 'Home');
                                                               <h5 class ="step-title">Agenda</h5>
                                                         </div>
                                                         <div class="caption vista-desktop">
-                                                                <p>Se parte de una gran comunidad de fiebres del futbol.</p>
+                                                                <p>Compare y elija la mejor cancha para hacer tu reservación. Simple y gratis.</p>
                                                         </div>
                                                 </div>
                                         </div>
@@ -41,7 +41,7 @@ $this->assign('title', 'Home');
                                                               <h5 class ="step-title">Juega</h5>
                                                         </div>
                                                         <div class="caption vista-desktop">
-                                                                <p>Se parte de una gran comunidad de fiebres del futbol.</p>
+                                                                <p>Presentate en la cancha a la hora reservada y juega.</p>
                                                         </div>
                                                 </div>
                                         </div>
@@ -58,22 +58,7 @@ $this->assign('title', 'Home');
                                             <th>Cancha</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr>
-                                                <td>Jugador 9</br>vs</br>Jugador 2</td>
-                                            <td>10/07/17 15:00</td>
-                                            <td>Cancha 1</td>
-                                        </tr>
-                                        <tr>
-                                                <td>Jugador 1</td>
-                                            <td>11/07/17 16:00</td>
-                                            <td>Cancha 2</td>
-                                        </tr>
-                                         <tr>
-                                                 <td>Jugador 3</br>vs</br>Jugador 5</td>
-                                            <td>15/07/17 16:00</td>
-                                            <td>Cancha 3</td>
-                                        </tr>
+                                    <tbody id='tbodyPartidos'>
                                     </tbody>
                                 </table>
                                 </div>
@@ -104,3 +89,5 @@ $this->assign('title', 'Home');
                 
         </div>
 </section>
+
+<script>cargarPartidos();</script>

@@ -88,7 +88,7 @@ class UsersFieldsController extends AppController
      * 
      * 
      */
-    public function add($user_id = null, $field_id = null )
+/*    public function add($user_id = null, $field_id = null )
     {
         $this->request->allowMethod(['post']);
         $usersField = $this->UsersFields->newEntity();
@@ -99,7 +99,7 @@ class UsersFieldsController extends AppController
 
                 return $this->redirect(['action' => 'index']);
             }
-    }
+    }*/
 
     /**
      * Edit method
@@ -135,7 +135,7 @@ class UsersFieldsController extends AppController
      * @return \Cake\Network\Response|null Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null)
+/*    public function delete($id = null)
     {
         $this->request->allowMethod(['post', 'delete']);
         $usersField = $this->UsersFields->get($id);
@@ -143,5 +143,51 @@ class UsersFieldsController extends AppController
         } 
 
         return $this->redirect(['action' => 'index']);
+    }*/
+    
+    
+    //AJAX
+    public function add($user_id,$field_id) {
+
+        if ($this->request->is('ajax')) {
+            $this->viewBuilder()->autoLayout();
+            $this->autoRender = false;
+            $usersField = $this->UsersFields->newEntity();
+            $usersField->user_id = $user_id;
+            $usersField->field_id = $field_id;
+        
+            if ($this->UsersFields->save($usersField)) {
+                $result = ['state'=>'success', 'id' => $usersField->id];
+            }else{
+                $result = ['state'=>'error'];
+            }
+            
+            echo json_encode($result);
+        }
+        else{
+            $this->Flash->error(__('Ocurrió un error.'));
+            return $this->redirect(['controller'=>'Fields', 'action' => 'visit-view', $field_id]);
+        }
+    }
+    
+        //AJAX
+        public function delete($id) {
+        if ($this->request->is('ajax')) {
+            $this->viewBuilder()->autoLayout();
+            $this->autoRender = false;
+            
+            $usersField = $this->UsersFields->get($id);
+            
+            if ($this->UsersFields->delete($usersField)) {
+                $result = ['state'=>'success'];
+            }else{
+                $result = ['state'=>'error'];
+            }
+            
+            echo json_encode($result);
+        }else{
+            $this->Flash->error(__('Ocurrió un error.'));
+            return $this->redirect(['controller'=>'Fields', 'action' => 'visit-view', $usersField->field_id]);
+        }
     }
 }
