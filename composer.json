@@ -11,7 +11,8 @@
         "cakephp/migrations": "@stable",
         "cakephp/plugin-installer": "*",
         "friendsofcake/bootstrap-ui": "^1.1",
-        "davidyell/proffer": "^0.8"
+        "davidyell/proffer": "^0.8",
+        "gourmet/email": "~3.0"
     },
     "require-dev": {
         "psy/psysh": "@stable",

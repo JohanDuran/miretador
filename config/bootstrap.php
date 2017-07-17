@@ -227,3 +227,4 @@ Plugin::load('BootstrapUI');
 
 Plugin::load('Proffer');
 Plugin::load('DebugKit');
+Plugin::load('Gourmet/Email');

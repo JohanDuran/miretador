@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\ORM\TableRegistry;
+use Cake\Mailer\Email;
 
 /**
  * UsersGames Controller
@@ -91,6 +92,8 @@ class UsersGamesController extends AppController
         $partido = $query->first();
         
         $usersGamesTable = TableRegistry::get('UsersGames');
+        $usersTable = TableRegistry::get('Users');
+        $fieldsTable = TableRegistry::get('Fields');
                         
         if(isset($partido)){
             if($partido->state == 1){
@@ -118,16 +121,41 @@ class UsersGamesController extends AppController
                 });
             }
         }else{
-            $usersGamesTable->connection()->transactional(function() use ($usersGamesTable, $usersGame, $field_id){
+            $usersGamesTable->connection()->transactional(function() use ($usersGamesTable, $usersTable, $fieldsTable, $usersGame, $field_id, $user_id){
                 if ($usersGamesTable->save($usersGame)) {
-                    $this->Flash->success(__('Partido agregado con exito.'));
+                    $this->Flash->success(__('Partido agregado con éxito.'));
+                   /* if($usersGame->state == 1){
+                        $userInfo = $usersTable->get($user_id);
+                        $cancha = $fieldsTable->get($field_id);
+                        $email = new Email();
+                        $email->to($userInfo->email);
+                        $email->template('confirmation');
+                        $email->viewVars(['user' => ['username' => $userInfo->name, 'fecha' => $usersGame->meet,  'fieldname' => $cancha->name]]);
+                        $email->send();
+                    }*/
+                    
+                    
+                    
                     return $this->redirect(['controller' => 'Fields', 'action' => 'visit_view', $field_id]);
+                    
+                    
                 }
                 $this->Flash->error(__('Ocurrió un error, intente nuevamente.')); 
                 return $this->redirect(['controller' => 'Fields', 'action' => 'visit_view', $field_id]);
             });
         }
     }
+    
+    
+    /*
+    $email = new Email();
+    $email->to('john@doe.com');
+    $email->template('welcome');
+    $email->viewVars(['user' => ['username' => 'johndoe']]);
+    $email->send();
+    */
+    
+    
 
     /**
      * Edit method

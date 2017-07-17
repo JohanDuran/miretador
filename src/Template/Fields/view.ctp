@@ -127,6 +127,8 @@ $this->assign('title', $field->name);
                 </div>
             </div>
         </div>
+        <input type="text" name="" id="latVisit" value="<?=$field->latitude ?>" hidden/>
+        <input type="text" name="" id="lngVisit" value="<?=$field->longitude ?>" hidden/>
         <div class="row" id="map">
         </div>
     </div>

@@ -7,10 +7,7 @@
   $this->Html->script([ 'calendar']);
 ?>
 
-<?php
-    echo $this->Form->hidden('latitude',['id'=>'lat','value'=>$field->latitude]);
-    echo $this->Form->hidden('longitude',['id'=>'lng','value'=>$field->longitude]);
-?>
+
 <section id="perfil_cancha">
     <?= $this->element('fields/fieldProfile'); ?>
     <div id="sticky" class="container">
@@ -176,10 +173,11 @@
                 </div>
                 <?php else: ?>
                 <p>No se encuentran retos disponibles.</p>
-                <?php endif; ?>
-                
-                
+                <?php endif; ?> 
             </div>
+        <input type="text" name="" id="latVisit" value="<?=$field->latitude ?>" hidden/>
+        <input type="text" name="" id="lngVisit" value="<?=$field->longitude ?>" hidden/>
+
         </div>
         <div class="row" id="map">
         </div>

@@ -1,20 +1,22 @@
 var map; //mapa de google global
 var marker;
 
-//mapa de google para la función de agregar, utiliza ubicación del usuario para brindar cercanía del lugar
+//mapa de google para la función de view, el marcador no se mueve y es cargado con la ubicación de la persona
 function initMapFields_view() {
-    alert("initMapFields_view");
-    var myLatLng = {lat: 10.071137, lng: -84.112214};
-    initMap(myLatLng);
+    initAutocomplete();
+    var lat = parseFloat($('#latVisit').val());
+    var lng = parseFloat($('#lngVisit').val());
+    var myLatLng = {lat: lat, lng: lng};
+    initMap(myLatLng,false);
 }
 
-//mapa de google para la función de agregar, utiliza ubicación del usuario para brindar cercanía del lugar
+//mapa de google para la función de VisitView, el marcador no se mueve y es cargado con la ubicación de la persona
 function initMapFields_visitView() {
-    var lat = parseFloat(document.getElementById("lat").value);
-    var lng = parseFloat(document.getElementById("lng").value);
-    alert("initMapFields_visit_view"+lat+" "+lng);
+    initAutocomplete();
+    var lat = parseFloat($('#latVisit').val());
+    var lng = parseFloat($('#lngVisit').val());
     var myLatLng = {lat: lat, lng: lng};
-    initMap(myLatLng);
+    initMap(myLatLng,false);
 }
 
 //mapa de google para la función de agregar, utiliza ubicación del usuario para brindar cercanía del lugar
@@ -22,7 +24,7 @@ function initMapFields_add() {
     initAutocomplete();
     //se crea el mapa centrado en un punto cualquiera
     var myLatLng = {lat: 10.071137, lng: -84.112214};
-    initMap(myLatLng);
+    initMap(myLatLng,true);
 
     //valor de lat y lng dentro del formulario
     $('#lat').val(myLatLng.lat);
@@ -47,14 +49,14 @@ function initMapFields_edit() {
     initAutocomplete();
     //se obtiene la ubicación de los input del formulario BD
     var myLatLng = {lat: parseFloat($('#lat').val()), lng: parseFloat($('#lng').val())};
-    initMap(myLatLng);
+    initMap(myLatLng,true);
     //se agregan los eventos del mapa clic y drag
     mapEvents();
 }
 
 
 //inicializar el mapa general
-function initMap(myLatLng) {
+function initMap(myLatLng,isDraggable) {
     map = new google.maps.Map(document.getElementById('map'), {
       zoom: 12,
       center: myLatLng,
@@ -65,8 +67,8 @@ function initMap(myLatLng) {
     marker = new google.maps.Marker({
     position: myLatLng,
     map: map,
-    draggable: true,
-    title: 'Ubicación actual'
+    draggable: isDraggable,
+    title: 'Ubicación'
     });
 }
 
