@@ -12,7 +12,8 @@
         "cakephp/plugin-installer": "*",
         "friendsofcake/bootstrap-ui": "^1.1",
         "davidyell/proffer": "^0.8",
-        "gourmet/email": "~3.0"
+        "gourmet/email": "~3.0",
+        "admad/cakephp-hybridauth": "^4.1"
     },
     "require-dev": {
         "psy/psysh": "@stable",

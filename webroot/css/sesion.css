@@ -98,12 +98,10 @@ box-shadow: 0px 0px 14px 0px rgba(0,0,0,0.24);}
     border-left: none !important;
     border-right: none !important;}
 	.btn-deep{
-    border-radius: 18px;
-    padding: 5px 19px;
+	    align-content: flex-end;
     color: #FFF;
     margin: 1rem;
     font-weight: 600;
-    float: right;
 	-webkit-box-shadow: 0px 0px 14px 0px rgba(0,0,0,0.24);
 -moz-box-shadow: 0px 0px 14px 0px rgba(0,0,0,0.24);
 box-shadow: 0px 0px 14px 0px rgba(0,0,0,0.24);
@@ -116,6 +114,9 @@ box-shadow: 0px 0px 14px 0px rgba(0,0,0,0.24);
     font-weight: 300;
     float: right;
 }
+.botones{
+    text-align:right;
+}
 .btn-deep:hover, .btn-deep:focus{
     color:#000000;
 }
@@ -124,6 +125,7 @@ box-shadow: 0px 0px 14px 0px rgba(0,0,0,0.24);
 }
 .btn-blue{
     background: #189BF2;
+    border: none;
 }
 
 .form .btn-default.btn-green{
@@ -154,6 +156,30 @@ box-shadow: 0px 0px 14px 0px rgba(0,0,0,0.24);
 }
 .btn-image:hover, .btn-image:focus{
     color:#000000;
+}
+
+.facebook{
+    text-align: right;
+    padding: 10px 50px 10px 50px;
+}
+.divider{
+    text-align:center;
+    border-top: 1px solid #189BF2;
+    border-bottom: 1px solid #189BF2;
+    padding: 1rem 0;
+    font-size:1.1rem;
+}
+
+.btn-facebook{
+    margin-top:1rem;
+    color:white;
+    background-color:#4267B2;
+    border:none;
+}
+
+.btn-facebook:hover, .btn-facebook:focus{
+    color:white;
+    outline:none;
 }
 
 

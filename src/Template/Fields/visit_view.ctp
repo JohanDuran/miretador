@@ -7,7 +7,6 @@
   $this->Html->script([ 'calendar']);
 ?>
 
-
 <section id="perfil_cancha">
     <?= $this->element('fields/fieldProfile'); ?>
     <div id="sticky" class="container">

@@ -52,16 +52,28 @@ class AppController extends Controller
                             'password' => 'password'
                         ],
                         'finder' => 'auth'
-                    ]
+                    ],
+                    'ADmad/HybridAuth.HybridAuth' => [
+                        // All keys shown below are defaults
+                        'fields' => [
+                            'provider' => 'provider',
+                            'openid_identifier' => 'openid_identifier',
+                            'email' => 'email'
+                        ],
+                        'profileModel' => 'ADmad/HybridAuth.SocialProfiles',
+                        'profileModelFkField' => 'user_id',
+                        'userModel' => 'Users',
+                        'hauth_return_to' => null
+                    ],
                 ],
                 'loginAction' => [ //action para logearse
                     'controller' => 'Users',
-                    'action' => 'login'
+                    'action' => 'login','plugin' => false
                 ],
                 //'authError' => $this->Flash->error('Ingrese sus datos.', ['key' => 'auth']),
                 'loginRedirect' => [ //Redireccionamiento después de logearse
                     'controller' => 'Pages', 
-                    'action' => 'display', 'home' 
+                    'action' => 'display', 'home' , 'plugin' => false
                 ],
                 'logoutRedirect' => [ //Redireccionamiento después de cerrar sesión.
                     'controller' => 'Pages', 
@@ -76,6 +88,8 @@ class AppController extends Controller
          */
         //$this->loadComponent('Security');
         //$this->loadComponent('Csrf');
+        
+        
     }
 
     /**
@@ -105,6 +119,10 @@ class AppController extends Controller
         }
         return false;
     }
+    
+    
+    
+    
     
     
     

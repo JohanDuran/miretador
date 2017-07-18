@@ -72,7 +72,9 @@ class UsersTable extends Table
         	]
         ]);
         
+        $this->hasMany('ADmad/HybridAuth.SocialProfiles');
         
+        \Cake\Event\EventManager::instance()->on('HybridAuth.newUser', [$this, 'createUser']);
     }
 
     /**
@@ -194,4 +196,23 @@ class UsersTable extends Table
         return true;
     }
     
+    public function createUser(\Cake\Event\Event $event) {
+        // Entity representing record in social_profiles table
+        $profile = $event->data()['profile'];
+    
+        // Make sure here that all the required fields are actually present
+    
+        $user = $this->newEntity(['email' => $profile->email]);
+        $user->password = time();
+        $user->name = $profile->first_name;
+        $user->role = 'user';
+        $user->active = 1;
+        $user = $this->save($user);
+    
+        if (!$user) {
+            throw new \RuntimeException('Unable to save new user');
+        }
+    
+        return $user;
+    }
 }

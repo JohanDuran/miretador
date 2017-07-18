@@ -10,6 +10,8 @@ $this->assign('title', $user->name);
                 <div class="col-md-3 col-sm-3 col-xs-12 foto_nombre">
                     <?php if(isset($user->photo)): ?>
                     <?= $this->Html->image('../files/users/photo/'. $user->photo_dir . '/square_' . $user->photo, ['alt' => 'foto de perfil de ' . $user->name, 'class' => 'img-responsive img-thumbnail-circle']) ?>
+                    <?php elseif(isset($current_user['social_profile']['photo_url'])): ?>
+                    <?= $this->Html->image($current_user['social_profile']['photo_url'], ['alt' => 'foto de perfil de ' . $user->name, 'class' => 'img-responsive img-thumbnail-circle']) ?>
                     <?php else: ?>
                     <?= $this->Html->image('logo.png', ['alt' => 'foto de perfil de ' . $user->name, 'class' => 'img-responsive img-thumbnail-circle']) ?>
                     <?php endif; ?>

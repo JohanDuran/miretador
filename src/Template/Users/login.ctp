@@ -71,14 +71,33 @@ $cakeDescription = 'Mi Retador | Login';
                    
                 </div>
                 
-                <div class="text-xs-center">
-                    <?= $this->Form->submit('Ingresar' ,['class' => 'btn btn-deep btn-green' ]) ?>
-                    <?= $this->Html->link('Registrarse', ['controller' => 'Users', 'action' => 'add' ], ['class' => 'btn btn-deep btn-blue']) ?>
+                <div class="row botones">
+                    <div class="col-xs-6 col-sm-offset-6 col-sm-3 col-md-offset-1 col-md-6 col-lg-offset-4 col-lg-4">
+                        <?= $this->Html->link('Registrarse', ['controller' => 'Users', 'action' => 'add' ], ['class' => 'btn btn-deep btn-blue']) ?>
+                    </div>
+                    <div class="col-xs-6 col-sm-3 col-md-5 col-lg-4">
+                        <?= $this->Form->submit('Ingresar' ,['class' => 'btn btn-deep btn-green' ]) ?>
+                    </div>
+                    
+                    
+                    
                 </div>
             
             </div>
             <!--/Form with header-->
         <?= $this->Form->end() ?>
+        
+        <div class="text-xs-center facebook">
+            <div class="divider">
+                O también puedes...
+            </div>
+            
+            <?= $this->Form->postLink(
+                ' Iniciar con Facebook',
+                ['controller' => 'Users', 'action' => 'login', '?' => ['provider' => 'Facebook']], ['class' => 'fa fa-facebook-official btn btn-deep btn-facebook']
+            ); ?>
+        </div>
+        
         </div><!--col-sm-6-->
     
     </div><!--col-sm-8-->
